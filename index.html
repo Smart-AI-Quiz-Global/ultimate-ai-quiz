@@ -6,7 +6,6 @@
     <title>Smart-AI-Quiz-Global | Unlimited Life-Time AI Quizzes</title>
     
     <meta name="description" content="Engage with the ultimate AI-powered global quiz platform. Unlimited questions in 25+ languages. High rewards and interactive learning.">
-    <meta name="keywords" content="Smart AI Quiz Global, Islamic History Quiz, Tech Trivia, Global Education, Earn Rewards, High CPM Quizzes, USA Traffic Quiz">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5264/5264565.png">
 
     <style>
@@ -28,6 +27,28 @@
             text-align: center;
         }
 
+        /* Loading Screen Styling */
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #0f172a;
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .loader-content { text-align: center; }
+        .ai-brain-icon { position: relative; width: 120px; height: 120px; margin: 0 auto 20px; }
+        .ai-brain-icon img { width: 100%; height: 100%; }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 15px #3b82f6; animation: scan 2s infinite linear; }
+        @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+        
+        .progress-container { width: 250px; height: 6px; background: #1e293b; border-radius: 10px; margin: 20px auto 10px; overflow: hidden; }
+        #progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #f59e0b); transition: width 0.1s linear; }
+
         header {
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(12px);
@@ -39,1517 +60,187 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .brand-title { font-size: 1.3rem; font-weight: 800; color: var(--accent-color); text-transform: uppercase; }
+        
+        .app-container { max-width: 800px; margin: 0 auto; padding-bottom: 80px; }
+        .question-card { background: var(--card-bg); padding: 30px; border-radius: 25px; margin: 20px; border: 1px solid #334155; }
+        
+        .option-btn {
+            display: block; width: 100%; padding: 16px; margin: 12px 0;
+            background: #334155; color: white; border: 2px solid transparent;
+            border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: left;
         }
+        .option-btn:hover { background: #475569; border-color: var(--blue-glow); }
 
-        .logo-img {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .brand-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-color);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Impression Booster: Ad Containers */
-        .ad-refresh-zone {
-            width: 100%;
-            min-height: 95px;
-            background: rgba(255, 255, 255, 0.03);
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px dashed #475569;
-            transition: all 0.3s ease;
-        }
-
-        .menu-icon {
-            font-size: 32px;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .menu-icon:hover {
-            transform: scale(1.1);
-            color: var(--accent-color);
-        }
+        /* ATM Card Styling */
+        .atm-card { width: 90%; max-width: 350px; height: 200px; margin: 20px auto; perspective: 1000px; }
+        .card-front { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); width: 100%; height: 100%; border-radius: 15px; position: relative; padding: 20px; text-align: left; color: white; }
+        .bank-name { font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; }
+        .chip { width: 45px; height: 35px; background: #fbbf24; border-radius: 5px; margin-bottom: 15px; }
+        .card-number { font-size: 1.3rem; letter-spacing: 2px; font-family: monospace; }
+        
+        /* Sidebar */
+        .sidebar { height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; right: 0; background-color: #1e293b; overflow-x: hidden; transition: 0.5s; padding-top: 20px; text-align: left; }
+        .menu-section { padding: 20px; border-bottom: 1px solid #334155; }
+        
+        .ad-refresh-zone { min-height: 90px; background: rgba(255,255,255,0.02); margin: 15px 0; border: 1px dashed #444; }
+        .eye-icon { position: fixed; bottom: 10px; right: 10px; opacity: 0.2; cursor: pointer; z-index: 5000; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-section">
-        <img src="https://cdn-icons-png.flaticon.com/512/5264/5264565.png" class="logo-img" alt="Smart-AI-Logo">
-        <span class="brand-title">Smart-AI-Quiz-Global</span>
-    </div>
-    <div class="menu-icon" onclick="toggleSidebar()">&#8942;</div>
-</header>
-
-<div id="top-banner-ad" class="ad-refresh-zone">
-    </div>
-
-<script>
-    /* Impression Automation Logic:
-       This script ensures that the ad codes are refreshed every 3 seconds 
-       to maximize impressions and earnings from global traffic.
-    */
-    function autoRefreshAds() {
-        console.log("Impression System: Refreshing Ad Units...");
-        // Logic to swap ad scripts for higher revenue will be added in final step
-    }
-    setInterval(autoRefreshAds, 3000); 
-</script>
-<div id="side-menu" class="sidebar">
-    <div class="sidebar-header">
-        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
-        <h3>Main Menu</h3>
-    </div>
-
-    <div class="menu-section">
-        <label>🌍 Select Your Language</label>
-        <select id="language-selector" class="menu-input" onchange="changeLanguage()">
-            <option value="en">English (USA/UK)</option>
-            <option value="ur">اردو (Pakistan)</option>
-            <option value="ar">العربية (Arabic/Kuwait)</option>
-            <option value="es">Español (Spain/USA)</option>
-            <option value="fr">Français (France)</option>
-            <option value="zh">中文 (Chinese)</option>
-            <option value="ru">Русский (Russia)</option>
-            <option value="de">Deutsch (Germany)</option>
-            <option value="hi">हिन्दी (India)</option>
-        </select>
-    </div>
-
-    <div class="menu-section">
-        <label>🧠 Quiz Categories</label>
-        <div class="category-grid">
-            <label><input type="checkbox" class="cat-check" value="islamic" checked> Islamic History</label>
-            <label><input type="checkbox" class="cat-check" value="tech" checked> Technology & AI</label>
-            <label><input type="checkbox" class="cat-check" value="general" checked> General Knowledge</label>
-            <label><input type="checkbox" class="cat-check" value="science" checked> Science</label>
-            <label><input type="checkbox" class="cat-check" value="sports" checked> Sports</label>
-            <label><input type="checkbox" class="cat-check" value="history" checked> World History</label>
-            <label><input type="checkbox" class="cat-check" value="business" checked> Business</label>
-        </div>
-        <button class="apply-btn" onclick="applySettings()">Apply & Refresh</button>
-    </div>
-
-    <div class="menu-section footer-links">
-        <a href="https://wa.me/923219379597" target="_blank" class="sidebar-link whatsapp">💬 Official WhatsApp</a>
-        <a href="https://smart-pro-tools-786.github.io/TikTok-Video-Downloader-Without-Watermark/" target="_blank" class="sidebar-link tiktok-tool">⬇️ TikTok Downloader Tool</a>
-    </div>
-</div>
-
-<style>
-    /* Professional Sidebar Styling */
-    .sidebar {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 2000;
-        top: 0;
-        right: 0;
-        background-color: #1e293b;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 20px;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        text-align: left;
-    }
-
-    .sidebar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        color: #f59e0b;
-        border-bottom: 1px solid #334155;
-    }
-
-    .close-btn { font-size: 35px; cursor: pointer; color: white; }
-
-    .menu-section { padding: 20px; border-bottom: 1px solid #334155; }
-    .menu-section label { display: block; margin-bottom: 10px; font-weight: bold; color: #3b82f6; }
-
-    .menu-input {
-        width: 100%;
-        padding: 10px;
-        background: #0f172a;
-        color: white;
-        border: 1px solid #3b82f6;
-        border-radius: 5px;
-    }
-
-    .category-grid { display: grid; grid-template-columns: 1fr; gap: 8px; color: #cbd5e1; }
-    .cat-check { margin-right: 10px; }
-
-    .apply-btn {
-        width: 100%;
-        margin-top: 15px;
-        padding: 10px;
-        background: #f59e0b;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .sidebar-link {
-        display: block;
-        padding: 12px;
-        text-decoration: none;
-        color: white;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        text-align: center;
-    }
-    .whatsapp { background: #25d366; }
-    .tiktok-tool { background: #ff0050; }
-</style>
-
-<script>
-    /* Function to Open/Close Sidebar Control Center */
-    function toggleSidebar() {
-        const menu = document.getElementById("side-menu");
-        if (menu.style.width === "300px") {
-            menu.style.width = "0";
-        } else {
-            menu.style.width = "300px";
-        }
-    }
-
-    function applySettings() {
-        alert("Settings Applied! Loading localized content...");
-        toggleSidebar();
-        // Quiz refresh logic will follow
-    }
-</script>
-<div class="main-quiz-container">
-    <div id="category-badge" class="badge">Global Challenge</div>
-    
-    <div id="ai-status" class="ai-status">
-        <span class="mic-icon">🎤</span> <span id="status-text">AI is ready...</span>
-    </div>
-
-    <div class="question-card">
-        <h2 id="current-question">Initializing Smart-AI-Quiz-Global System...</h2>
-        <div id="options-box">
-            </div>
-    </div>
-
-    <div class="quiz-info">
-        <p>Current Score: <span id="score">0</span></p>
-        <p>Question: <span id="q-count">1</span>/10</p>
-    </div>
-</div>
-
-<style>
-    /* Professional Quiz UI */
-    .main-quiz-container { max-width: 650px; margin: 20px auto; padding: 15px; }
-    .badge { background: var(--accent-color); color: black; display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
-    
-    .ai-status { margin-bottom: 15px; font-style: italic; color: #94a3b8; font-size: 0.9rem; }
-    .mic-icon { animation: pulse 1.5s infinite; display: inline-block; }
-    
-    @keyframes pulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.2); opacity: 0.7; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    .question-card {
-        background: var(--card-bg);
-        padding: 30px;
-        border-radius: 25px;
-        border: 1px solid #334155;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-
-    .option-btn {
-        display: block;
-        width: 100%;
-        padding: 16px;
-        margin: 12px 0;
-        background: #334155;
-        color: white;
-        border: 2px solid transparent;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: 0.3s;
-        text-align: left;
-    }
-
-    .option-btn:hover {
-        background: #475569;
-        border-color: var(--blue-glow);
-        transform: translateY(-2px);
-    }
-
-    .quiz-info { display: flex; justify-content: space-around; margin-top: 20px; color: #cbd5e1; }
-</style>
-
-<script>
-    /* AI Voice & Question Database Logic */
-    const synth = window.speechSynthesis;
-    let currentLang = 'en-US';
-
-    // Core Question Database (Expansion Ready)
-    const questionsDB = {
-        "en": [
-            {q: "What is the capital of Saudi Arabia?", o: ["Riyadh", "Jeddah", "Mecca"], a: 0},
-            {q: "Which AI developed this system?", o: ["OpenAI", "Google Gemini", "Smart-AI-Global"], a: 2}
-        ],
-        "ur": [
-            {q: "پہلے نبی کا نام کیا ہے؟", o: ["حضرت نوح", "حضرت آدم", "حضرت ابراہیم"], a: 1},
-            {q: "پاکستان کا قومی کھیل کیا ہے؟", o: ["کرکٹ", "ہاکی", "فٹ بال"], a: 1}
-        ],
-        "ar": [
-            {q: "ما هي عاصمة الكويت؟", o: ["الجهراء", "مدينة الكويت", "الفروانية"], a: 1}
-        ]
-    };
-
-    function speakText(text) {
-        if (synth.speaking) { synth.cancel(); }
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = document.getElementById('language-selector').value || 'en-US';
-        utterance.rate = 0.9;
-        
-        utterance.onstart = () => { document.getElementById('status-text').innerText = "AI is Speaking..."; };
-        utterance.onend = () => { document.getElementById('status-text').innerText = "Waiting for your answer..."; };
-        
-        synth.speak(utterance);
-    }
-
-    function loadNewQuestion() {
-        const lang = document.getElementById('language-selector').value || 'en';
-        const activePool = questionsDB[lang] || questionsDB['en'];
-        const qData = activePool[Math.floor(Math.random() * activePool.length)];
-
-        document.getElementById('current-question').innerText = qData.q;
-        const box = document.getElementById('options-box');
-        box.innerHTML = '';
-
-        qData.o.forEach((opt, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = (index + 1) + ". " + opt;
-            btn.onclick = () => checkAnswer(index, qData.a);
-            box.appendChild(btn);
-        });
-
-        // Trigger AI Voice
-        const fullText = qData.q + ". Option 1: " + qData.o[0] + ". Option 2: " + qData.o[1] + ". Option 3: " + qData.o[2];
-        speakText(fullText);
-    }
-
-    function checkAnswer(selected, correct) {
-        if(selected === correct) {
-            alert("Correct Answer!");
-            // Score and Ad logic will follow in Point 4
-        } else {
-            alert("Wrong Answer! Try again.");
-        }
-    }
-</script>
-<div class="timer-wrapper">
-    <div class="timer-container">
-        <svg class="timer-svg" viewBox="0 0 100 100">
-            <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
-            <circle id="timer-progress" class="timer-bar" cx="50" cy="50" r="45"></circle>
-        </svg>
-        <div id="timer-number">10</div>
-    </div>
-</div>
-
-<audio id="bg-music-soft" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-<audio id="timer-tick-sound">
-    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
-</audio>
-
-<style>
-    /* Professional Timer Styling */
-    .timer-wrapper { margin: 20px 0; display: flex; justify-content: center; }
-    .timer-container { position: relative; width: 100px; height: 100px; }
-    
-    .timer-svg { transform: rotate(-90deg); width: 100px; height: 100px; }
-    .timer-bg { fill: none; stroke: #334155; stroke-width: 8; }
-    .timer-bar {
-        fill: none; stroke: #f59e0b; stroke-width: 8;
-        stroke-dasharray: 283; stroke-dashoffset: 0;
-        transition: stroke-dashoffset 1s linear;
-        stroke-linecap: round;
-    }
-
-    #timer-number {
-        position: absolute; top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2rem; font-weight: bold; color: #f59e0b;
-    }
-
-    /* Animation for the last 3 seconds */
-    .timer-danger { color: #ef4444 !important; animation: blink 0.5s infinite; }
-    @keyframes blink { 50% { opacity: 0.3; } }
-</style>
-
-<script>
-    let timeLeft = 10;
-    let timerInterval;
-    const softMusic = document.getElementById('bg-music-soft');
-    const tickSound = document.getElementById('timer-tick-sound');
-
-    function startGlobalTimer() {
-        clearInterval(timerInterval);
-        timeLeft = 10;
-        updateTimerUI();
-        
-        // Start Soft Background Music
-        softMusic.volume = 0.2;
-        softMusic.play().catch(e => console.log("Music wait for user click"));
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            updateTimerUI();
-
-            if (timeLeft <= 3 && timeLeft > 0) {
-                // Suspense Tick Sound for last 3 seconds
-                tickSound.play();
-                document.getElementById('timer-number').classList.add('timer-danger');
-            }
-
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                timeUpLogic();
-            }
-        }, 1000);
-    }
-
-    function updateTimerUI() {
-        const timerDisplay = document.getElementById('timer-number');
-        const progressBar = document.getElementById('timer-progress');
-        timerDisplay.innerText = timeLeft;
-
-        // Progress bar calculation (Circle circumference is ~283)
-        const offset = 283 - (timeLeft / 10) * 283;
-        progressBar.style.strokeDashoffset = offset;
-
-        if (timeLeft > 3) {
-            timerDisplay.classList.remove('timer-danger');
-        }
-    }
-
-    function timeUpLogic() {
-        speakText("Time is up! Let's check the correct answer.");
-        // This will trigger the checkAnswer function from Point 3 automatically
-        const correctAnswerIndex = 0; // This will be dynamic from DB
-        showCorrectAnswer(correctAnswerIndex);
-    }
-
-    function showCorrectAnswer(index) {
-        const btns = document.getElementsByClassName('option-btn');
-        if(btns[index]) {
-            btns[index].style.background = "#22c55e"; // Green for correct
-            btns[index].style.borderColor = "#ffffff";
-        }
-        setTimeout(() => {
-            moveToNextQuestion();
-        }, 3000);
-    }
-</script>
-<div id="ad-slots-container">
-    <div class="ad-row">
-        <div id="ad-slot-5" class="ad-box-dynamic"></div>
-        <div id="ad-slot-9" class="ad-box-dynamic"></div>
-    </div>
-
-    <div id="hidden-impression-engine" style="width:1px; height:1px; opacity:0.01; overflow:hidden;">
-        <div id="ad-slot-6"></div>
-        <div id="ad-slot-7"></div>
-        <div id="ad-slot-8"></div>
-    </div>
-</div>
-
-<style>
-    /* Ads Layout Styling */
-    .ad-row { display: flex; justify-content: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-    .ad-box-dynamic { 
-        min-height: 60px; 
-        background: rgba(255,255,255,0.02); 
-        border-radius: 8px; 
-        transition: all 0.5s ease;
-    }
-    
-    /* Auto-Refresh Animation */
-    .refreshing { filter: blur(2px); opacity: 0.7; }
-</style>
-
-<script>
-    /* Adsterra Impression Multiplier 
-       This script rotates your 10 ad units to maximize revenue.
-    */
-    
-    const adUnits = {
-        slot5: `<script>atOptions={'key':'90af8dee84ab8501b624e076ec9a12c8','format':'iframe','height':60,'width':468,'params':{}};</script>`,
-        slot9: `<script>atOptions={'key':'c3fad5f8aa7dc16816052e3745d01c9c','format':'iframe','height':50,'width':320,'params':{}};</script>`,
-        slot10: `<script>atOptions={'key':'bbce5a50700ab4a362d5a6a41f0756ed','format':'iframe','height':90,'width':728,'params':{}};</script>`,
-        // Other slots will be filled in the same pattern
-    };
-
-    function runImpressionMachine() {
-        console.log("Impression Machine: Updating IP Signals & Ad Units...");
-        
-        // Refreshing Top Banners every 3 seconds
-        const mainSlots = ['ad-slot-5', 'ad-slot-9'];
-        mainSlots.forEach(slotId => {
-            const slot = document.getElementById(slotId);
-            if(slot) {
-                slot.classList.add('refreshing');
-                setTimeout(() => {
-                    // Re-injecting scripts to force new impression
-                    slot.innerHTML = adUnits[slotId.replace('-', '')] + 
-                    `<script src="https://breachuptown.com/${slotId.split('-')[2] === '5' ? '90af8dee84ab8501b624e076ec9a12c8' : 'c3fad5f8aa7dc16816052e3745d01c9c'}/invoke.js"><\/script>`;
-                    slot.classList.remove('refreshing');
-                }, 500);
-            }
-        });
-    }
-
-    // Start the Impression Machine
-    setInterval(runImpressionMachine, 3000); 
-
-    /* High-Security Script to Mask IP for Higher CPM */
-    function maskUserSignal() {
-        // This simulates premium traffic behavior for Ad networks
-        window.history.replaceState(null, null, "?global-traffic=high-cpm-usa");
-    }
-    window.onload = maskUserSignal;
-</script>
-
-<script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
-<script src="https://breachuptown.com/4d/f7/56/4df7569fb44a5d7a885cd63b4f956e09.js"></script>
-<div id="ad-break-overlay" class="ad-overlay">
-    <div class="ad-content-box">
-        <div class="reward-header">
-            <span class="gift-icon">🎁</span>
-            <h2>Reward Break!</h2>
-            <p>Your next set of questions is loading...</p>
-        </div>
-
-        <div id="break-ad-container" class="break-ad-frame">
-            <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
-            <div id="container-bc14fd3cc493145f5f9b6821df2fea04"></div>
-        </div>
-
-        <button id="close-ad-btn" class="continue-btn" onclick="closeRewardAd()" disabled>
-            Please Wait (<span id="ad-timer">5</span>s)
-        </button>
-    </div>
-</div>
-
-<style>
-    /* Ad Break Styling */
-    .ad-overlay {
-        display: none; position: fixed; top: 0; left: 0;
-        width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98);
-        z-index: 9999; justify-content: center; align-items: center;
-        backdrop-filter: blur(10px);
-    }
-    .ad-content-box {
-        background: #1e293b; padding: 25px; border-radius: 20px;
-        max-width: 450px; width: 90%; text-align: center;
-        border: 2px solid #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
-    }
-    .reward-header h2 { color: #f59e0b; margin: 10px 0; }
-    .gift-icon { font-size: 50px; animation: bounce 2s infinite; display: block; }
-    
-    .break-ad-frame {
-        min-height: 250px; margin: 20px 0; background: #0f172a;
-        border-radius: 10px; display: flex; justify-content: center; align-items: center;
-    }
-
-    .continue-btn {
-        width: 100%; padding: 15px; background: #3b82f6; color: white;
-        border: none; border-radius: 12px; font-weight: bold; cursor: pointer;
-        transition: 0.3s;
-    }
-    .continue-btn:disabled { background: #475569; cursor: not-allowed; }
-    .continue-btn:not(:disabled):hover { background: #2563eb; transform: scale(1.02); }
-
-    @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
-</style>
-
-<script>
-    let breakTimer;
-    let secondsLeft = 5;
-
-    function triggerAdBreak() {
-        // Stop current quiz timer and music
-        clearInterval(timerInterval);
-        softMusic.pause();
-        
-        // Show Overlay
-        const overlay = document.getElementById('ad-break-overlay');
-        overlay.style.display = 'flex';
-        
-        // Start 5 second force-wait for the Ad
-        secondsLeft = 5;
-        const btn = document.getElementById('close-ad-btn');
-        btn.disabled = true;
-        
-        breakTimer = setInterval(() => {
-            secondsLeft--;
-            document.getElementById('ad-timer').innerText = secondsLeft;
-            if(secondsLeft <= 0) {
-                clearInterval(breakTimer);
-                btn.disabled = false;
-                btn.innerText = "Continue to Next Round";
-            }
-        }, 1000);
-    }
-
-    function closeRewardAd() {
-        document.getElementById('ad-break-overlay').style.display = 'none';
-        qCount = 0; // Reset question counter
-        loadNewQuestion(); // Start next round
-    }
-</script>
-<div id="smart-ad-frame-container" class="in-app-ad-overlay">
-    <div class="ad-top-bar">
-        <span class="ad-label">Sponsored Ad</span>
-        <button class="ad-close-x" onclick="closeInAppAd()">Close [X]</button>
-    </div>
-    <iframe id="ad-direct-frame" src="" frameborder="0"></iframe>
-</div>
-
-<style>
-    /* In-App Ad Container Styling */
-    .in-app-ad-overlay {
-        display: none; position: fixed; top: 0; left: 0;
-        width: 100%; height: 100%; background: #000;
-        z-index: 10000; flex-direction: column;
-    }
-    
-    .ad-top-bar {
-        background: #1e293b; color: white; padding: 10px 15px;
-        display: flex; justify-content: space-between; align-items: center;
-        border-bottom: 2px solid #f59e0b;
-    }
-
-    .ad-label { font-size: 14px; font-weight: bold; color: #f59e0b; }
-    
-    .ad-close-x {
-        background: #ef4444; color: white; border: none;
-        padding: 5px 15px; border-radius: 5px; cursor: pointer;
-        font-weight: bold; font-size: 14px;
-    }
-
-    #ad-direct-frame {
-        width: 100%; height: calc(100% - 40px);
-        background: white;
-    }
-
-    /* Side Ads for Desktop */
-    .desktop-ad-wing {
-        position: fixed; top: 100px; width: 160px; height: 600px;
-        z-index: 500; display: none; border: 1px solid #334155;
-    }
-    @media screen and (min-width: 1300px) { .desktop-ad-wing { display: block; } }
-</style>
-
-<script>
-    /* Logic to show Ad inside the same Website/App */
-    const directAdLink = "https://breachuptown.com/hzy27ig1?key=6234a8317563d50972f81c9db90823ff";
-    let adShownStatus = false;
-
-    function openInAppAd() {
-        if (!adShownStatus) {
-            const overlay = document.getElementById('smart-ad-frame-container');
-            const frame = document.getElementById('ad-direct-frame');
-            
-            frame.src = directAdLink;
-            overlay.style.display = 'flex';
-            adShownStatus = true;
-            console.log("In-App Ad: Opened within the same screen.");
-        }
-    }
-
-    function closeInAppAd() {
-        document.getElementById('smart-ad-frame-container').style.display = 'none';
-        document.getElementById('ad-direct-frame').src = ""; // Stop ad content
-    }
-
-    /* Trigger ad on user interaction (Click) */
-    document.addEventListener('click', function(e) {
-        // Do not trigger if user is clicking on buttons or links
-        if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !adShownStatus) {
-            openInAppAd();
-        }
-    });
-
-    /* Invisible Impression Multiplier for Ad 6 & 8 */
-    setInterval(() => {
-        console.log("Impression System: Boosting Ad 6 & 8 revenue...");
-        // Ad refreshing logic
-    }, 4000);
-</script>
-
-<div class="desktop-ad-wing" style="left: 10px;">
-    <script> atOptions = { 'key' : '2ad6c4e5997c6ab7a5ebaa6dcce124b6', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} }; </script>
-    <script src="https://breachuptown.com/2ad6c4e5997c6ab7a5ebaa6dcce124b6/invoke.js"></script>
-</div>
-
-<div class="desktop-ad-wing" style="right: 10px;">
-    <script> atOptions = { 'key' : 'f8e0f5f1c77aee933fbb7a25f674c4ee', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} }; </script>
-    <script src="https://breachuptown.com/f8e0f5f1c77aee933fbb7a25f674c4ee/invoke.js"></script>
-</div>
-<div class="support-container">
-    <div class="support-header">
-        <span class="heart-icon">💙</span>
-        <h3>Support Our Global Mission</h3>
-        <p>If you like our AI system, you can support us via UBL Bank.</p>
-    </div>
-
-    <div class="atm-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <div class="bank-name">UBL Bank</div>
-                <div class="chip"></div>
-                <div class="card-number">XXXX XXXX XXXX 4141</div>
-                <div class="card-holder">SYED ALI HASSAN</div>
-                <div class="card-details">
-                    <span>Valid Thru: 12/29</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="bank-details-box">
-        <p><strong>Bank Name:</strong> United Bank Limited (UBL)</p>
-        <p><strong>Account Holder:</strong> Syed Ali Hassan</p>
-        <p><strong>Account/IBAN:</strong> [Your IBAN Here]</p>
-        <p><strong>Official Contact:</strong> +92 321-9379597</p>
-        <a href="https://wa.me/923219379597" class="support-wa-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20"> 
-            Chat with Support
-        </a>
-    </div>
-</div>
-
-<style>
-    /* Banking Section Styling */
-    .support-container {
-        background: #1e293b;
-        margin: 40px auto;
-        padding: 30px;
-        border-radius: 25px;
-        max-width: 500px;
-        border: 1px solid #334155;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    }
-    .support-header h3 { color: #f59e0b; margin-bottom: 5px; }
-    .heart-icon { font-size: 30px; animation: heartbeat 1.5s infinite; display: block; }
-    
-    @keyframes heartbeat {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-
-    /* ATM Card Design */
-    .atm-card {
-        width: 100%; max-width: 350px; height: 200px;
-        margin: 20px auto; perspective: 1000px;
-    }
-    .card-front {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        width: 100%; height: 100%; border-radius: 15px;
-        position: relative; padding: 20px; text-align: left;
-        color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .bank-name { font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; }
-    .chip {
-        width: 45px; height: 35px; background: #fbbf24;
-        border-radius: 5px; margin-bottom: 15px;
-    }
-    .card-number { font-size: 1.3rem; letter-spacing: 2px; margin-bottom: 10px; font-family: 'Courier New', monospace; }
-    .card-holder { text-transform: uppercase; font-size: 0.9rem; margin-top: 10px; }
-    .card-details { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; font-size: 0.8rem; }
-    .card-logo { width: 40px; }
-
-    .bank-details-box { text-align: left; margin-top: 20px; color: #cbd5e1; line-height: 1.6; }
-    .bank-details-box strong { color: #f59e0b; }
-
-    .support-wa-btn {
-        display: flex; align-items: center; justify-content: center; gap: 10px;
-        background: #25d366; color: white; padding: 12px;
-        border-radius: 10px; text-decoration: none; font-weight: bold;
-        margin-top: 15px; transition: 0.3s;
-    }
-    .support-wa-btn:hover { background: #128c7e; transform: translateY(-2px); }
-</style>
-<footer class="global-footer">
-    <div class="footer-content">
-        <div class="footer-logo">
-            <span class="brand-title">Smart-AI-Quiz-Global</span>
-            <p>The World's Leading AI-Powered Quiz Platform</p>
-        </div>
-
-        <div class="social-links-grid">
-            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-btn facebook">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-                <span>Facebook</span>
-            </a>
-            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-btn tiktok">
-                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
-                <span>TikTok</span>
-            </a>
-            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-btn youtube">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
-                <span>YouTube</span>
-            </a>
-        </div>
-
-        <div class="footer-divider"></div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 Smart-AI-Quiz-Global. All Rights Reserved.</p>
-            <div class="policy-links">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms of Service</a> | 
-                <a href="https://wa.me/923219379597">Contact Us</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<style>
-    /* Professional Footer Styling */
-    .global-footer {
-        background: #0f172a;
-        color: #94a3b8;
-        padding: 40px 20px;
-        margin-top: 50px;
-        border-top: 1px solid #334155;
-    }
-
-    .footer-content {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    .footer-logo { margin-bottom: 30px; }
-    .footer-logo .brand-title { 
-        font-size: 1.5rem; 
-        color: #f59e0b; 
-        font-weight: 800;
-        text-transform: uppercase;
-    }
-
-    .social-links-grid {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        margin-bottom: 30px;
-    }
-
-    .social-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 20px;
-        border-radius: 30px;
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        transition: 0.3s;
-        min-width: 140px;
-        justify-content: center;
-    }
-
-    .facebook { background: #1877f2; }
-    .tiktok { background: #000000; border: 1px solid #ffffff33; }
-    .youtube { background: #ff0000; }
-
-    .social-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-    }
-
-    .social-btn img { width: 24px; height: 24px; }
-
-    .footer-divider {
-        height: 1px;
-        background: #334155;
-        margin: 20px 0;
-    }
-
-    .footer-bottom {
-        font-size: 0.85rem;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .policy-links a {
-        color: #3b82f6;
-        text-decoration: none;
-        margin: 0 5px;
-    }
-    
-    .policy-links a:hover { color: #f59e0b; }
-
-    @media (min-width: 768px) {
-        .footer-bottom {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-    }
-</style>
-<div class="external-tool-promo">
-    <div class="tool-card">
-        <div class="tool-icon-wrapper">
-            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok Tool" class="floating-icon">
-        </div>
-        <div class="tool-text">
-            <h4>🔥 Special Tool for You!</h4>
-            <p>Download any TikTok video <strong>Without Watermark</strong> in HD for Free!</p>
-        </div>
-        <a href="https://smart-pro-tools-786.github.io/TikTok-Video-Downloader-Without-Watermark/" target="_blank" class="visit-tool-btn">
-            Open TikTok Downloader 
-            <span class="arrow-anim">→</span>
-        </a>
-    </div>
-</div>
-
-<style>
-    /* Smart Tool Section Styling */
-    .external-tool-promo {
-        padding: 20px;
-        margin: 30px auto;
-        max-width: 600px;
-    }
-
-    .tool-card {
-        background: linear-gradient(145deg, #1e293b, #0f172a);
-        border: 2px solid #ff0050; /* TikTok Theme Color */
-        border-radius: 20px;
-        padding: 25px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(255, 0, 80, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .tool-icon-wrapper {
-        background: rgba(255, 255, 255, 0.1);
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .floating-icon {
-        width: 40px;
-        animation: rotateIcon 4s linear infinite;
-    }
-
-    @keyframes rotateIcon {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .tool-text h4 {
-        color: #ff0050;
-        margin: 0 0 10px 0;
-        font-size: 1.4rem;
-    }
-
-    .tool-text p {
-        color: #cbd5e1;
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-
-    .visit-tool-btn {
-        background: #ff0050;
-        color: white;
-        text-decoration: none;
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: 0.3s;
-    }
-
-    .visit-tool-btn:hover {
-        background: #d60043;
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
-    }
-
-    .arrow-anim {
-        animation: moveArrow 1s infinite alternate;
-    }
-
-    @keyframes moveArrow {
-        from { transform: translateX(0); }
-        to { transform: translateX(5px); }
-    }
-
-    /* Professional Touch: Background glow */
-    .tool-card::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,0,80,0.05) 0%, transparent 70%);
-        pointer-events: none;
-    }
-</style>
-<div class="admin-access-area">
-    <div id="hidden-eye" class="eye-icon" onclick="secretClick()">👁️</div>
-</div>
-
-<div id="admin-login-modal" class="admin-modal">
-    <div class="admin-content login-box">
-        <h2 style="color: #f59e0b;">🔐 Secure Access</h2>
-        <div id="login-step-1">
-            <p>Enter Secret Admin Code:</p>
-            <input type="password" id="admin-secret-code" placeholder="Enter Code Here">
-            <button class="save-btn" onclick="verifyStep1()">Next Step</button>
-        </div>
-        <div id="login-step-2" style="display:none;">
-            <p>Enter Authorized Mobile Number:</p>
-            <input type="text" id="admin-mobile-number" placeholder="03xxxxxxxxx">
-            <button class="save-btn" onclick="verifyStep2()">Login to Dashboard</button>
-        </div>
-        <button class="close-panel" style="margin-top:15px;" onclick="closeAdmin()">Cancel</button>
-        <p id="login-error" style="color: #ef4444; margin-top: 10px; font-size: 13px;"></p>
-    </div>
-</div>
-
-<div id="admin-panel" class="admin-modal">
-    <div class="admin-content">
-        <div class="admin-header">
-            <h2>Admin Control Panel</h2>
-            <button class="close-panel" onclick="closeAdmin()">Logout & Exit</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>🏦 Bank Detail Settings (UBL)</h3>
-            <input type="text" id="bank-title-input" placeholder="Bank Name (e.g. UBL Bank)">
-            <input type="text" id="bank-acc-name" placeholder="Account Holder Name">
-            <input type="text" id="bank-iban-input" placeholder="IBAN / Account Number">
-            <button class="save-btn" onclick="saveBankDetails()">Update Bank Info</button>
-        </div>
-
-        <hr style="border-color: #334155; margin: 20px 0;">
-
-        <div class="admin-section">
-            <h3>📝 Quick Question Injector</h3>
-            <p style="font-size: 11px; color: #94a3b8;">Write question & correct answer. AI will mix options.</p>
-            <textarea id="new-q-text" rows="3" placeholder="Type question here..."></textarea>
-            <input type="text" id="correct-ans-input" placeholder="The Correct Answer">
-            <button class="save-btn" style="background: #3b82f6;" onclick="addNewQuestion()">Public to 50+ Regions</button>
-        </div>
-        <div id="q-status" style="color: #22c55e; margin-top:10px; font-weight: bold;"></div>
-    </div>
-</div>
-
-<style>
-    /* Eye Icon & Security Styling */
-    .eye-icon { position: fixed; bottom: 12px; right: 12px; font-size: 20px; cursor: pointer; opacity: 0.2; z-index: 9999; }
-    .eye-icon:hover { opacity: 0.8; }
-
-    .admin-modal {
-        display: none; position: fixed; top: 0; left: 0;
-        width: 100%; height: 100%; background: rgba(10, 15, 25, 0.98);
-        z-index: 10001; justify-content: center; align-items: center;
-        padding: 20px; box-sizing: border-box;
-    }
-
-    .admin-content {
-        background: #1e293b; width: 100%; max-width: 450px;
-        border-radius: 20px; padding: 30px; border: 2px solid #3b82f6;
-        box-shadow: 0 0 60px rgba(0,0,0,0.9); text-align: center;
-    }
-
-    .admin-section { text-align: left; }
-    .admin-section h3 { color: #f59e0b; margin-bottom: 15px; font-size: 1.1rem; }
-    
-    .admin-section input, .admin-section textarea, .login-box input {
-        width: 100%; padding: 12px; margin-bottom: 12px;
-        background: #0f172a; border: 1px solid #334155;
-        border-radius: 10px; color: white; box-sizing: border-box;
-    }
-
-    .save-btn {
-        width: 100%; padding: 14px; background: #22c55e;
-        border: none; color: white; border-radius: 10px;
-        font-weight: bold; cursor: pointer; transition: 0.3s;
-    }
-    .save-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
-</style>
-
-<script>
-    let eyeClicks = 0;
-    const SECRET_CODE = "7866_zaigham_5121472";
-    const SECRET_PHONE = "03208151163";
-
-    function secretClick() {
-        eyeClicks++;
-        if (eyeClicks >= 10) {
-            document.getElementById('admin-login-modal').style.display = 'flex';
-            eyeClicks = 0;
-        }
-    }
-
-    function verifyStep1() {
-        const inputCode = document.getElementById('admin-secret-code').value;
-        if(inputCode === SECRET_CODE) {
-            document.getElementById('login-step-1').style.display = 'none';
-            document.getElementById('login-step-2').style.display = 'block';
-            document.getElementById('login-error').innerText = "";
-        } else {
-            document.getElementById('login-error').innerText = "Incorrect Secret Code!";
-        }
-    }
-
-    function verifyStep2() {
-        const inputPhone = document.getElementById('admin-mobile-number').value;
-        if(inputPhone === SECRET_PHONE) {
-            document.getElementById('admin-login-modal').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'flex';
-            document.getElementById('login-error').innerText = "";
-        } else {
-            document.getElementById('login-error').innerText = "Unauthorized Mobile Number!";
-        }
-    }
-
-    function saveBankDetails() {
-        const title = document.getElementById('bank-title-input').value;
-        const name = document.getElementById('bank-acc-name').value;
-        const iban = document.getElementById('bank-iban-input').value;
-
-        if(title && name && iban) {
-            // Updating UI on the main screen
-            const displayTitle = document.getElementById('display-bank-title');
-            if(displayTitle) displayTitle.innerText = title;
-            alert("UBL Bank Settings Updated Successfully!");
-        }
-    }
-
-    function addNewQuestion() {
-        const qText = document.getElementById('new-q-text').value;
-        const correct = document.getElementById('correct-ans-input').value;
-
-        if(qText && correct) {
-            // AI Automation: Creating 3 options dynamically
-            const qObj = {
-                q: qText,
-                o: [correct, "Global AI Guess 1", "Global AI Guess 2"].sort(() => Math.random() - 0.5),
-                a: 0 
-            };
-            // Adding to global question pool
-            if(typeof questionsDB !== 'undefined') {
-                questionsDB['en'].push(qObj);
-                document.getElementById('q-status').innerText = "✅ Question Publicly Published!";
-                document.getElementById('new-q-text').value = "";
-                document.getElementById('correct-ans-input').value = "";
-            }
-        }
-    }
-
-    function closeAdmin() {
-        document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('admin-login-modal').style.display = 'none';
-        document.getElementById('login-step-1').style.display = 'block';
-        document.getElementById('login-step-2').style.display = 'none';
-    }
-</script>
-<script>
-    /* High-CPM Automation Logic: 
-       This script optimizes ad delivery for maximum revenue.
-    */
-
-    const highCpmSignals = ["US", "GB", "CA", "AU", "DE"];
-    
-    function boostRevenueImpression() {
-        console.log("AI Booster: Optimizing Impression for High CPM...");
-
-        // Layer 1: Data Masking
-        // This simulates high-quality user engagement patterns
-        if (window.history.pushState) {
-            const url = new URL(window.location.href);
-            url.searchParams.set('g_source', 'organic-usa');
-            url.searchParams.set('cpm_boost', 'active_v12');
-            window.history.replaceState({path: url.href}, '', url.href);
-        }
-
-        // Layer 2: Rapid Ad Rotation (Ad 5, 7, 9, 10)
-        // This ensures the impression count increases every few seconds
-        const adSlots = [
-            {id: 'top-banner-ad', key: 'bbce5a50700ab4a362d5a6a41f0756ed'},
-            {id: 'break-ad-container', key: 'bc14fd3cc493145f5f9b6821df2fea04'},
-            {id: 'ad-slot-5', key: '90af8dee84ab8501b624e076ec9a12c8'}
-        ];
-
-        adSlots.forEach(slot => {
-            const element = document.getElementById(slot.id);
-            if (element) {
-                // Secret Refresh: Re-injecting scripts without reloading the whole page
-                const timestamp = new Date().getTime();
-                console.log(`Impression Captured for Slot: ${slot.id} at ${timestamp}`);
-            }
-        });
-    }
-
-    /* Dynamic Impression Machine:
-       Runs every 2 seconds to keep the Adsterra counter moving fast.
-    */
-    setInterval(() => {
-        boostRevenueImpression();
-    }, 2000);
-
-    /* Traffic Quality Simulator:
-       Prevents Adsterra from detecting 'Bot' traffic by simulating 
-       real mouse movements and scrolls automatically.
-    */
-    function simulateHumanActivity() {
-        const randomScroll = Math.floor(Math.random() * 100);
-        window.scrollBy(0, randomScroll);
-        setTimeout(() => window.scrollBy(0, -randomScroll), 500);
-    }
-
-    setInterval(simulateHumanActivity, 5000);
-</script>
-
-<style>
-    /* Premium Look for High CPM Countries */
-    .cpm-optimized-bg {
-        background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-        border-top: 2px solid #f59e0b;
-    }
-    
-    /* Auto-Click Safety Layer */
-    .ad-safe-zone {
-        pointer-events: auto;
-        cursor: pointer;
-    }
-</style>
 <div id="loading-screen">
     <div class="loader-content">
         <div class="ai-brain-icon">
             <img src="https://cdn-icons-png.flaticon.com/512/5264/5264565.png" alt="Smart AI">
             <div class="scan-line"></div>
         </div>
-        <h1 class="loading-title">Smart-AI-Quiz-Global</h1>
-        <p class="loading-subtext">Initializing AI Question Bank...</p>
-        
-        <div class="progress-container">
-            <div id="progress-bar-fill"></div>
-        </div>
+        <h1 style="color:#f59e0b">Smart-AI-Quiz-Global</h1>
+        <div class="progress-container"><div id="progress-bar-fill"></div></div>
         <div id="loading-percent">0%</div>
     </div>
 </div>
 
-<style>
-    /* Loading Screen Styling */
-    #loading-screen {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: #0f172a;
-        z-index: 20000; /* Highest Priority */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 1s ease-out;
-    }
+<header>
+    <div class="logo-section">
+        <span class="brand-title">Smart-AI-Quiz-Global</span>
+    </div>
+    <div style="font-size:30px; cursor:pointer" onclick="toggleSidebar()">&#8942;</div>
+</header>
 
-    .loader-content { text-align: center; }
-
-    .ai-brain-icon {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 20px;
-    }
-
-    .ai-brain-icon img { width: 100%; height: 100%; }
-
-    /* Moving Scan Line Animation */
-    .scan-line {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 3px;
-        background: #3b82f6;
-        box-shadow: 0 0 15px #3b82f6;
-        animation: scan 2s infinite linear;
-    }
-
-    @keyframes scan {
-        0% { top: 0%; }
-        50% { top: 100%; }
-        100% { top: 0%; }
-    }
-
-    .loading-title {
-        color: #f59e0b;
-        font-size: 1.8rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        margin: 10px 0;
-        text-transform: uppercase;
-    }
-
-    .loading-subtext { color: #94a3b8; font-family: monospace; }
-
-    /* Progress Bar Animation */
-    .progress-container {
-        width: 250px; height: 6px;
-        background: #1e293b;
-        border-radius: 10px;
-        margin: 20px auto 10px;
-        overflow: hidden;
-    }
-
-    #progress-bar-fill {
-        width: 0%; height: 100%;
-        background: linear-gradient(90deg, #3b82f6, #f59e0b);
-        transition: width 0.1s linear;
-    }
-
-    #loading-percent { color: #ffffff; font-weight: bold; }
-
-    /* Main Content Reveal Animation */
-    .reveal-content {
-        animation: zoomIn 0.8s ease forwards;
-    }
-
-    @keyframes zoomIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
-</style>
-
-<script>
-    /* Loading Progress Logic */
-    window.addEventListener('load', () => {
-        let progress = 0;
-        const fill = document.getElementById('progress-bar-fill');
-        const percent = document.getElementById('loading-percent');
-        
-        const loadingInterval = setInterval(() => {
-            progress += Math.floor(Math.random() * 5) + 2;
-            if (progress > 100) progress = 100;
-            
-            fill.style.width = progress + "%";
-            percent.innerText = progress + "%";
-            
-            if (progress >= 100) {
-                clearInterval(loadingInterval);
-                finishLoading();
-            }
-        }, 100);
-    });
-
-    function finishLoading() {
-        const screen = document.getElementById('loading-screen');
-        screen.style.opacity = '0';
-        setTimeout(() => {
-            screen.style.display = 'none';
-            // Start Music and AI Voice after loading
-            document.body.classList.add('reveal-content');
-            startGlobalTimer(); // First question timer starts
-        }, 1000);
-    }
-</script>
 <main class="app-container">
-    
-    <div id="top-refresher" class="ad-refresh-zone">
-        <div id="ad-slot-10-top"></div>
+    <div class="ad-refresh-zone" id="top-ad">
+        <script type="text/javascript">
+            atOptions = { 'key' : 'bbce5a50700ab4a362d5a6a41f0756ed', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="//breachuptown.com/bbce5a50700ab4a362d5a6a41f0756ed/invoke.js"></script>
     </div>
 
-    <section id="quiz-flow" class="main-quiz-container">
-        <div id="category-badge" class="badge">AI Global Challenge</div>
-        <div id="ai-status" class="ai-status">
-            <span class="mic-icon">🎤</span> <span id="status-text">AI System Initializing...</span>
-        </div>
-
-        <div class="question-card">
-            <h2 id="current-question">Welcome to Smart-AI-Global. Waiting for System Start...</h2>
-            <div id="options-box">
-                </div>
-        </div>
-
-        <div class="quiz-info">
-            <p>Score: <span id="score">0</span></p>
-            <p>Question: <span id="q-count">1</span>/10</p>
+    <section class="question-card">
+        <div style="background:#f59e0b; color:black; display:inline-block; padding:5px 15px; border-radius:20px; font-weight:bold; margin-bottom:15px;">AI Global Challenge</div>
+        <h2 id="current-question">System Initializing...</h2>
+        <div id="options-box"></div>
+        
+        <div style="display:flex; justify-content:space-around; margin-top:20px; color:#94a3b8;">
+            <span>Score: <b id="score">0</b></span>
+            <span>Question: <b id="q-count">1</b>/10</span>
         </div>
     </section>
 
-    <section id="partner-zone" class="company-section">
-        </section>
-
-    <section id="bank-footer" class="support-container">
-        <div class="support-header">
-            <span class="heart-icon">💙</span>
-            <h3>Support Global Education</h3>
-            <p>Direct Contributions via Bank</p>
-        </div>
-        
+    <section style="background:#1e293b; padding:20px; border-radius:20px; margin:20px;">
+        <h3 style="color:#f59e0b">Support Global Education</h3>
         <div class="atm-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <div id="display-bank-title" class="bank-name">UBL Bank</div>
-                    <div class="chip"></div>
-                    <div class="card-number">XXXX XXXX XXXX 4141</div>
-                    <div id="display-acc-name" class="card-holder">SYED ALI HASSAN</div>
-                    <div class="card-details">
-                        <span>Valid Thru: 12/29</span>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
-                    </div>
-                </div>
+            <div class="card-front">
+                <div id="display-bank-title" class="bank-name">UBL Bank</div>
+                <div class="chip"></div>
+                <div class="card-number">XXXX XXXX XXXX 4141</div>
+                <div id="display-acc-name" class="card-holder">SYED ALI HASSAN</div>
+                <div style="margin-top:10px; font-size:0.8rem;">Valid Thru: 12/29</div>
             </div>
         </div>
     </section>
+</main>
 
-    </main>
+<div id="side-menu" class="sidebar">
+    <div class="menu-section">
+        <h3 style="color:white">Menu <span style="float:right; cursor:pointer" onclick="toggleSidebar()">&times;</span></h3>
+        <label style="color:#3b82f6">Language</label>
+        <select id="language-selector" style="width:100%; padding:10px; margin-top:10px;" onchange="loadNewQuestion()">
+            <option value="en">English</option>
+            <option value="ur">اردو (Pakistan)</option>
+        </select>
+    </div>
+    <div class="menu-section">
+        <a href="https://wa.me/923219379597" style="color:white; text-decoration:none; display:block; background:#25d366; padding:10px; text-align:center; border-radius:5px;">WhatsApp Support</a>
+    </div>
+</div>
 
-<style>
-    /* Final Structural Layout Fixes */
-    .app-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding-bottom: 80px;
-        background: #0f172a;
-        min-height: 100vh;
-        box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        border-left: 1px solid #1e293b;
-        border-right: 1px solid #1e293b;
-    }
-
-    #quiz-flow {
-        padding: 20px;
-        animation: fadeIn 1s ease-in;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Mobile Responsive Adjustments */
-    @media (max-width: 600px) {
-        .app-container { width: 100%; border: none; }
-        .question-card { padding: 20px; border-radius: 15px; }
-        .bank-name { font-size: 1rem; }
-    }
-</style>
+<div class="eye-icon" onclick="secretClick()">👁️</div>
 
 <script>
-    /* Final System Logic Linking */
-    let totalQuestionsAnswered = 0;
-    
-    function moveToNextQuestion() {
-        totalQuestionsAnswered++;
-        
-        // Every 10 questions, trigger the Ad Break (Point 6)
-        if(totalQuestionsAnswered % 10 === 0) {
-            if(typeof triggerAdBreak === "function") {
-                triggerAdBreak();
-            }
-        } else {
-            // Logic to load new question from DB
-            if(typeof loadNewQuestion === "function") {
-                loadNewQuestion();
-                startGlobalTimer();
-            }
-        }
-        
-        // Update Stats
-        document.getElementById('q-count').innerText = (totalQuestionsAnswered % 10) + 1;
+    // 1. DATA & VARIABLES
+    const questionsDB = {
+        "en": [
+            {q: "What is the capital of Saudi Arabia?", o: ["Riyadh", "Jeddah", "Mecca"], a: 0},
+            {q: "Which AI developed this system?", o: ["OpenAI", "Google", "Smart-AI-Global"], a: 2}
+        ],
+        "ur": [
+            {q: "پہلے نبی کا نام کیا ہے؟", o: ["حضرت نوح", "حضرت آدم", "حضرت ابراہیم"], a: 1},
+            {q: "پاکستان کا قومی کھیل کیا ہے؟", o: ["کرکٹ", "ہاکی", "فٹ بال"], a: 1}
+        ]
+    };
+
+    let score = 0;
+    let currentQIndex = 1;
+    let eyeClicks = 0;
+
+    // 2. CORE FUNCTIONS
+    function toggleSidebar() {
+        const menu = document.getElementById("side-menu");
+        menu.style.width = menu.style.width === "300px" ? "0" : "300px";
     }
 
-    // This ensures that when the page loads, the system is ready
-    console.log("Point 14: Final Structure successfully linked with AI Engine.");
-</script>
-/* 15: Final Initialization & Auto-Start Logic */
+    function loadNewQuestion() {
+        const lang = document.getElementById('language-selector').value;
+        const pool = questionsDB[lang] || questionsDB['en'];
+        const data = pool[Math.floor(Math.random() * pool.length)];
 
-function finishLoading() {
-    const screen = document.getElementById('loading-screen');
-    if (screen) {
-        screen.style.opacity = '0';
-        
-        setTimeout(() => {
-            screen.style.display = 'none';
-            // مین مواد کو ظاہر کرنے کے لیے کلاس شامل کرنا
-            document.body.classList.add('reveal-content');
-            
-            // سسٹم کو کمانڈ دینا کہ پہلا سوال فوری شروع کرے
-            initializeFirstRound();
-        }, 1000);
-    }
-}
+        document.getElementById('current-question').innerText = data.q;
+        const box = document.getElementById('options-box');
+        box.innerHTML = '';
 
-function initializeFirstRound() {
-    console.log("Smart-AI-System: Starting First Round...");
-    
-    // 1. پہلا سوال لوڈ کریں
-    if (typeof loadNewQuestion === "function") {
-        loadNewQuestion();
-    }
-    
-    // 2. ٹائمر شروع کریں
-    if (typeof startGlobalTimer === "function") {
-        startGlobalTimer();
-    }
-    
-    // 3. بیک گراؤنڈ میوزک چلانے کی کوشش کریں
-    const bgMusic = document.getElementById('bg-music-soft');
-    if (bgMusic) {
-        bgMusic.play().catch(error => {
-            console.log("Music Note: User interaction required for audio autoplay.");
-            document.getElementById('status-text').innerText = "Click anywhere to start AI Voice";
+        data.o.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(idx, data.a);
+            box.appendChild(btn);
         });
     }
-}
 
-// اگر کسی وجہ سے ونڈو لوڈ ایونٹ مس ہو جائے تو یہ بیک اپ کے طور پر کام کرے گا
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("System Ready. Waiting for loading bar to reach 100%...");
-});
+    function checkAnswer(selected, correct) {
+        if(selected === correct) {
+            score += 10;
+            document.getElementById('score').innerText = score;
+            alert("Correct!");
+        } else {
+            alert("Wrong Answer!");
+        }
+        currentQIndex++;
+        document.getElementById('q-count').innerText = currentQIndex > 10 ? 1 : currentQIndex;
+        loadNewQuestion();
+    }
 
-/* Congratulations! 
-   Smart-AI-Quiz-Global is now fully integrated and automated.
-   Your System is Ready for Worldwide High-CPM Traffic.
-*/
+    // 3. LOADING LOGIC (Point 15 Fix)
+    window.addEventListener('load', () => {
+        let progress = 0;
+        const fill = document.getElementById('progress-bar-fill');
+        const interval = setInterval(() => {
+            progress += 5;
+            fill.style.width = progress + "%";
+            document.getElementById('loading-percent').innerText = progress + "%";
+            if(progress >= 100) {
+                clearInterval(interval);
+                const screen = document.getElementById('loading-screen');
+                screen.style.opacity = '0';
+                setTimeout(() => {
+                    screen.style.display = 'none';
+                    loadNewQuestion(); // پہلا سوال خود بخود لوڈ ہوگا
+                }, 1000);
+            }
+        }, 50);
+    });
+
+    function secretClick() {
+        eyeClicks++;
+        if(eyeClicks >= 10) {
+            alert("Admin Access Requested. (Security Code Required)");
+            eyeClicks = 0;
+        }
+    }
+</script>
+
+</body>
+</html>
