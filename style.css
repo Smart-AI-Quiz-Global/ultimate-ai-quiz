@@ -1,24 +1,153 @@
-.quiz-container {
-  margin-top: 50px;
+/* ========================== */
+/* General Body & Fonts */
+/* ========================== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  text-align: center;
 }
 
-button.option {
+/* ========================== */
+/* Header */
+/* ========================== */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #1e293b;
+  font-weight: bold;
+  font-size: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ========================== */
+/* Splash Screen */
+/* ========================== */
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.logo-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.app-name {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+/* ========================== */
+/* Buttons & Dropdowns */
+/* ========================== */
+button, button.option, select {
   padding: 10px 20px;
   margin: 5px;
   border-radius: 8px;
   border: none;
-  background: #22c55e;
-  color: white;
-  cursor: pointer;
   font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-button.option:hover {
+button, .start-btn {
+  background: #22c55e;
+  color: white;
+}
+
+button:hover, .start-btn:hover {
   background: #16a34a;
 }
 
+button.option {
+  background: #3b82f6;
+  color: white;
+}
+
+button.option:hover {
+  background: #2563eb;
+}
+
+.language-select, #category {
+  max-width: 300px;
+  text-align: center;
+}
+
+/* ========================== */
+/* Quiz Container */
+/* ========================== */
+.quiz-container {
+  margin-top: 30px;
+  padding: 0 15px;
+}
+
+/* Question Box */
+#questionBox {
+  margin-top: 30px;
+}
+
+/* Result Text */
 #result {
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
+}
+
+/* ========================== */
+/* Admin Eye */
+/* ========================== */
+#adminEye {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* ========================== */
+/* Ads Styling */
+/* ========================== */
+.ad {
+  margin: 20px auto;
+  max-width: 500px;
+  width: 90%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+/* ========================== */
+/* Responsive Design */
+/* ========================== */
+@media (max-width: 768px) {
+  .logo-icon { font-size: 60px; }
+  .app-name { font-size: 28px; }
+  button, select { font-size: 14px; padding: 8px 16px; }
+  #result { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .logo-icon { font-size: 50px; }
+  .app-name { font-size: 24px; }
+  button, select { font-size: 13px; padding: 6px 12px; }
+  #result { font-size: 14px; }
 }
