@@ -3,8 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Start Quiz - Smart AI Quiz Global</title>
+  <title>Smart AI Quiz Global - Quiz</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#0f172a; color:white; text-align:center; }
+    header { display:flex; justify-content:center; padding:15px; background:#1e293b; font-weight:bold; }
+    .quiz-container { margin-top:30px; padding:0 15px; }
+    select, button, button.option {
+      padding:10px 20px; margin:5px; border-radius:8px; border:none; font-size:16px; cursor:pointer;
+    }
+    button { background:#22c55e; color:white; }
+    button:hover { background:#16a34a; }
+    button.option { background:#3b82f6; }
+    button.option:hover { background:#2563eb; }
+    #result { margin-top:20px; font-size:18px; font-weight:bold; }
+    #adminEye { position:fixed; bottom:10px; right:10px; cursor:pointer; }
+  </style>
 </head>
 <body>
 
@@ -14,38 +28,131 @@
 
 <section class="quiz-container">
 
-  <h2>Select Language</h2>
-  <select id="language">
-    <option value="English">English</option>
-    <option value="Urdu">Urdu</option>
-    <option value="Arabic">Arabic</option>
-    <option value="Hindi">Hindi</option>
-  </select>
-
   <h2>Select Category</h2>
   <select id="category">
     <option value="General Knowledge">General Knowledge</option>
     <option value="Technology">Technology</option>
     <option value="Islamic">Islamic</option>
     <option value="History">History</option>
+    <option value="Science">Science</option>
+    <option value="Sports">Sports</option>
+    <option value="Movies">Movies</option>
+    <option value="Music">Music</option>
+    <option value="Geography">Geography</option>
+    <option value="Literature">Literature</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Programming">Programming</option>
+    <option value="Economics">Economics</option>
+    <option value="Politics">Politics</option>
+    <option value="Health">Health & Wellness</option>
   </select>
 
   <br><br>
-
   <button onclick="beginQuiz()">Start Quiz</button>
 
-  <div id="questionBox" style="display:none; margin-top:40px;">
+  <div id="questionBox" style="display:none; margin-top:30px;">
     <h3 id="question"></h3>
-
     <button class="option" onclick="checkAnswer(1)">Option 1</button>
     <button class="option" onclick="checkAnswer(2)">Option 2</button>
     <button class="option" onclick="checkAnswer(3)">Option 3</button>
-
     <p id="result"></p>
+  </div>
+
+  <div style="margin-top:30px;">
+    <button onclick="openDonation()">🎁 Gift / Donate</button>
   </div>
 
 </section>
 
-<script src="quiz.js"></script>
+<div id="adminEye">👁</div>
+
+<script>
+  // ==========================
+  // Variables
+  // ==========================
+  let correctAnswer = 2; // demo, future AI replace
+  let countdown;
+  let timeLeft = 10;
+
+  // ==========================
+  // Quiz Functions
+  // ==========================
+  async function beginQuiz(){
+    const category = document.getElementById("category").value;
+    const language = localStorage.getItem("selectedLanguage") || "English";
+
+    document.getElementById("questionBox").style.display = "block";
+
+    // AI Question Simulation (replace with real AI API)
+    const questionText = await fetchAIQuestion(language, category);
+    document.getElementById("question").innerText = questionText;
+    document.getElementById("result").innerText = "";
+
+    timeLeft = 10;
+    clearInterval(countdown);
+    countdown = setInterval(timer,1000);
+  }
+
+  function timer(){
+    if(timeLeft<=0){
+      clearInterval(countdown);
+      showAnswer();
+    } else {
+      document.getElementById("result").innerText = "⏳ Time Left: "+timeLeft;
+      playSound("sounds/tick.mp3");
+      timeLeft--;
+    }
+  }
+
+  function checkAnswer(selected){
+    clearInterval(countdown);
+    if(selected===correctAnswer){
+      document.getElementById("result").innerText = "✅ Correct Answer!";
+      playSound("sounds/clap.mp3");
+    } else {
+      document.getElementById("result").innerText = "❌ Wrong Answer!";
+      playSound("sounds/wrong.mp3");
+    }
+    setTimeout(nextQuestion,2000);
+  }
+
+  function showAnswer(){
+    document.getElementById("result").innerText = "✅ Correct Answer: Option "+correctAnswer;
+    playSound("sounds/clap.mp3");
+    setTimeout(nextQuestion,2000);
+  }
+
+  function nextQuestion(){ beginQuiz(); }
+
+  function playSound(filename){ let audio=new Audio(filename); audio.play(); }
+
+  async function fetchAIQuestion(language,category){
+    // Replace with real AI API call for selected language and category
+    return "Sample AI Question ("+language+" - "+category+")";
+  }
+
+  // ==========================
+  // Donation
+  // ==========================
+  function openDonation(){ window.open("https://www.easypaisa.com.pk/","_blank"); }
+
+  // ==========================
+  // Hidden Admin Eye
+  // ==========================
+  let adminClicks=0;
+  document.getElementById("adminEye").addEventListener("click",function(){
+    adminClicks++;
+    if(adminClicks>=10){
+      const code = prompt("Enter Code:");
+      if(code==="7866_Zaigham_5121472"){
+        const phone = prompt("Enter Phone Number:");
+        if(phone==="03219379597"){ alert("✅ Admin Panel Opened!"); window.open("admin.html","_blank"); }
+        else{ alert("❌ Wrong Phone Number!"); }
+      } else{ alert("❌ Wrong Code!"); }
+      adminClicks=0;
+    }
+  });
+</script>
+
 </body>
 </html>
