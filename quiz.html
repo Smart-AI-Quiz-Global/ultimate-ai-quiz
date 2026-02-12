@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start Quiz - Smart AI Quiz Global</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">🌍 Smart AI Quiz Global</div>
+</header>
+
+<section class="quiz-container">
+
+  <h2>Select Language</h2>
+
+  <select id="language">
+    <option value="English">English</option>
+    <option value="Urdu">Urdu</option>
+    <option value="Arabic">Arabic</option>
+    <option value="Hindi">Hindi</option>
+  </select>
+
+  <h2>Select Category</h2>
+
+  <select id="category">
+    <option value="General Knowledge">General Knowledge</option>
+    <option value="Technology">Technology</option>
+    <option value="Islamic">Islamic</option>
+    <option value="History">History</option>
+  </select>
+
+  <br><br>
+
+  <button onclick="beginQuiz()">Start Quiz</button>
+
+  <div id="questionBox" style="display:none; margin-top:40px;">
+    <h3 id="question"></h3>
+
+    <button class="option" onclick="checkAnswer(1)">Option 1</button>
+    <button class="option" onclick="checkAnswer(2)">Option 2</button>
+    <button class="option" onclick="checkAnswer(3)">Option 3</button>
+
+    <p id="result"></p>
+  </div>
+
+</section>
+
+<script src="quiz.js"></script>
+
+</body>
+</html>
