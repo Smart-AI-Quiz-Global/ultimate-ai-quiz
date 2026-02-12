@@ -3,47 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Smart AI Quiz Global - Play Unlimited AI Questions Online</title>
-
-  <meta name="description" content="Smart AI Quiz Global is a powerful AI based quiz website. Play unlimited questions in multiple languages and categories. Improve your knowledge with AI.">
-  <meta name="keywords" content="AI Quiz, Online Quiz, Smart Quiz, Islamic Quiz, Technology Quiz, Global Quiz">
-  <meta name="author" content="Smart AI Quiz Global">
-
-  <meta property="og:title" content="Smart AI Quiz Global">
-  <meta property="og:description" content="Play Unlimited AI Powered Quiz Questions in Multiple Languages.">
-  <meta property="og:type" content="website">
-
+  <title>Smart AI Quiz Global</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color:white;
+      text-align:center;
+    }
+    .splash-screen {
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      padding:20px;
+    }
+    .logo-icon {
+      font-size:80px;
+      margin-bottom:20px;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .app-name {
+      font-size:36px;
+      font-weight:bold;
+      margin-bottom:40px;
+    }
+    .start-btn {
+      padding:15px 30px;
+      font-size:18px;
+      border:none;
+      border-radius:10px;
+      background:#22c55e;
+      color:white;
+      cursor:pointer;
+      margin-top:20px;
+    }
+    .start-btn:hover {
+      background:#16a34a;
+    }
+    .language-select {
+      margin-top:20px;
+      font-size:18px;
+      padding:10px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+      max-width:300px;
+      text-align:center;
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">🌍 Smart AI Quiz Global</div>
-  <div class="menu">⋮</div>
-</header>
+<!-- Splash Screen -->
+<div class="splash-screen" id="splashScreen">
+  <div class="logo-icon">🌍</div>
+  <div class="app-name">Smart AI Quiz Global</div>
 
-<section class="main">
-  <h1>Welcome to Smart AI Quiz Global</h1>
-  <p>اپنے علم کو آزمائیں اور AI کے ساتھ کھیلیں</p>
+  <div>
+    <select id="language" class="language-select">
+      <!-- South Asia -->
+      <option value="English">🇺🇸 English</option>
+      <option value="Urdu">🇵🇰 Urdu</option>
+      <option value="Hindi">🇮🇳 Hindi</option>
+      <option value="Bengali">🇧🇩 Bengali</option>
+      <option value="Tamil">🇱🇰 Tamil</option>
 
-  <!-- یہ صحیح بٹن ہے -->
-  <a href="quiz.html">
-    <button>Question Answer کی طرف بڑھیں</button>
-  </a>
+      <!-- Middle East -->
+      <option value="Arabic">🇦🇪 Arabic</option>
+      <option value="Persian">🇮🇷 Persian</option>
+      <option value="Turkish">🇹🇷 Turkish</option>
 
-</section>
+      <!-- East Asia -->
+      <option value="Chinese">🇨🇳 Chinese</option>
+      <option value="Japanese">🇯🇵 Japanese</option>
+      <option value="Korean">🇰🇷 Korean</option>
 
-<footer>
-  <div class="social">
-    <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank">Facebook</a>
-    <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank">TikTok</a>
-    <a href="https://youtube.com/@mast_tv_official" target="_blank">YouTube</a>
+      <!-- Europe -->
+      <option value="French">🇫🇷 French</option>
+      <option value="German">🇩🇪 German</option>
+      <option value="Spanish">🇪🇸 Spanish</option>
+      <option value="Italian">🇮🇹 Italian</option>
+      <option value="Russian">🇷🇺 Russian</option>
+
+      <!-- Africa -->
+      <option value="Swahili">🇰🇪 Swahili</option>
+      <option value="Arabic_AF">🇲🇦 Arabic (Africa)</option>
+
+      <!-- Americas -->
+      <option value="Portuguese">🇧🇷 Portuguese</option>
+      <option value="English_US">🇺🇸 English (US)</option>
+      <option value="English_CA">🇨🇦 English (Canada)</option>
+    </select>
   </div>
 
-  <p>© 2026 Smart AI Quiz Global. All Rights Reserved.</p>
-</footer>
+  <button class="start-btn" onclick="goToQuiz()">Start Quiz</button>
+</div>
+
+<script>
+  function goToQuiz(){
+    let lang = document.getElementById("language").value;
+    localStorage.setItem("selectedLanguage", lang);
+    window.location.href = "quiz.html";
+  }
+</script>
 
 </body>
 </html>
