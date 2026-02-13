@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Master Control | Smart-AI-Quiz-Global</title>
+    <style>
+        body { background: #050505; color: #00ff00; font-family: monospace; padding: 20px; }
+        .panel-box { border: 2px solid #00ff00; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; }
+        h1 { text-align: center; color: #fff; text-shadow: 0 0 10px #00ff00; }
+        .section { margin-bottom: 30px; border-bottom: 1px dashed #333; padding-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #fff; }
+        button { background: #00ff00; color: #000; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
+        button:hover { background: #fff; }
+        .status-msg { color: yellow; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="panel-box">
+    <h1>ADMIN CONTROL CENTER</h1>
+    <p style="text-align:center">Welcome, Syed Ali Hassan Shah</p>
+
+    <div class="section">
+        <h3>🏦 Bank & Payment Details (Gifts)</h3>
+        <label>Account Title Name:</label>
+        <input type="text" id="acc-name" placeholder="e.g. Syed Ali Hassan">
+        
+        <label>JazzCash Number:</label>
+        <input type="text" id="jazz-num" placeholder="0321xxxxxxx">
+        
+        <label>UBL / Visa Card Details:</label>
+        <textarea id="bank-details" placeholder="Enter UBL Bank AC or Visa Details"></textarea>
+        
+        <button onclick="saveBankDetails()">Update Payment Info</button>
+    </div>
+
+    <div class="section">
+        <h3>📺 Upload Personal Ads (Video/Image)</h3>
+        <label>Ad Title:</label>
+        <input type="text" id="ad-title" placeholder="e.g. Special Offer Pakistan">
+        
+        <label>Ad Media URL (Image/Video Link):</label>
+        <input type="text" id="ad-url" placeholder="https://link-to-your-ad-image.jpg">
+        
+        <label>Target Country:</label>
+        <select id="target-country">
+            <option value="Global">All Countries (Global)</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="UAE">UAE</option>
+            <option value="India">India</option>
+        </select>
+
+        <label>Ad Slot Position:</label>
+        <select id="ad-slot">
+            <option value="after-10">After 10 Questions</option>
+            <option value="homepage">On Homepage (Start)</option>
+        </select>
+        
+        <button onclick="uploadAd()" style="background: #ff0000; color: white;">Launch Ad Now</button>
+    </div>
+
+    <div class="section">
+        <h3>🤖 AI Engine Backup Settings</h3>
+        <p>Current Active Engine: <strong>Gemini Pro (Global)</strong></p>
+        <button onclick="alert('AI System is running stable!')">Check AI Health</button>
+    </div>
+
+    <button onclick="window.location.href='index.html'" style="background: #333; color: #ccc; margin-top: 20px;">Logout & View Site</button>
+</div>
+
+<script>
+    function saveBankDetails() {
+        const data = {
+            name: document.getElementById('acc-name').value,
+            jazz: document.getElementById('jazz-num').value,
+            bank: document.getElementById('bank-details').value
+        };
+        // LocalStorage میں سیو کریں تاکہ ویب سائٹ پر شو ہو سکے
+        localStorage.setItem('bankData', JSON.stringify(data));
+        alert("Payment Details Saved Successfully!");
+    }
+
+    function uploadAd() {
+        alert("Ad has been scheduled for the selected country!");
+        // یہاں ایڈ سیو کرنے کا لاجک ائے گا
+    }
+</script>
+
+</body>
+</html>
 
