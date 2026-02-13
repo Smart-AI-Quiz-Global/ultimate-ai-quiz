@@ -1,1 +1,230 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f0f; /* Dark YouTube-like background */
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Header & Navigation */
+header {
+    background: #1a1a1a;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #333;
+}
+
+.logo-area h1 {
+    font-size: 20px;
+    color: #ff0000; /* YouTube Red */
+}
+
+/* 16:9 Video Frame System */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    gap: 20px;
+    padding: 20px;
+}
+
+.video-ratio-16-9 {
+    position: relative;
+    width: 100%;
+    max-width: 854px; /* Standard 480p width */
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 4px solid #444;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+}
+
+/* Sidebar Ads Styling */
+.ad-sidebar {
+    width: 160px; /* For 160x600 Ads */
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Overlay Screens (Setup & Categories) */
+.overlay-screen {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.categories-grid button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.categories-grid button:hover {
+    background: #ff0000;
+}
+/* Quiz UI - Question & Options */
+#game-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+#question-text {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 10px;
+    width: 90%;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+}
+
+.option-btn {
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    color: white;
+    border: 2px solid #ff0000;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.option-btn:hover {
+    background: #ff0000;
+    transform: scale(1.05);
+}
+
+/* Timer Circle */
+#timer-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 4px solid #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    background: #000;
+}
+
+/* Footer & Hidden Eye */
+.footer-area {
+    background: #111;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    font-size: 24px;
+    color: #888;
+    transition: 0.3s;
+}
+
+.social-icon:hover { color: #fff; }
+.fb:hover { color: #1877F2; }
+.tt:hover { color: #00f2ea; }
+.yt:hover { color: #ff0000; }
+.wa:hover { color: #25D366; }
+
+/* The Secret Eye */
+.eye-icon-dim {
+    font-size: 20px;
+    color: #222; /* بہت مدہم تاکہ کسی کو شک نہ ہو */
+    cursor: pointer;
+    transition: 0.5s;
+    opacity: 0.3;
+}
+
+.eye-icon-dim:hover {
+    opacity: 1;
+    color: #555;
+}
+
+/* Modal / Admin Login */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #222;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #ff0000;
+    text-align: center;
+    width: 320px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #000;
+    border: 1px solid #444;
+    color: white;
+}
+
+.modal-content button {
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.hidden { display: none !important; }
 
