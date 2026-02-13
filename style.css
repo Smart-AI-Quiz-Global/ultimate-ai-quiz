@@ -1,156 +1,214 @@
-/* General Styling */
+/* =========================================
+   1. General & Reset Styling
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 body {
-    background-color: #0f0f0f; /* Dark YouTube-like background */
+    background-color: #0a0a0a; /* Deep Black background */
     color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
-/* Header & Navigation */
+.hidden { display: none !important; }
+
+/* =========================================
+   2. Header & Navigation
+   ========================================= */
 header {
     background: #1a1a1a;
-    padding: 15px 5%;
+    padding: 12px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #ff0000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-logo {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
 .logo-area h1 {
-    font-size: 20px;
-    color: #ff0000; /* YouTube Red */
+    font-size: 18px;
+    color: #ff0000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* 16:9 Video Frame System */
+/* Language Dropdown */
+.menu-container {
+    position: relative;
+}
+
+.three-dots {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    padding: 5px;
+}
+
+.dropdown-content {
+    background: #222;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 150px;
+    z-index: 100;
+}
+
+.dropdown-content a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #333;
+}
+
+.dropdown-content a:hover {
+    background: #ff0000;
+}
+
+/* =========================================
+   3. Main Content & 16:9 Video Frame
+   ========================================= */
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    gap: 20px;
-    padding: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 10px;
+    flex: 1;
 }
 
 .video-ratio-16-9 {
     position: relative;
     width: 100%;
-    max-width: 854px; /* Standard 480p width */
+    max-width: 800px;
     aspect-ratio: 16 / 9;
     background: #000;
-    border: 4px solid #444;
+    border: 3px solid #333;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
 }
 
-/* Sidebar Ads Styling */
+/* Ad Sidebars */
 .ad-sidebar {
-    width: 160px; /* For 160x600 Ads */
-    min-height: 600px;
+    width: 160px;
+    min-height: 400px;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+/* =========================================
+   4. Quiz UI (Setup & Game Screens)
+   ========================================= */
+.overlay-screen {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-/* Overlay Screens (Setup & Categories) */
-.overlay-screen {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
+    justify-content: center;
+    background: rgba(0,0,0,0.8);
 }
 
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+    grid-template-columns: repeat(2, 1fr); /* Mobile friendly 2 columns */
+    gap: 8px;
+    margin-top: 15px;
 }
 
 .categories-grid button {
-    background: #333;
+    background: #2a2a2a;
     color: white;
-    border: none;
-    padding: 10px;
+    border: 1px solid #444;
+    padding: 10px 5px;
     border-radius: 5px;
+    font-size: 13px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 .categories-grid button:hover {
     background: #ff0000;
-}
-/* Quiz UI - Question & Options */
-#game-screen {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
+    border-color: #ff0000;
 }
 
+/* Question & Timer Box */
 #question-text {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
-    text-align: center;
-    background: rgba(0,0,0,0.7);
-    padding: 15px;
-    border-radius: 10px;
-    width: 90%;
+    margin-bottom: 20px;
+    padding: 0 10px;
 }
 
 .options-container {
+    width: 85%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 80%;
+    gap: 10px;
 }
 
 .option-btn {
-    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    background: #1a1a1a;
     color: white;
-    border: 2px solid #ff0000;
-    padding: 15px;
-    font-size: 18px;
-    border-radius: 50px;
+    border: 1.5px solid #ff0000;
+    padding: 12px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 16px;
 }
 
-.option-btn:hover {
-    background: #ff0000;
-    transform: scale(1.05);
-}
-
-/* Timer Circle */
 #timer-box {
-    width: 60px;
-    height: 60px;
+    margin-top: 15px;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #ff0000;
     border-radius: 50%;
-    border: 4px solid #ff0000;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 22px;
     font-weight: bold;
-    background: #000;
 }
 
-/* Footer & Hidden Eye */
+/* =========================================
+   5. Footer & Social & Eye
+   ========================================= */
 .footer-area {
     background: #111;
-    padding: 20px;
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -159,72 +217,28 @@ header {
 
 .social-links {
     display: flex;
-    gap: 15px;
+    gap: 12px;
 }
 
 .social-icon {
-    font-size: 24px;
-    color: #888;
+    font-size: 20px;
+    color: #666;
     transition: 0.3s;
 }
 
-.social-icon:hover { color: #fff; }
-.fb:hover { color: #1877F2; }
-.tt:hover { color: #00f2ea; }
-.yt:hover { color: #ff0000; }
-.wa:hover { color: #25D366; }
+.social-icon:hover { color: #ff0000; }
 
-/* The Secret Eye */
 .eye-icon-dim {
-    font-size: 20px;
-    color: #222; /* بہت مدہم تاکہ کسی کو شک نہ ہو */
-    cursor: pointer;
-    transition: 0.5s;
-    opacity: 0.3;
-}
-
-.eye-icon-dim:hover {
-    opacity: 1;
-    color: #555;
-}
-
-/* Modal / Admin Login */
-.modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.modal-content {
-    background: #222;
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid #ff0000;
-    text-align: center;
-    width: 320px;
-}
-
-.modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    background: #000;
-    border: 1px solid #444;
-    color: white;
-}
-
-.modal-content button {
-    background: #ff0000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
+    color: #1a1a1a; /* Very dim hidden eye */
+    font-size: 18px;
     cursor: pointer;
 }
 
-.hidden { display: none !important; }
-
+/* =========================================
+   6. Responsive Adjustments
+   ========================================= */
+@media (max-width: 768px) {
+    .ad-sidebar { display: none; } /* Hide side ads on mobile for space */
+    .video-ratio-16-9 { border-radius: 0; width: 100%; }
+    .logo-area h1 { font-size: 14px; }
+}
