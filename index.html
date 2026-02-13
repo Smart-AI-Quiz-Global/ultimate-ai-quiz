@@ -1,119 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="auto">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart AI Quiz Global</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color:white;
-      text-align:center;
-    }
-    .splash-screen {
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      padding:20px;
-    }
-    .logo-icon {
-      font-size:80px;
-      margin-bottom:20px;
-      animation: bounce 1.5s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    .app-name {
-      font-size:36px;
-      font-weight:bold;
-      margin-bottom:40px;
-    }
-    .start-btn {
-      padding:15px 30px;
-      font-size:18px;
-      border:none;
-      border-radius:10px;
-      background:#22c55e;
-      color:white;
-      cursor:pointer;
-      margin-top:20px;
-    }
-    .start-btn:hover {
-      background:#16a34a;
-    }
-    .language-select {
-      margin-top:20px;
-      font-size:18px;
-      padding:10px;
-      border-radius:8px;
-      border:none;
-      cursor:pointer;
-      max-width:300px;
-      text-align:center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart-AI Global | Interactive Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Splash Screen -->
-<div class="splash-screen" id="splashScreen">
-  <div class="logo-icon">🌍</div>
-  <div class="app-name">Smart AI Quiz Global</div>
+    <div class="app-container">
+        
+        <div id="particles-js"></div>
 
-  <div>
-    <select id="language" class="language-select">
-      <!-- South Asia -->
-      <option value="English">🇺🇸 English</option>
-      <option value="Urdu">🇵🇰 Urdu</option>
-      <option value="Hindi">🇮🇳 Hindi</option>
-      <option value="Bengali">🇧🇩 Bengali</option>
-      <option value="Tamil">🇱🇰 Tamil</option>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-brain-circuit"></i>
+                <span>SMART-AI GLOBAL</span>
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
 
-      <!-- Middle East -->
-      <option value="Arabic">🇦🇪 Arabic</option>
-      <option value="Persian">🇮🇷 Persian</option>
-      <option value="Turkish">🇹🇷 Turkish</option>
+        <header class="hero-section">
+            <h1 class="animate-text">خوش آمدید! مستقبل کی دنیا میں</h1>
+            <p>Welcome to the AI-Powered Quiz Platform</p>
+        </header>
+<main class ="main-content">
+    <div id="intro-overlay" class="intro-screen">
+        <div class="intro-content">
+            <div class="ai-logo-animation">
+                <i class="fas fa-brain"></i>
+                <div class="pulse-ring"></div>
+            </div>
+            <h1 class="logo-text">SMART-AI <span>GLOBAL</span></h1>
+            <p class="typing-text">Initializing AI Engine for Global Users...</p>
+        </div>
+    </div>
 
-      <!-- East Asia -->
-      <option value="Chinese">🇨🇳 Chinese</option>
-      <option value="Japanese">🇯🇵 Japanese</option>
-      <option value="Korean">🇰🇷 Korean</option>
+    <div class="app-main-wrapper" id="main-app" style="display:none;">
+        
+        <div class="premium-ad-header">
+            <div class="ad-label">SPONSORED BY GLOBAL PARTNERS</div>
+            <div id="header-ad-content">
+                <p>Top Deals in USA, UK & Kuwait</p>
+            </div>
+        </div>
 
-      <!-- Europe -->
-      <option value="French">🇫🇷 French</option>
-      <option value="German">🇩🇪 German</option>
-      <option value="Spanish">🇪🇸 Spanish</option>
-      <option value="Italian">🇮🇹 Italian</option>
-      <option value="Russian">🇷🇺 Russian</option>
+        <section class="setup-container">
+            
+            <div class="step-box">
+                <div class="step-header">
+                    <span class="step-num">01</span>
+                    <h3>Select Website Language</h3>
+                </div>
+                <div class="custom-dropdown">
+                    <select id="ui-lang" class="global-select">
+                        <optgroup label="Tier 1 (High Revenue)">
+                            <option value="en">English (USA & UK)</option>
+                            <option value="zh">Chinese (Simplified) - 中文</option>
+                            <option value="ar">Arabic (Kuwait / UAE / Saudi)</option>
+                            <option value="de">German (Germany)</option>
+                            <option value="fr">French (France)</option>
+                        </optgroup>
+                        <optgroup label="Global High Traffic">
+                            <option value="ur" selected>Urdu (Pakistan)</option>
+                            <option value="hi">Hindi (India)</option>
+                            <option value="mr">Marathi (India)</option>
+                            <option value="ru">Russian (Russia)</option>
+                            <option value="ja">Japanese (Japan)</option>
+                            <option value="es">Spanish (Spain / Mexico)</option>
+                            <option value="pt">Portuguese (Brazil)</option>
+                            <option value="it">Italian (Italy)</option>
+                            <option value="tr">Turkish (Turkey)</option>
+                            <option value="ko">Korean (South Korea)</option>
+                            <option value="nl">Dutch (Netherlands)</option>
+                            <option value="sv">Swedish (Sweden)</option>
+                            <option value="no">Norwegian (Norway)</option>
+                            <option value="da">Danish (Denmark)</option>
+                            <option value="fi">Finnish (Finland)</option>
+                            <option value="pl">Polish (Poland)</option>
+                            <option value="he">Hebrew (Israel)</option>
+                            <option value="th">Thai (Thailand)</option>
+                            <option value="vi">Vietnamese (Vietnam)</option>
+                            <option value="id">Indonesian (Indonesia)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Africa -->
-      <option value="Swahili">🇰🇪 Swahili</option>
-      <option value="Arabic_AF">🇲🇦 Arabic (Africa)</option>
+            <div class="step-box">
+                <div class="step-header">
+                    <span class="step-num">02</span>
+                    <h3>Quiz Content Language</h3>
+                </div>
+                <p class="step-sub">جس زبان میں آپ سوال جواب کرنا چاہتے ہیں</p>
+                <div class="lang-pill-container">
+                    <button class="lang-pill active" onclick="setQuizLang('en')">English</button>
+                    <button class="lang-pill" onclick="setQuizLang('ur')">اردو</button>
+                    <button class="lang-pill" onclick="setQuizLang('ar')">العربية</button>
+                    <button class="lang-pill" onclick="setQuizLang('hi')">हिन्दी</button>
+                    <button class="lang-pill" onclick="setQuizLang('zh')">中文</button>
+                </div>
+            </div>
 
-      <!-- Americas -->
-      <option value="Portuguese">🇧🇷 Portuguese</option>
-      <option value="English_US">🇺🇸 English (US)</option>
-      <option value="English_CA">🇨🇦 English (Canada)</option>
-    </select>
-  </div>
+            <div class="step-box">
+                <div class="step-header">
+                    <span class="step-num">03</span>
+                    <h3>Select Category</h3>
+                </div>
+                <div class="category-grid-3d">
+                    <div class="cat-card" onclick="selectCat('tech')"><i class="fas fa-microchip"></i> Technology</div>
+                    <div class="cat-card" onclick="selectCat('ai')"><i class="fas fa-robot"></i> Artificial Intelligence</div>
+                    <div class="cat-card" onclick="selectCat('news')"><i class="fas fa-globe"></i> World News</div>
+                    <div class="cat-card" onclick="selectCat('business')"><i class="fas fa-wallet"></i> Business & Finance</div>
+                    <div class="cat-card" onclick="selectCat('ent')"><i class="fas fa-tv"></i> Entertainment</div>
+                    <div class="cat-card" onclick="selectCat('crypto')"><i class="fas fa-coins"></i> Crypto & Web3</div>
+                    <div class="cat-card" onclick="selectCat('science')"><i class="fas fa-flask"></i> Science</div>
+                    <div class="cat-card" onclick="selectCat('sports')"><i class="fas fa-football-ball"></i> Sports</div>
+                    <div class="cat-card" onclick="selectCat('gaming')"><i class="fas fa-gamepad"></i> Gaming</div>
+                    <div class="cat-card" onclick="selectCat('health')"><i class="fas fa-stethoscope"></i> Health & Fitness</div>
+                    <div class="cat-card" onclick="selectCat('history')"><i class="fas fa-monument"></i> History</div>
+                    <div class="cat-card" onclick="selectCat('space')"><i class="fas fa-rocket"></i> Space Exploration</div>
+                    <div class="cat-card" onclick="selectCat('edu')"><i class="fas fa-book-reader"></i> Education</div>
+                    <div class="cat-card" onclick="selectCat('logic')"><i class="fas fa-lightbulb"></i> Logic & IQ</div>
+                    <div class="cat-card" onclick="selectCat('food')"><i class="fas fa-hamburger"></i> Global Culture</div>
+                </div>
+            </div>
 
-  <button class="start-btn" onclick="goToQuiz()">Start Quiz</button>
-</div>
+            <button class="start-quiz-btn" onclick="launchQuizEngine()">
+                ENTER AI QUIZ ZONE <i class="fas fa-bolt"></i>
+            </button>
+        </section>
+        <section id="quiz-dashboard" class="quiz-interface" style="display:none;">
+            
+            <div class="quiz-header-bar">
+                <div class="stat-item">
+                    <i class="fas fa-star color-gold"></i>
+                    <span id="score-count">Score: 0</span>
+                </div>
+                <div class="progress-container">
+                    <div id="progress-bar-fill"></div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock color-blue"></i>
+                    <span id="timer-display">00:30</span>
+                </div>
+            </div>
 
-<script>
-  function goToQuiz(){
-    let lang = document.getElementById("language").value;
-    localStorage.setItem("selectedLanguage", lang);
-    window.location.href = "quiz.html";
-  }
-</script>
+            <div class="ad-slot-header">
+                <script> atOptions = { 'key' : 'bbce5a50700ab4a362d5a6a41f0756ed', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} }; </script>
+                <script src="https://breachuptown.com/bbce5a50700ab4a362d5a6a41f0756ed/invoke.js"></script>
+            </div>
 
+            <div class="question-container">
+                <div class="question-meta">
+                    <span id="q-number">Question 1/10</span>
+                    <button class="voice-btn" onclick="speakQuestion()">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                
+                <h2 id="main-question-text">Loading secure question...</h2>
+
+                <div class="options-grid" id="options-box">
+                    </div>
+            </div>
+
+            <div class="ad-slot-middle">
+                <script> atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
+                <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
+            </div>
+
+            <div class="action-footer">
+                <button class="mic-action-btn" id="mic-btn" onclick="startVoiceInput()">
+                    <i class="fas fa-microphone"></i>
+                    <span>Speak Answer</span>
+                </button>
+                <button class="next-btn" onclick="checkAndNext()">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <div id="popup-ad-overlay" class="ad-modal" style="display:none;">
+            <div class="ad-modal-content">
+                <button class="close-ad-btn" onclick="closePopupAd()">&times; Close Ad</button>
+                <div class="ad-internal-body">
+                    <h3>Special Reward Opportunity</h3>
+                    <div id="container-bc14fd3cc493145f5f9b6821df2fea04">
+                        <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
+                    </div>
+                    <p>Click below to continue your journey</p>
+                    <a href="https://breachuptown.com/hzy27ig1?key=6234a8317563d50972f81c9db90823ff" target="_blank" class="ad-link-btn">Claim Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticky-footer-ad">
+            <script> atOptions = { 'key' : 'c3fad5f8aa7dc16816052e3745d01c9c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} }; </script>
+            <script src="https://breachuptown.com/c3fad5f8aa7dc16816052e3745d01c9c/invoke.js"></script>
+        </div>
+        <section id="result-screen" class="result-container" style="display:none;">
+            <div class="result-card">
+                <div class="confetti-icon"><i class="fas fa-trophy"></i></div>
+                <h2>Quiz Completed!</h2>
+                <p id="final-status-msg">Excellent Performance!</p>
+                
+                <div class="score-display">
+                    <span id="final-score">0</span>
+                    <small>Total Points</small>
+                </div>
+
+                <div class="ad-slot-result">
+                    <script> atOptions = { 'key' : '2ad6c4e5997c6ab7a5ebaa6dcce124b6', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} }; </script>
+                    <script src="https://breachuptown.com/2ad6c4e5997c6ab7a5ebaa6dcce124b6/invoke.js"></script>
+                </div>
+
+                <div class="result-actions">
+                    <button class="retry-btn" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> Play Again
+                    </button>
+                    <button class="share-btn" onclick="shareResult()">
+                        <i class="fas fa-share-alt"></i> Share Score
+                    </button>
+                </div>
+            </div>
+
+            <div class="ad-skyscraper-right">
+                <script> atOptions = { 'key' : 'f8e0f5f1c77aee933fbb7a25f674c4ee', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} }; </script>
+                <script src="https://breachuptown.com/f8e0f5f1c77aee933fbb7a25f674c4ee/invoke.js"></script>
+            </div>
+        </section>
+
+        <footer class="main-footer">
+            <div class="footer-top-ad">
+                <script> atOptions = { 'key' : '90af8dee84ab8501b624e076ec9a12c8', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} }; </script>
+                <script src="https://breachuptown.com/90af8dee84ab8501b624e076ec9a12c8/invoke.js"></script>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">About AI Master</a> | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a>
+            </div>
+            <p>&copy; 2026 Smart-AI Global. All Rights Reserved.</p>
+        </footer>
+    </div> 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
+    <script src="https://breachuptown.com/4d/f7/56/4df7569fb44a5d7a885cd63b4f956e09.js"></script>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Initialization Script
+        window.onload = function() {
+            // انٹرو اسکرین کو 3 سیکنڈ بعد ہٹانے کے لیے
+            setTimeout(function() {
+                document.getElementById('intro-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('intro-overlay').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                }, 500);
+            }, 3000);
+
+            // Background Animation Start
+            if(typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": { "value": 80 },
+                        "color": { "value": "#ffffff" },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.5 },
+                        "size": { "value": 3 },
+                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }
+                    }
+                });
+            }
+        };
+
+        // UI Language Selector Logic
+        document.getElementById('ui-lang').addEventListener('change', function() {
+            let selectedLang = this.value;
+            console.log("Interface Language set to: " + selectedLang);
+            // یہاں ہم سکرپٹ فائل کے ذریعے پوری ویب سائٹ کا ٹیکسٹ تبدیل کریں گے
+        });
+    </script>
 </body>
 </html>
