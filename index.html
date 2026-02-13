@@ -4,246 +4,332 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     
-    <title>Smart AI Quiz Global | The Ultimate YouTube Content Creator App</title>
+    <title>Smart AI Quiz Global | High-End YouTube Content Generator</title>
 
-    <meta name="description" content="دنیا کا پہلا AI کوئز پلیٹ فارم جو آپ کو یوٹیوب ویڈیوز بنانے اور پیسے کمانے میں مدد دیتا ہے۔">
-    <meta name="keywords" content="AI Quiz, YouTube automation, Earn Money Online, Islamic Quiz, Technology Quiz">
+    <meta name="description" content="AI پر مبنی دنیا کا پہلا سسٹم جو آپ کے لیے خودکار طور پر یوٹیوب کوئز ویڈیوز بناتا ہے اور آپ کے موبائل کو ایک پروفیشنل اسٹوڈیو میں بدل دیتا ہے۔">
+    <meta name="keywords" content="AI Quiz, Auto YouTube Creator, Make Money Online, Islamic Knowledge, Tech Quiz, 16:9 Recorder">
     <meta name="author" content="Syed Ali Hassan Shah">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://z-global.github.io/">
     <meta property="og:title" content="Smart AI Quiz Global - Create & Earn">
+    <meta property="og:description" content="پروفیشنل یوٹیوب ویڈیوز اب ایک کلک پر۔">
     <meta property="og:image" content="assets/og-preview.png">
     
     <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preload" href="style.css" as="style">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* فوری لوڈنگ کے لیے ضروری ان لائن سی ایس ایس */
         :root {
-            --app-red: #ff0000;
-            --app-dark: #0f0f0f;
-            --app-card: #1e1e1e;
-            --app-gold: #ffd700;
-            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+            --primary: #ff0000;
+            --secondary: #121212;
+            --accent: #ffd700;
+            --text-main: #ffffff;
+            --bg-gradient: linear-gradient(180deg, #0f0f0f 0%, #000000 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        body.loading { overflow: hidden; }
-        #app-preloader {
+        
+        /* Preloader Animation */
+        #master-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--app-dark); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 10000;
+            background: var(--secondary); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 99999;
         }
+        .loading-text { margin-top: 20px; color: var(--accent); font-family: 'Poppins', sans-serif; letter-spacing: 2px; }
     </style>
 </head>
 
-<body class="mobile-app-mode">
+<body class="app-shell loading">
 
-    <div id="app-preloader">
-        <div class="loader-logo animate__animated animate__pulse animate__infinite">
-            <img src="favicon.ico" alt="Logo" width="80">
+    <div id="master-loader">
+        <div class="spinner-container">
+            <div class="main-spinner"></div>
+            <img src="favicon.ico" class="loader-logo-center" alt="AI">
         </div>
-        <div class="loader-bar"><div class="progress"></div></div>
-        <p>AI سسٹم لوڈ ہو رہا ہے...</p>
+        <div class="loading-text animate__animated animate__fadeIn">INITIALIZING AI CORE...</div>
+        <div class="loading-bar-wrapper">
+            <div id="boot-progress" class="boot-fill"></div>
+        </div>
     </div>
 
-    <header class="main-app-header animate__animated animate__fadeInDown">
-        <div class="header-content">
-            <div class="header-left">
-                <button id="sidebar-toggle" class="icon-btn" onclick="toggleMenu()">
-                    <i class="fas fa-align-right"></i>
-                </button>
-                <div class="brand">
-                    <span class="brand-text">AI QUIZ <span class="pro-badge">PRO</span></span>
-                </div>
+    <div id="studio-chamber-16-9" class="off-screen-layer" aria-hidden="true">
+        <div class="render-canvas-container">
+            <canvas id="youtube-recorder-canvas" width="1280" height="720"></canvas>
             </div>
-            <div class="header-right">
-                <div class="points-badge" onclick="showRewards()">
-                    <i class="fas fa-bolt"></i>
-                    <span id="score-counter">000</span>
-                </div>
-                <div class="profile-circle" onclick="handleEyeClick()">
-                    <img src="favicon.ico" alt="Admin">
-                    <div class="online-indicator"></div>
-                </div>
-            </div>
-        </div>
-    </header>
+    </div>
 
-    <aside id="app-sidebar" class="sidebar-closed">
-        <div class="sidebar-header">
-            <img src="favicon.ico" alt="Logo" width="50">
-            <h3>مینو سیٹنگز</h3>
-            <i class="fas fa-times close-sidebar" onclick="toggleMenu()"></i>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="#" class="nav-link active"><i class="fas fa-home"></i> ہوم پیج</a>
-            <a href="#" class="nav-link"><i class="fas fa-history"></i> پرانی ویڈیوز</a>
-            <a href="#" class="nav-link"><i class="fas fa-language"></i> زبان تبدیل کریں</a>
-            <a href="#" class="nav-link" onclick="openAdmin()"><i class="fas fa-user-lock"></i> ایڈمن لاگ ان</a>
-            <div class="nav-divider"></div>
-            <a href="https://wa.me/923219379597" class="nav-link support"><i class="fab fa-whatsapp"></i> سپورٹ ہیلپ</a>
-        </nav>
-    </aside>
-
-    <main id="app-main-viewport">
+    <div class="app-layout">
         
-        <section id="welcome-area" class="viewport-section">
-            <div class="app-banner animate__animated animate__zoomIn">
-                <div class="banner-overlay">
-                    <h2>خوش آمدید، سید علی حسن شاہ</h2>
-                    <p>آج آپ کتنی ویڈیوز ریکارڈ کریں گے؟</p>
-                    <div class="stats-grid">
-                        <div class="stat-item"><span>12</span><small>سوالات</small></div>
-                        <div class="stat-item"><span>5</span><small>ویڈیوز</small></div>
-                        <div class="stat-item"><span>PKR 0</span><small>کمائی</small></div>
+        <header class="app-header-main animate__animated animate__slideInDown">
+            <div class="container-fluid">
+                <div class="nav-control">
+                    <button class="btn-menu" id="main-drawer-trigger" onclick="toggleDrawer()">
+                        <div class="bar1"></div><div class="bar2"></div><div class="bar3"></div>
+                    </button>
+                    <div class="brand-identity">
+                        <h1 class="glow-text">AI QUIZ <span class="badge-pro">PRO</span></h1>
+                    </div>
+                </div>
+                <div class="user-meta">
+                    <div class="currency-pod" onclick="showWallet()">
+                        <i class="fas fa-coins gold-coin"></i>
+                        <span id="global-balance">2500</span>
+                    </div>
+                    <div class="admin-eye-pod" onclick="handleEyeClick()">
+                        <img src="favicon.ico" alt="User" class="avatar-img">
+                        <span class="online-status-dot"></span>
                     </div>
                 </div>
             </div>
-        </section>
+        </header>
 
-        <section id="category-selector" class="viewport-section">
-            <div class="section-title">
-                <h3>کیٹیگری منتخب کریں</h3>
-                <span>سب دیکھیں</span>
-            </div>
+        <main class="viewport-content" id="main-scroll-area">
             
-            <div class="categories-container">
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('Islamic')">
-                    <div class="cat-icon" style="background: #008080;"><i class="fas fa-kaaba"></i></div>
-                    <p>اسلامی</p>
-                </div>
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('Science')">
-                    <div class="cat-icon" style="background: #1e90ff;"><i class="fas fa-atom"></i></div>
-                    <p>سائنس</p>
-                </div>
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('History')">
-                    <div class="cat-icon" style="background: #cd853f;"><i class="fas fa-monument"></i></div>
-                    <p>تاریخ</p>
-                </div>
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('Tech')">
-                    <div class="cat-icon" style="background: #4b0082;"><i class="fas fa-microchip"></i></div>
-                    <p>ٹیکنالوجی</p>
-                </div>
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('General')">
-                    <div class="cat-icon" style="background: #2e8b57;"><i class="fas fa-book"></i></div>
-                    <p>معلومات</p>
-                </div>
-                <div class="cat-item animate__animated animate__fadeInUp" onclick="startQuiz('Mix')">
-                    <div class="cat-icon" style="background: #ff4500;"><i class="fas fa-random"></i></div>
-                    <p>مکس</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="recording-console" class="viewport-section">
-            <div class="console-card">
-                <div class="setting-row">
-                    <div class="text">
-                        <h4>یوٹیوب آٹو ریکارڈنگ</h4>
-                        <p>ویڈیو 16:9 Landscape میں محفوظ ہوگی</p>
+            <section id="user-dashboard" class="app-section">
+                <div class="welcome-card animate__animated animate__fadeIn">
+                    <div class="user-info">
+                        <h2>سلام، <span id="display-name">سید علی حسن شاہ</span></h2>
+                        <p>آپ کا ریکارڈنگ اسٹوڈیو تیار ہے۔</p>
                     </div>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="yt-mode" checked>
-                        <label for="yt-mode"></label>
+                    <div class="quick-stats">
+                        <div class="stat-box">
+                            <span class="val">14</span>
+                            <span class="lab">کل ویڈیوز</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="val">85%</span>
+                            <span class="lab">ریٹنگ</span>
+                        </div>
                     </div>
                 </div>
-                <div class="setting-row">
-                    <div class="text">
-                        <h4>AI آواز (Voiceover)</h4>
-                        <p>سوالات خودکار طور پر پڑھے جائیں گے</p>
+            </section>
+
+            <section id="quiz-categories" class="app-section">
+                <div class="section-header">
+                    <h3>ٹاپ کیٹیگریز</h3>
+                    <button class="btn-view-all">سب دیکھیں</button>
+                </div>
+                <div class="category-grid">
+                    <div class="category-card" onclick="startQuiz('Islamic')">
+                        <div class="card-inner islamic-bg">
+                            <div class="card-icon"><i class="fas fa-kaaba"></i></div>
+                            <h4>اسلامی کوئز</h4>
+                            <p>1500+ سوالات</p>
+                            <div class="card-footer-info">ریکارڈنگ کیلئے تیار</div>
+                        </div>
                     </div>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="ai-voice" checked>
-                        <label for="ai-voice"></label>
+                    <div class="category-card" onclick="startQuiz('Science')">
+                        <div class="card-inner science-bg">
+                            <div class="card-icon"><i class="fas fa-flask"></i></div>
+                            <h4>سائنس و کائنات</h4>
+                            <p>800+ سوالات</p>
+                        </div>
+                    </div>
+                    </div>
+            </section>
+            <section id="trending-topics" class="app-section animate__animated animate__fadeInUp">
+                <div class="section-header-v2">
+                    <div class="title-wrap">
+                        <i class="fas fa-fire-alt fire-icon"></i>
+                        <h3>آج کے ٹرینڈنگ ٹاپکس</h3>
+                    </div>
+                    <span class="live-count">1.2k لوگ ابھی کھیل رہے ہیں</span>
+                </div>
+
+                <div class="trending-scroll-container">
+                    <div class="trend-card" onclick="startQuiz('General_Knowledge')">
+                        <div class="trend-badge">Hot</div>
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400" alt="GK" class="trend-img">
+                        <div class="trend-info">
+                            <h4>عالمی جنرل نالج</h4>
+                            <div class="trend-meta">
+                                <span><i class="fas fa-play"></i> 5.4k ویڈیوز</span>
+                                <span><i class="fas fa-star"></i> 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trend-card" onclick="startQuiz('History_Special')">
+                        <div class="trend-badge purple">New</div>
+                        <img src="https://images.unsplash.com/photo-1461360226052-72361dab9179?q=80&w=400" alt="History" class="trend-img">
+                        <div class="trend-info">
+                            <h4>تاریخِ عالم کے بڑے حقائق</h4>
+                            <div class="trend-meta">
+                                <span><i class="fas fa-play"></i> 2.1k ویڈیوز</span>
+                                <span><i class="fas fa-star"></i> 4.7</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="quiz-game-interface" class="hidden">
-            <div class="quiz-top-bar">
-                <div class="live-indicator">● LIVE RECORDING</div>
-                <div class="timer-circle"><span id="timer-val">10</span></div>
-            </div>
-            
-            <div id="ai-question-bubble">
-                <p id="main-q-text">سوال تیار ہو رہا ہے، براہ کرم انتظار کریں...</p>
-            </div>
+            <section id="studio-quick-settings" class="app-section">
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-video-camera icon-glow"></i>
+                        <h3>ریکارڈنگ اسٹوڈیو کنٹرولز</h3>
+                    </div>
+                    
+                    <div class="settings-grid-v2">
+                        <div class="setting-item-v2">
+                            <div class="s-info">
+                                <strong>ریزولوشن (Resolution)</strong>
+                                <p>1080p Full HD (16:9)</p>
+                            </div>
+                            <div class="s-action">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                        </div>
 
-            <div class="options-wrapper">
-                <div class="option-row" id="q-opt-1" onclick="submitAnswer(0)">
-                    <span class="opt-label">A</span> <span class="opt-text">Loading...</span>
+                        <div class="setting-item-v2">
+                            <div class="s-info">
+                                <strong>AI وائس اوور (Voice)</strong>
+                                <p>اردو فیمیل وائس (پریمیم)</p>
+                            </div>
+                            <div class="s-action">
+                                <label class="switch-v2">
+                                    <input type="checkbox" checked id="ai-voice-toggle">
+                                    <span class="slider-v2"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-item-v2">
+                            <div class="s-info">
+                                <strong>واٹر مارک (Watermark)</strong>
+                                <p>چینل لوگو شامل کریں</p>
+                            </div>
+                            <div class="s-action">
+                                <button class="btn-sm-outline" onclick="openLogoUpload()">تبدیل کریں</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="option-row" id="q-opt-2" onclick="submitAnswer(1)">
-                    <span class="opt-label">B</span> <span class="opt-text">Loading...</span>
+            </section>
+
+            <section id="earning-snapshot" class="app-section">
+                <div class="earning-card-gradient">
+                    <div class="top-row">
+                        <div class="wallet-info">
+                            <span class="label">آپ کا موجودہ بیلنس</span>
+                            <h2 id="total-earnings">PKR 12,450.00</h2>
+                        </div>
+                        <div class="withdraw-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="bottom-stats">
+                        <div class="stat">
+                            <small>آج کی کمائی</small>
+                            <span>+450</span>
+                        </div>
+                        <div class="stat">
+                            <small>کل ودڈرا</small>
+                            <span>8,000</span>
+                        </div>
+                        <button class="btn-withdraw-now" onclick="openWithdrawModal()">رقم نکالیں</button>
+                    </div>
                 </div>
-                <div class="option-row" id="q-opt-3" onclick="submitAnswer(2)">
-                    <span class="opt-label">C</span> <span class="opt-text">Loading...</span>
+            </section>
+
+            <section id="leaderboard-preview" class="app-section">
+                <div class="section-header">
+                    <h3>ٹاپ کونٹینٹ کریٹرز</h3>
+                    <span class="refresh-btn"><i class="fas fa-sync"></i></span>
+                </div>
+                <div class="leader-list">
+                    <div class="leader-row animate__animated animate__fadeInLeft">
+                        <div class="rank">1</div>
+                        <img src="https://ui-avatars.com/api/?name=Ali+Hassan&background=ff0000&color=fff" alt="User" class="u-img">
+                        <div class="u-details">
+                            <strong>سید علی حسن شاہ</strong>
+                            <p>120 ویڈیوز رینڈر کیں</p>
+                        </div>
+                        <div class="u-points">9500 pts</div>
+                    </div>
+
+                    <div class="leader-row animate__animated animate__fadeInLeft animate__delay-1s">
+                        <div class="rank">2</div>
+                        <img src="https://ui-avatars.com/api/?name=Z-Global&background=000&color=fff" alt="User" class="u-img">
+                        <div class="u-details">
+                            <strong>زیڈ گلوبل اسٹوڈیو</strong>
+                            <p>85 ویڈیوز رینڈر کیں</p>
+                        </div>
+                        <div class="u-points">8200 pts</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="help-center" class="app-section">
+                <div class="help-grid">
+                    <div class="help-box" onclick="showTutorial()">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>کورس</span>
+                    </div>
+                    <div class="help-box" onclick="contactSupport()">
+                        <i class="fas fa-headset"></i>
+                        <span>سپورٹ</span>
+                    </div>
+                    <div class="help-box" onclick="openFAQ()">
+                        <i class="fas fa-question-circle"></i>
+                        <span>سوالات</span>
+                    </div>
+                    <div class="help-box" onclick="shareApp()">
+                        <i class="fas fa-share-alt"></i>
+                        <span>شیئر</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="news-ticker-container">
+                <div class="news-label">نیوز اپ ڈیٹ:</div>
+                <marquee behavior="scroll" direction="right" id="app-news-ticker">
+                    پریمیم صارفین کے لیے 10 نئے اسلامی کوئز تھیمز شامل کر دیے گئے ہیں۔ ● جیمنی AI ماڈل کو اپ ڈیٹ کر دیا گیا ہے۔ ● اگلا بڑا ٹورنامنٹ اتوار کو ہوگا۔
+                </marquee>
+            </div>
+
+           
+            </main>
+
+        <footer class="bottom-tab-bar">
+            <div class="tab-item active" data-target="home">
+                <i class="fas fa-house-chimney"></i>
+                <span>ہوم</span>
+            </div>
+            <div class="tab-item" data-target="studio">
+                <i class="fas fa-clapperboard"></i>
+                <span>اسٹوڈیو</span>
+            </div>
+            <div class="tab-item mega-action" onclick="initiateAutoSession()">
+                <div class="action-circle">
+                    <i class="fas fa-plus"></i>
                 </div>
             </div>
-        </section>
+            <div class="tab-item" data-target="earnings">
+                <i class="fas fa-hand-holding-dollar"></i>
+                <span>کمائی</span>
+            </div>
+            <div class="tab-item" onclick="toggleDrawer()">
+                <i class="fas fa-sliders-h"></i>
+                <span>سیٹنگز</span>
+            </div>
+        </footer>
 
-    </main>
-
-    <div id="hidden-studio-16-9" aria-hidden="true">
-        <canvas id="youtube-recorder-canvas" width="1280" height="720"></canvas>
     </div>
-
-    <footer class="app-bottom-nav">
-        <div class="nav-tab active" onclick="showSection('home')">
-            <i class="fas fa-th-large"></i>
-            <span>ہوم</span>
-        </div>
-        <div class="nav-tab" onclick="showSection('history')">
-            <i class="fas fa-video"></i>
-            <span>ویڈیوز</span>
-        </div>
-        <div class="nav-tab main-action" onclick="startAutoSession()">
-            <div class="center-btn">
-                <i class="fas fa-play"></i>
-            </div>
-        </div>
-        <div class="nav-tab" onclick="showRewards()">
-            <i class="fas fa-wallet"></i>
-            <span>کمائی</span>
-        </div>
-        <div class="nav-tab" onclick="toggleMenu()">
-            <i class="fas fa-cog"></i>
-            <span>سیٹنگز</span>
-        </div>
-    </footer>
-
-    <div id="admin-login-overlay" class="modal-overlay hidden">
-        <div class="modal-card">
-            <div class="modal-icon"><i class="fas fa-user-lock"></i></div>
-            <h3>ایڈمن کنٹرول لاگ ان</h3>
-            <div class="input-group">
-                <i class="fas fa-key"></i>
-                <input type="password" id="admin-pass-field" placeholder="درست سیکریٹ کوڈ ڈالیں">
-            </div>
-            <button class="primary-btn" onclick="verifyAdmin()">تصدیق کریں</button>
-            <button class="text-btn" onclick="closeModal()">کینسل</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>     <script src="ai-engine.js"></script>  <script src="ads-manager.js"></script> <script src="recorder.js"></script>   <script>
-        // Page Preloader Logic
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('app-preloader').style.display = 'none';
-                document.body.classList.remove('loading');
-            }, 2000);
-        });
-    </script>
-
-</body>
+    
+    <script src="script.js"></script>
+    </body>
 </html>
