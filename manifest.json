@@ -1,1 +1,22 @@
+{
+  "name": "Smart-AI-Quiz-Global",
+  "short_name": "AI-Quiz",
+  "description": "Global AI Quiz Platform with Video Recording and Rewards",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#ff0000",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
 
