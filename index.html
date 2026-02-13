@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart-AI-Quiz-Global | Create & Earn</title>
+    
     <link rel="stylesheet" href="style.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <img src="favicon.ico" alt="Logo" class="site-logo">
+            <img src="favicon.ico" alt="Logo" class="site-logo" style="width: 40px; height: 40px;">
             <h1>Smart-AI-Quiz-Global</h1>
         </div>
         
         <div class="menu-container">
-            <div class="three-dots" onclick="toggleMenu()">
-                <span></span><span></span><span></span>
+            <div class="three-dots" onclick="toggleMenu()" style="cursor: pointer; font-size: 24px;">
+                ⋮
             </div>
-            <div id="language-menu" class="dropdown-content">
+            <div id="language-menu" class="dropdown-content hidden">
                 <a href="#" onclick="setLanguage('en')">English</a>
                 <a href="#" onclick="setLanguage('ur')">اردو</a>
                 <a href="#" onclick="setLanguage('hi')">हिन्दी</a>
@@ -30,7 +34,6 @@
     </header>
 
     <main class="container">
-        
         <div class="ad-sidebar left-ads">
             <script type="text/javascript" src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
         </div>
@@ -52,8 +55,8 @@
                     <button onclick="startQuiz('Mixed')">Select All (Mixed)</button>
                 </div>
                 
-                <div class="recording-prompt">
-                    <label>Enable Screen Recording?</label>
+                <div class="recording-prompt" style="margin-top: 20px;">
+                    <p>Enable Screen Recording for YouTube?</p>
                     <button onclick="toggleRecording(true)">Yes</button>
                     <button onclick="toggleRecording(false)">No</button>
                 </div>
@@ -80,31 +83,25 @@
         </div>
 
     </main>
+
     <footer class="footer-area">
         <div class="social-links">
-            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-icon fb">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-icon tt">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-icon yt">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://wa.me/923219379597" target="_blank" class="social-icon wa">
-                <i class="fab fa-whatsapp"></i>
-            </a>
+            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-icon tt"><i class="fab fa-tiktok"></i></a>
+            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/923219379597" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
         </div>
 
         <div class="eye-container">
-            <div id="gift-eye" class="eye-icon-dim" onclick="handleEyeClick()">
+            <div id="gift-eye" class="eye-icon-dim" onclick="handleEyeClick()" style="opacity: 0.2; cursor: pointer;">
                 <i class="fas fa-eye"></i>
             </div>
             
-            <div id="gift-details" class="hidden-box">
+            <div id="gift-details" class="hidden">
                 <p>Support Us/Send Gift:</p>
                 <div id="bank-info-display">
-                    Loading details...
+                    JazzCash: 03219379597 <br>
+                    UBL: Syed Ali Hassan Shah
                 </div>
             </div>
         </div>
@@ -116,18 +113,15 @@
 
         <script> atOptions = { 'key' : '90af8dee84ab8501b624e076ec9a12c8', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} }; </script> 
         <script src="https://breachuptown.com/90af8dee84ab8501b624e076ec9a12c8/invoke.js"></script>
-
-        <script> atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script> 
-        <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
     </div>
 
     <div id="admin-modal" class="modal hidden">
         <div class="modal-content">
-            <h3>Admin Access Required</h3>
-            <input type="password" id="admin-pass" placeholder="Enter Secret Code">
-            <input type="text" id="admin-num" placeholder="Enter Admin Number">
-            <button onclick="verifyAdmin()">Open Admin Panel</button>
-            <button onclick="closeModal()">Cancel</button>
+            <h3>Admin Access</h3>
+            <input type="password" id="admin-pass" placeholder="Secret Code">
+            <input type="text" id="admin-num" placeholder="Admin Number">
+            <button onclick="verifyAdmin()">Login</button>
+            <button onclick="closeModal()">Close</button>
         </div>
     </div>
 
@@ -138,4 +132,3 @@
 
 </body>
 </html>
-
