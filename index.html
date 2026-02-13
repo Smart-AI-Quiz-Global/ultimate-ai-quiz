@@ -3,360 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart-AI Global | Interactive Experience</title>
+    <title>Smart-AI Global | Next-Gen Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="app-wrapper">
-        
-        <section id="step-1" class="setup-screen active">
-            <div class="logo-area">
-                <h1>SMART-AI <span>GLOBAL</span></h1>
+    <div id="splash-screen">
+        <div class="intro-box">
+            <div class="ai-glow-circle">
+                <i class="fas fa-brain-circuit brain-icon"></i>
             </div>
-            
-            <div class="glass-box">
-                <h2>Select Website Language</h2>
-                <p>Choose the language for the website menu and buttons.</p>
-                
-                <div class="options-container scrollable">
-                    <div class="option-item" onclick="selectInterface('en')">
-                        <img src="https://flagcdn.com/w40/us.png" alt="USA">
-                        <span>English (United States)</span>
-                        <i class="fas fa-check-circle"></i>
+            <h1 class="glow-text">SMART-AI GLOBAL</h1>
+            <div class="loader-line"></div>
+            <p class="intro-status">Powering Up Intelligence...</p>
+        </div>
+    </div>
+
+    <div id="main-app" style="display:none;">
+        
+        <div class="bg-particles"></div>
+
+        <header class="app-header">
+            <div class="welcome-banner">
+                <h2 id="welcome-title">Welcome to the Future</h2>
+                <p id="welcome-sub">The ultimate AI interactive platform</p>
+            </div>
+        </header>
+
+        <section id="step-1" class="setup-view active">
+            <div class="glass-card">
+                <div class="step-indicator">Step 01 / 03</div>
+                <h3>Select Website Interface Language</h3>
+                <p>All menus and buttons will adapt to this language.</p>
+
+                <div class="custom-dropdown" id="lang-dropdown">
+                    <div class="selected-lang" onclick="toggleDropdown()">
+                        <img src="https://flagcdn.com/w40/us.png" id="curr-flag">
+                        <span id="curr-lang-name">English (United States)</span>
+                        <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="option-item" onclick="selectInterface('gb')">
-                        <img src="https://flagcdn.com/w40/gb.png" alt="UK">
-                        <span>English (United Kingdom)</span>
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="option-item" onclick="selectInterface('kw')">
-                        <img src="https://flagcdn.com/w40/kw.png" alt="Kuwait">
-                        <span>العربية (Kuwait)</span>
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="option-item" onclick="selectInterface('pk')">
-                        <img src="https://flagcdn.com/w40/pk.png" alt="Pakistan">
-                        <span>اردو (Pakistan)</span>
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="option-item" onclick="selectInterface('in')">
-                        <img src="https://flagcdn.com/w40/in.png" alt="India">
-                        <span>हिन्दी (India)</span>
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="option-item" onclick="selectInterface('cn')">
-                        <img src="https://flagcdn.com/w40/cn.png" alt="China">
-                        <span>中文 (China)</span>
-                        <i class="fas fa-check-circle"></i>
+                    <div class="dropdown-options" id="drop-list">
+                        <div class="option" onclick="pickLang('en', 'us', 'English')">
+                            <img src="https://flagcdn.com/w20/us.png"> English (USA)
+                        </div>
+                        <div class="option" onclick="pickLang('ar', 'kw', 'العربية')">
+                            <img src="https://flagcdn.com/w20/kw.png"> العربية (Kuwait)
+                        </div>
+                        <div class="option" onclick="pickLang('ur', 'pk', 'اردو')">
+                            <img src="https://flagcdn.com/w20/pk.png"> اردو (Pakistan)
+                        </div>
+                        <div class="option" onclick="pickLang('hi', 'in', 'हिन्दी')">
+                            <img src="https://flagcdn.com/w20/in.png"> हिन्दी (India)
+                        </div>
+                        <div class="option" onclick="pickLang('zh', 'cn', '中文')">
+                            <img src="https://flagcdn.com/w20/cn.png"> 中文 (China)
+                        </div>
+                        <div class="option" onclick="pickLang('de', 'de', 'Deutsch')">
+                            <img src="https://flagcdn.com/w20/de.png"> Deutsch (Germany)
+                        </div>
                     </div>
                 </div>
 
-                <button class="next-btn" onclick="goToStep(2)">
-                    NEXT <i class="fas fa-arrow-right"></i>
+                <button class="action-btn next-glow" onclick="moveToNext(2)">
+                    <span>NEXT</span> <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
-        <section id="step-2" class="setup-screen" style="display:none;">
-            <div class="logo-area">
-                <h1>SMART-AI <span>GLOBAL</span></h1>
-            </div>
-            
-            <div class="glass-box">
-                <h2>Quiz Content Language</h2>
-                <p>In which language do you want to play the quiz?</p>
-                
-                <div class="options-container scrollable">
-                    <div class="option-item" onclick="selectQuizLang('en')">
-                        <img src="https://flagcdn.com/w40/us.png" alt="English">
+        <section id="step-2" class="setup-view" style="display:none;">
+            <div class="glass-card">
+                <div class="step-indicator">Step 02 / 03</div>
+                <h3>Question & Answer Language</h3>
+                <p>Choose the language you want to interact with during the quiz.</p>
+
+                <div class="options-scroll-box">
+                    <div class="quiz-lang-card" onclick="setQuizLang('en')">
+                        <img src="https://flagcdn.com/w80/us.png" alt="USA">
                         <span>English</span>
-                        <i class="fas fa-check-circle"></i>
                     </div>
-                    <div class="option-item" onclick="selectQuizLang('ur')">
-                        <img src="https://flagcdn.com/w40/pk.png" alt="Urdu">
-                        <span>اردو (Urdu)</span>
-                        <i class="fas fa-check-circle"></i>
+                    <div class="quiz-lang-card" onclick="setQuizLang('ur')">
+                        <img src="https://flagcdn.com/w80/pk.png" alt="Pakistan">
+                        <span>Urdu (اردو)</span>
                     </div>
-                    <div class="option-item" onclick="selectQuizLang('ar')">
-                        <img src="https://flagcdn.com/w40/kw.png" alt="Arabic">
-                        <span>العربية (Arabic)</span>
-                        <i class="fas fa-check-circle"></i>
+                    <div class="quiz-lang-card" onclick="setQuizLang('ar')">
+                        <img src="https://flagcdn.com/w80/kw.png" alt="Kuwait">
+                        <span>Arabic (العربية)</span>
                     </div>
-                    <div class="option-item" onclick="selectQuizLang('hi')">
-                        <img src="https://flagcdn.com/w40/in.png" alt="Hindi">
-                        <span>हिन्दी (Hindi)</span>
-                        <i class="fas fa-check-circle"></i>
+                    <div class="quiz-lang-card" onclick="setQuizLang('hi')">
+                        <img src="https://flagcdn.com/w80/in.png" alt="India">
+                        <span>Hindi (हिन्दी)</span>
                     </div>
-                    <div class="option-item" onclick="selectQuizLang('zh')">
-                        <img src="https://flagcdn.com/w40/cn.png" alt="Chinese">
-                        <span>中文 (Chinese)</span>
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="option-item" onclick="selectQuizLang('mr')">
-                        <img src="https://flagcdn.com/w40/in.png" alt="Marathi">
-                        <span>मराठी (Marathi)</span>
-                        <i class="fas fa-check-circle"></i>
+                    <div class="quiz-lang-card" onclick="setQuizLang('zh')">
+                        <img src="https://flagcdn.com/w80/cn.png" alt="China">
+                        <span>Chinese (中文)</span>
                     </div>
                 </div>
 
-                <div class="button-group">
-                    <button class="back-btn" onclick="goToStep(1)">
-                        <i class="fas fa-arrow-left"></i> BACK
-                    </button>
-                    <button class="next-btn" onclick="goToStep(3)">
-                        NEXT <i class="fas fa-arrow-right"></i>
+                <div class="nav-btns">
+                    <button class="back-link" onclick="moveToNext(1)"><i class="fas fa-chevron-left"></i> Back</button>
+                    <button class="action-btn next-glow" onclick="moveToNext(3)">
+                        <span>CONTINUE</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </section>
-        <section id="step-3" class="setup-screen" style="display:none;">
-            <div class="logo-area">
-                <h1>SMART-AI <span>GLOBAL</span></h1>
-            </div>
-            
-            <div class="glass-box wide-box">
-                <h2>Select Your Interests</h2>
-                <p>Select categories you want to explore (Multiple allowed)</p>
-                
-                <div class="select-all-bar">
-                    <label class="checkbox-container">
-                        <input type="checkbox" id="select-all-cats" onclick="toggleAllCategories(this)">
-                        <span class="checkmark"></span>
-                        Select All Categories
+
+        <section id="step-3" class="setup-view" style="display:none;">
+            <div class="glass-card wide-card">
+                <div class="step-indicator">Step 03 / 03</div>
+                <h3>Personalize Your Quiz</h3>
+                <p>Select categories to include in your session (Tick to select)</p>
+
+                <div class="all-select-wrapper">
+                    <label class="modern-checkbox">
+                        <input type="checkbox" id="master-select" onclick="toggleAll(this)">
+                        <span class="box-visual"></span>
+                        Select All 15 Categories
                     </label>
                 </div>
 
-                <div class="category-grid scrollable">
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="tech">
-                        <div class="cat-content">
+                <div class="category-grid-modern">
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="ai">
+                        <div class="cat-box">
+                            <i class="fas fa-robot"></i>
+                            <span>AI & Robotics</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="tech">
+                        <div class="cat-box">
                             <i class="fas fa-microchip"></i>
                             <span>Technology</span>
                         </div>
                     </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="ai">
-                        <div class="cat-content">
-                            <i class="fas fa-robot"></i>
-                            <span>Artificial Intelligence</span>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="business">
+                        <div class="cat-box">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Business</span>
                         </div>
                     </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="business">
-                        <div class="cat-content">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Business & Finance</span>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="crypto">
+                        <div class="cat-box">
+                            <i class="fas fa-coins"></i>
+                            <span>Crypto/Web3</span>
                         </div>
                     </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="news">
-                        <div class="cat-content">
-                            <i class="fas fa-globe"></i>
-                            <span>World News</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="crypto">
-                        <div class="cat-content">
-                            <i class="fas fa-bitcoin"></i>
-                            <span>Crypto & Web3</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="gaming">
-                        <div class="cat-content">
-                            <i class="fas fa-gamepad"></i>
-                            <span>Gaming</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="ent">
-                        <div class="cat-content">
-                            <i class="fas fa-film"></i>
-                            <span>Entertainment</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="sci">
-                        <div class="cat-content">
-                            <i class="fas fa-flask"></i>
-                            <span>Science</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="sports">
-                        <div class="cat-content">
-                            <i class="fas fa-trophy"></i>
-                            <span>Sports</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="health">
-                        <div class="cat-content">
-                            <i class="fas fa-heartbeat"></i>
-                            <span>Health & Life</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="hist">
-                        <div class="cat-content">
-                            <i class="fas fa-monument"></i>
-                            <span>History</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="geo">
-                        <div class="cat-content">
-                            <i class="fas fa-map-marked-alt"></i>
-                            <span>Geography</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="edu">
-                        <div class="cat-content">
-                            <i class="fas fa-book"></i>
-                            <span>Education</span>
-                        </div>
-                    </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="space">
-                        <div class="cat-content">
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="space">
+                        <div class="cat-box">
                             <i class="fas fa-rocket"></i>
                             <span>Space</span>
                         </div>
                     </label>
-
-                    <label class="cat-item-check">
-                        <input type="checkbox" class="cat-checkbox" value="logic">
-                        <div class="cat-content">
-                            <i class="fas fa-lightbulb"></i>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="gaming">
+                        <div class="cat-box">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Gaming</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="news">
+                        <div class="cat-box">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Global News</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="science">
+                        <div class="cat-box">
+                            <i class="fas fa-flask"></i>
+                            <span>Science</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="sports">
+                        <div class="cat-box">
+                            <i class="fas fa-trophy"></i>
+                            <span>Sports</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="health">
+                        <div class="cat-box">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Health</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="history">
+                        <div class="cat-box">
+                            <i class="fas fa-book"></i>
+                            <span>History</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="ent">
+                        <div class="cat-box">
+                            <i class="fas fa-tv"></i>
+                            <span>Entertainment</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-input" value="logic">
+                        <div class="cat-box">
+                            <i class="fas fa-brain"></i>
                             <span>Logic & IQ</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-checkbox" value="edu">
+                        <div class="cat-box">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Education</span>
+                        </div>
+                    </label>
+                    <label class="cat-label">
+                        <input type="checkbox" class="cat-checkbox" value="world">
+                        <div class="cat-box">
+                            <i class="fas fa-earth-americas"></i>
+                            <span>Geography</span>
                         </div>
                     </label>
                 </div>
 
-                <div class="button-group">
-                    <button class="back-btn" onclick="goToStep(2)">
-                        <i class="fas fa-arrow-left"></i> BACK
-                    </button>
-                    <button class="start-final-btn" onclick="launchEngine()">
-                        START QUIZ ENGINE <i class="fas fa-bolt"></i>
+                <div class="nav-btns">
+                    <button class="back-link" onclick="moveToNext(2)"><i class="fas fa-chevron-left"></i> Back</button>
+                    <button class="action-btn start-engine" onclick="launchQuiz()">
+                        <span>LAUNCH AI ENGINE</span> <i class="fas fa-bolt"></i>
                     </button>
                 </div>
             </div>
         </section>
-        <section id="quiz-dashboard" class="setup-screen" style="display:none;">
+        <section id="quiz-dashboard" class="setup-view" style="display:none;">
             
-            <div class="ad-slot-header">
+            <div class="ad-slot-top">
                 <script> atOptions = { 'key' : 'bbce5a50700ab4a362d5a6a41f0756ed', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} }; </script>
                 <script src="https://breachuptown.com/bbce5a50700ab4a362d5a6a41f0756ed/invoke.js"></script>
             </div>
 
-            <div class="quiz-main-card">
-                <div class="quiz-stats">
-                    <div class="stat"><i class="fas fa-coins"></i> Score: <span id="current-score">0</span></div>
-                    <div class="stat"><i class="fas fa-hourglass-half"></i> <span id="timer-text">30s</span></div>
+            <div class="quiz-container-premium">
+                <div class="quiz-stats-bar">
+                    <div class="stat-pill"><i class="fas fa-gem"></i> Points: <span id="user-score">0</span></div>
+                    <div class="stat-pill timer-alert"><i class="fas fa-stopwatch"></i> <span id="quiz-timer">30s</span></div>
                 </div>
 
-                <div class="question-box">
-                    <div class="q-header">
-                        <span id="q-count">Question 1</span>
-                        <button class="voice-icon-btn" onclick="readQuestion()" title="Listen">
-                            <i class="fas fa-volume-up"></i>
+                <div class="main-q-box">
+                    <div class="q-meta">
+                        <span id="q-index-tag">Question 1/10</span>
+                        <button class="speaker-btn" onclick="speakText()" title="Listen Question">
+                            <i class="fas fa-volume-high"></i>
                         </button>
                     </div>
-                    <h2 id="question-text">AI is analyzing your selection...</h2>
+                    <h2 id="display-question">AI is generating your secure challenge...</h2>
                     
-                    <div id="options-container" class="options-list">
+                    <div id="answers-grid" class="options-layout">
                         </div>
                 </div>
 
-                <div class="mid-quiz-ad">
+                <div class="ad-slot-mid">
                     <div id="container-bc14fd3cc493145f5f9b6821df2fea04">
                         <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
                     </div>
                 </div>
 
-                <div class="quiz-footer">
-                    <button class="mic-btn-main" id="start-mic" onclick="toggleMic()">
+                <div class="interaction-zone">
+                    <button class="voice-input-btn" id="mic-trigger" onclick="handleVoiceInput()">
+                        <div class="mic-wave"></div>
                         <i class="fas fa-microphone"></i>
-                        <span>Answer by Voice</span>
+                        <span>Speak Your Answer</span>
                     </button>
-                    <button class="next-quiz-btn" onclick="handleNextQuestion()">
+                    
+                    <button class="skip-btn" onclick="nextQuestion()">
                         Next <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="sticky-footer-banner">
+            <div class="ad-sticky-bottom">
                 <script> atOptions = { 'key' : 'c3fad5f8aa7dc16816052e3745d01c9c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} }; </script>
                 <script src="https://breachuptown.com/c3fad5f8aa7dc16816052e3745d01c9c/invoke.js"></script>
             </div>
         </section>
 
-        <div id="reward-ad-modal" class="modal-overlay" style="display:none;">
-            <div class="modal-box">
-                <button class="close-modal" onclick="closeRewardAd()">&times;</button>
-                <h3>🎁 Bonus Points Opportunity</h3>
-                <div class="modal-ad-body">
-                    <script> atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
-                    <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
+        <div id="reward-ad-popup" class="premium-modal" style="display:none;">
+            <div class="modal-inner">
+                <span class="close-modal-x" onclick="closeRewardAd()">&times;</span>
+                <div class="reward-content">
+                    <h3><i class="fas fa-gift"></i> Extra Points Reward</h3>
+                    <p>Interact with the content below to unlock bonus points.</p>
+                    <div class="ad-frame-modal">
+                        <script> atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
+                        <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
+                    </div>
                 </div>
-                <p>Close after 5 seconds to continue</p>
             </div>
         </div>
-        <section id="result-screen" class="setup-screen" style="display:none;">
-            <div class="result-card">
-                <div class="trophy-box">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <h2>Congratulations!</h2>
-                <p>You've completed the AI challenge.</p>
-                
-                <div class="final-score-box">
-                    <span id="score-final">0</span>
-                    <small>Points Earned</small>
+        <section id="result-screen" class="setup-view" style="display:none;">
+            <div class="glass-card result-card-final">
+                <div class="victory-header">
+                    <div class="confetti-effect"></div>
+                    <i class="fas fa-crown gold-crown"></i>
+                    <h2>Challenge Completed!</h2>
                 </div>
 
-                <div class="result-ad">
+                <div class="final-score-display">
+                    <div class="score-circle">
+                        <span id="final-points">0</span>
+                        <small>Total Points</small>
+                    </div>
+                </div>
+
+                <p id="performance-msg">AI Engine rates your knowledge as "Excellent"!</p>
+
+                <div class="ad-slot-result-big">
                     <script> atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
                     <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
                 </div>
 
-                <div class="result-btns">
+                <div class="result-navigation">
                     <button class="retry-btn" onclick="location.reload()">
-                        <i class="fas fa-redo"></i> Play Again
+                        <i class="fas fa-rotate-left"></i> Play Again
                     </button>
-                    <a href="https://breachuptown.com/hzy27ig1?key=6234a8317563d50972f81c9db90823ff" target="_blank" class="reward-btn">
-                        <i class="fas fa-gift"></i> Claim Your Reward
+                    
+                    <a href="https://breachuptown.com/hzy27ig1?key=6234a8317563d50972f81c9db90823ff" target="_blank" class="claim-gift-btn">
+                        <i class="fas fa-gift"></i> Claim Your Daily Reward
                     </a>
                 </div>
             </div>
 
-            <div class="final-skyscaper">
+            <div class="ad-side-skyscraper">
                 <script> atOptions = { 'key' : 'f8e0f5f1c77aee933fbb7a25f674c4ee', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} }; </script>
                 <script src="https://breachuptown.com/f8e0f5f1c77aee933fbb7a25f674c4ee/invoke.js"></script>
             </div>
         </section>
 
-    </div> <script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
+        <footer class="app-footer-global">
+            <div class="footer-ad-bar">
+                <script> atOptions = { 'key' : '90af8dee84ab8501b624e076ec9a12c8', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} }; </script>
+                <script src="https://breachuptown.com/90af8dee84ab8501b624e076ec9a12c8/invoke.js"></script>
+            </div>
+            <div class="legal-links">
+                <a href="#">Security Protocol</a>
+                <span>|</span>
+                <a href="#">Global AI Standards</a>
+                <span>|</span>
+                <a href="#">Privacy</a>
+            </div>
+            <p>© 2026 SMART-AI GLOBAL - Intelligent Solutions</p>
+        </footer>
+    </div> 
+    <script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
     <script src="https://breachuptown.com/4d/f7/56/4df7569fb44a5d7a885cd63b4f956e09.js"></script>
-    
+
     <script src="script.js"></script>
 
+    <script>
+        // 1. Splash Screen Control (TikTok Style Intro)
+        window.onload = function() {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.transition = 'opacity 0.8s ease';
+                splash.style.opacity = '0';
+                
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                }, 800);
+            }, 3500); // 3.5 seconds professional intro
+        };
+
+        // 2. Multi-Step Navigation Logic
+        function moveToNext(stepNumber) {
+            // تمام ویوز کو چھپا دیں
+            document.querySelectorAll('.setup-view').forEach(view => {
+                view.style.display = 'none';
+                view.classList.remove('active');
+            });
+
+            // مطلوبہ سٹیپ دکھائیں
+            const target = document.getElementById('step-' + stepNumber);
+            if (target) {
+                target.style.display = 'flex';
+                setTimeout(() => target.classList.add('active'), 10);
+            }
+        }
+
+        // 3. Dropdown Language Picker Logic
+        function toggleDropdown() {
+            const list = document.getElementById('drop-list');
+            list.style.display = (list.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function pickLang(code, flag, name) {
+            document.getElementById('curr-flag').src = `https://flagcdn.com/w40/${flag}.png`;
+            document.getElementById('curr-lang-name').innerText = name + ` (${flag.toUpperCase()})`;
+            toggleDropdown(); // کلک کرنے کے بعد ڈراپ ڈاؤن بند کر دیں
+            console.log("Interface Language Selected: " + code);
+        }
+
+        // 4. Category "Select All" Logic
+        function toggleAll(masterCheckbox) {
+            const checkboxes = document.querySelectorAll('.cat-input');
+            checkboxes.forEach(cb => {
+                cb.checked = masterCheckbox.checked;
+            });
+        }
+
+        // 5. Launch Quiz Engine
+        function launchQuiz() {
+            // چیک کریں کہ کم از کم ایک کیٹیگری منتخب ہو
+            const selectedCats = document.querySelectorAll('.cat-input:checked');
+            if (selectedCats.length === 0) {
+                alert("Please select at least one category to proceed.");
+                return;
+            }
+            
+            // کوئز ڈیش بورڈ پر منتقل ہوں
+            document.querySelectorAll('.setup-view').forEach(v => v.style.display = 'none');
+            document.getElementById('quiz-dashboard').style.display = 'flex';
+            
+            // یہاں سے script.js کا کوئز فنکشن کال ہوگا
+            if(typeof startQuizEngine === 'function') startQuizEngine();
+        }
+
+        // 6. Close Reward Ad Modal
+        function closeRewardAd() {
+            document.getElementById('reward-ad-popup').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
