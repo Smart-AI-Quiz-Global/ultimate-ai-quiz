@@ -1,1 +1,98 @@
+/*
+  Smart-AI-Quiz-Global | Favicon Manager
+  --------------------------------------
+  Fully dynamic, multi-language, future-proof favicon system.
+  Lifetime ready for dynamic badges, events, language changes, notifications.
+  Author: SAQG Team
+  Version: 1.0.0
+*/
 
+// Initialize favicon
+function setFavicon(src) {
+    let link = document.getElementById("dynamic-favicon");
+    if (!link) {
+        link = document.createElement("link");
+        link.id = "dynamic-favicon";
+        link.rel = "icon";
+        link.type = "image/x-icon";
+        document.head.appendChild(link);
+    }
+    link.href = src;
+}
+
+// Change favicon by language
+function updateFaviconByLanguage(lang) {
+    switch(lang) {
+        case "en": setFavicon("favicon-en.ico"); break;
+        case "ar": setFavicon("favicon-ar.ico"); break;
+        case "hi": setFavicon("favicon-hi.ico"); break;
+        case "zh": setFavicon("favicon-zh.ico"); break;
+        default: setFavicon("favicon.ico"); break;
+    }
+}
+
+// Add dynamic badge (for notifications, quiz score, gifts, etc.)
+function setFaviconBadge(count) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.src = "favicon.ico"; // base favicon
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, 64, 64);
+
+        if(count > 0) {
+            // Draw red notification circle
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(52, 12, 10, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw number
+            ctx.fillStyle = "white";
+            ctx.font = "bold 12px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(count, 52, 12);
+        }
+
+        const newIcon = canvas.toDataURL("image/png");
+        setFavicon(newIcon);
+    };
+}
+
+// Example: seasonal/event-based favicon
+function setEventFavicon(eventName) {
+    switch(eventName) {
+        case "eid": setFavicon("favicon-eid.ico"); break;
+        case "newyear": setFavicon("favicon-newyear.ico"); break;
+        default: setFavicon("favicon.ico"); break;
+    }
+}
+
+// Automatically rotate favicons for engagement
+function rotateFavicons(arrayOfFavicons, interval=10000) {
+    let index = 0;
+    setInterval(() => {
+        setFavicon(arrayOfFavicons[index]);
+        index = (index + 1) % arrayOfFavicons.length;
+    }, interval);
+}
+
+// Initialization
+(function initFaviconSystem() {
+    // Set default
+    setFavicon("favicon.ico");
+
+    // Example: rotate different language favicons every 15 sec
+    rotateFavicons(["favicon-en.ico","favicon-ar.ico","favicon-hi.ico","favicon-zh.ico"], 15000);
+
+    // Example: set dynamic badge (simulate notifications)
+    let fakeCount = 0;
+    setInterval(() => {
+        fakeCount = (fakeCount + 1) % 10; // 0-9 loop
+        setFaviconBadge(fakeCount);
+    }, 20000);
+})();
