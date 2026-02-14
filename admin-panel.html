@@ -1,151 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Master Control | Smart-AI-Quiz-Global</title>
-    <style>
-        body { background: #050505; color: #00ff00; font-family: monospace; padding: 20px; }
-        .panel-box { border: 2px solid #00ff00; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; }
-        h1 { text-align: center; color: #fff; text-shadow: 0 0 10px #00ff00; }
-        .section { margin-bottom: 30px; border-bottom: 1px dashed #333; padding-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff00; color: #fff; }
-        button { background: #00ff00; color: #000; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
-        button:hover { background: #fff; }
-        .status-msg { color: yellow; font-style: italic; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Smart AI Quiz Global</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {margin:0; font-family:Arial, sans-serif; background:#111; color:#fff;}
+.container {max-width:1000px; margin:auto; padding:20px;}
+h1{text-align:center; margin-bottom:30px; color:#00ffcc;}
+.section{background:#1c1c1c; padding:20px; border-radius:10px; margin-bottom:25px;}
+.section h2{color:#00ffcc; margin-bottom:15px;}
+input, textarea, select{width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:none;}
+button{padding:10px 20px; border:none; background:#00ffcc; color:#000; font-weight:bold; border-radius:6px; cursor:pointer;}
+button:hover{background:#00ddb3;}
+.small-text{font-size:12px; color:#aaa;}
+</style>
 </head>
 <body>
 
-<div class="panel-box">
-    <h1>ADMIN CONTROL CENTER</h1>
-    <p style="text-align:center">Welcome, Syed Ali Hassan Shah</p>
+<div class="container">
+<h1>Admin Dashboard</h1>
 
-    <div class="section">
-        <h3>🏦 Bank & Payment Details (Gifts)</h3>
-        <label>Account Title Name:</label>
-        <input type="text" id="acc-name" placeholder="e.g. Syed Ali Hassan">
-        
-        <label>JazzCash Number:</label>
-        <input type="text" id="jazz-num" placeholder="0321xxxxxxx">
-        
-        <label>UBL / Visa Card Details:</label>
-        <textarea id="bank-details" placeholder="Enter UBL Bank AC or Visa Details"></textarea>
-        
-        <button onclick="saveBankDetails()">Update Payment Info</button>
-    </div>
+<!-- Site & Quiz Settings -->
+<div class="section">
+<h2>Site & Quiz Settings</h2>
+<label>Website Name</label>
+<input type="text" id="siteName">
 
-    <div class="section">
-        <h3>📺 Upload Personal Ads (Video/Image)</h3>
-        <label>Ad Title:</label>
-        <input type="text" id="ad-title" placeholder="e.g. Special Offer Pakistan">
-        
-        <label>Ad Media URL (Image/Video Link):</label>
-        <input type="text" id="ad-url" placeholder="https://link-to-your-ad-image.jpg">
-        
-        <label>Target Country:</label>
-        <select id="target-country">
-            <option value="Global">All Countries (Global)</option>
-            <option value="Pakistan">Pakistan</option>
-            <option value="USA">USA</option>
-            <option value="UK">UK</option>
-            <option value="UAE">UAE</option>
-            <option value="India">India</option>
-        </select>
+<label>Splash Video URL</label>
+<input type="text" id="introVideo">
 
-        <label>Ad Slot Position:</label>
-        <select id="ad-slot">
-            <option value="after-10">After 10 Questions</option>
-            <option value="homepage">On Homepage (Start)</option>
-        </select>
-        
-        <button onclick="uploadAd()" style="background: #ff0000; color: white;">Launch Ad Now</button>
-    </div>
+<label>Splash Image URL</label>
+<input type="text" id="splashAd">
 
-    <div class="section">
-        <h3>🤖 AI Engine Backup Settings</h3>
-        <p>Current Active Engine: <strong>Gemini Pro (Global)</strong></p>
-        <button onclick="alert('AI System is running stable!')">Check AI Health</button>
-    </div>
+<label>Background Music URL</label>
+<input type="text" id="bgMusic">
 
-    <button onclick="window.location.href='index.html'" style="background: #333; color: #ccc; margin-top: 20px;">Logout & View Site</button>
+<label>AI Question Engine API Key</label>
+<input type="text" id="aiApiKey">
+
+<label>Categories (comma separated)</label>
+<input type="text" id="categories">
+
+<label>Languages (comma separated)</label>
+<input type="text" id="languages">
+
+<label>Ads Code (All scripts)</label>
+<textarea id="adsCode" rows="5"></textarea>
+
+<button onclick="saveSiteSettings()">Save Site Settings</button>
+</div>
+
+<!-- Payment Settings -->
+<div class="section">
+<h2>Payment Options</h2>
+<label>EasyPaisa Number</label>
+<input type="text" id="easypaisa">
+<label>JazzCash Number</label>
+<input type="text" id="jazzcash">
+<label>Visa Card Number</label>
+<input type="text" id="visa">
+<label>UBL Bank Account Number</label>
+<input type="text" id="ubl">
+<label>Gift Card / Wallet Address</label>
+<input type="text" id="giftcard">
+<button onclick="savePaymentSettings()">Save Payment Settings</button>
+</div>
+
+<!-- Reward Settings -->
+<div class="section">
+<h2>Reward / Quiz Configuration</h2>
+<label>Points Required for Gift</label>
+<input type="number" id="pointsRequired">
+<label>Reward Message</label>
+<input type="text" id="rewardMessage">
+<button onclick="saveRewardSettings()">Save Reward Settings</button>
+</div>
+
 </div>
 
 <script>
-    function saveBankDetails() {
-        const data = {
-            name: document.getElementById('acc-name').value,
-            jazz: document.getElementById('jazz-num').value,
-            bank: document.getElementById('bank-details').value
-        };
-        // LocalStorage میں سیو کریں تاکہ ویب سائٹ پر شو ہو سکے
-        localStorage.setItem('bankData', JSON.stringify(data));
-        alert("Payment Details Saved Successfully!");
-    }
-
-    function uploadAd() {
-        alert("Ad has been scheduled for the selected country!");
-        // یہاں ایڈ سیو کرنے کا لاجک ائے گا
-    }
-    /* PROJECT: SMART-AI-QUIZ-GLOBAL 
-   FILE: AI-ENGINE.JS
-   DESCRIPTION: Connects to Google Gemini to fetch unlimited quiz questions.
-*/
-
-const AI_ENGINE = {
-    // یہ فنکشن Gemini API سے سوال لے کر آئے گا
-    async getQuestion(category, language) {
-        const apiKey = _internalAuth(); // یہ config.js سے آپ کی API کی (Key) اٹھائے گا
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-        // اے آئی کے لیے ہدایات (Prompt)
-        const promptText = `Generate a unique multiple choice question about ${category} in ${language} language. 
-        Provide 4 options and the index of the correct answer (0-3). 
-        Format the response strictly as JSON: {"question": "...", "options": ["...", "...", "...", "..."], "answer": index}`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }]
-                })
-            });
-
-            const data = await response.json();
-            const content = data.candidates[0].content.parts[0].text;
-            
-            // JSON صاف کرنے کے لیے (اگر AI کچھ اضافی ٹیکسٹ لکھ دے)
-            const jsonStart = content.indexOf('{');
-            const jsonEnd = content.lastIndexOf('}') + 1;
-            const cleanJson = content.slice(jsonStart, jsonEnd);
-
-            return JSON.parse(cleanJson);
-        } catch (error) {
-            console.error("AI Error:", error);
-            return this.getBackupQuestion(); // اگر نیٹ نہ ہو تو بیک اپ سوال
-        }
-    },
-
-    // بیک اپ سوال اگر اے آئی کام نہ کرے
-    getBackupQuestion() {
-        return {
-            question: "What is the capital of Pakistan?",
-            options: ["Karachi", "Lahore", "Islamabad", "Peshawar"],
-            answer: 2
-        };
-    }
-};
-
-// AI Voice (سوال بولنے کے لیے)
-function speakAI(text, langCode) {
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = text;
-    speech.lang = langCode; // مثلاً 'ur-PK' اردو کے لیے، 'en-US' انگلش کے لیے
-    window.speechSynthesis.speak(speech);
+function saveSiteSettings(){
+    localStorage.setItem("siteName", document.getElementById("siteName").value);
+    localStorage.setItem("introVideo", document.getElementById("introVideo").value);
+    localStorage.setItem("splashAd", document.getElementById("splashAd").value);
+    localStorage.setItem("bgMusic", document.getElementById("bgMusic").value);
+    localStorage.setItem("aiApiKey", document.getElementById("aiApiKey").value);
+    localStorage.setItem("categories", document.getElementById("categories").value);
+    localStorage.setItem("languages", document.getElementById("languages").value);
+    localStorage.setItem("adsCode", document.getElementById("adsCode").value);
+    alert("Site & Quiz Settings Saved");
 }
 
+function savePaymentSettings(){
+    localStorage.setItem("easypaisa", document.getElementById("easypaisa").value);
+    localStorage.setItem("jazzcash", document.getElementById("jazzcash").value);
+    localStorage.setItem("visa", document.getElementById("visa").value);
+    localStorage.setItem("ubl", document.getElementById("ubl").value);
+    localStorage.setItem("giftcard", document.getElementById("giftcard").value);
+    alert("Payment Settings Saved");
+}
+
+function saveRewardSettings(){
+    localStorage.setItem("pointsRequired", document.getElementById("pointsRequired").value);
+    localStorage.setItem("rewardMessage", document.getElementById("rewardMessage").value);
+    alert("Reward Settings Saved");
+}
+
+// Load saved values
+window.onload=function(){
+    document.getElementById("siteName").value = localStorage.getItem("siteName") || "";
+    document.getElementById("introVideo").value = localStorage.getItem("introVideo") || "";
+    document.getElementById("splashAd").value = localStorage.getItem("splashAd") || "";
+    document.getElementById("bgMusic").value = localStorage.getItem("bgMusic") || "";
+    document.getElementById("aiApiKey").value = localStorage.getItem("aiApiKey") || "";
+    document.getElementById("categories").value = localStorage.getItem("categories") || "";
+    document.getElementById("languages").value = localStorage.getItem("languages") || "";
+    document.getElementById("adsCode").value = localStorage.getItem("adsCode") || "";
+    document.getElementById("easypaisa").value = localStorage.getItem("easypaisa") || "";
+    document.getElementById("jazzcash").value = localStorage.getItem("jazzcash") || "";
+    document.getElementById("visa").value = localStorage.getItem("visa") || "";
+    document.getElementById("ubl").value = localStorage.getItem("ubl") || "";
+    document.getElementById("giftcard").value = localStorage.getItem("giftcard") || "";
+    document.getElementById("pointsRequired").value = localStorage.getItem("pointsRequired") || "";
+    document.getElementById("rewardMessage").value = localStorage.getItem("rewardMessage") || "";
+}
 </script>
 
 </body>
 </html>
-
