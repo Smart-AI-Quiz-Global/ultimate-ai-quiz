@@ -1,148 +1,231 @@
+// script.js
+// Smart-AI-Quiz-Global - Main Quiz & UI Controller
+// Author: Smart-AI-Quiz-Global Team
+// Description: Handles quiz engine, UI interactions, countdowns, feedback, and integrates audio/video recording.
+
+// ----------------------------
 // Global Variables
-let clickCount = 0;
-const secretCode = "7866_Zaigham_5121472";
-const adminPhone = "03219379597";
-let currentLanguage = 'en';
-let isRecordingEnabled = false;
+// ----------------------------
+let currentQuestionIndex = 0;
+let questions = [];
+let score = 0;
+let countdownInterval = null;
+let countdownTime = 10; // seconds
 
-// 1. Secret Eye Logic (10 Clicks System)
-function handleEyeClick() {
-    clickCount++;
-    
-    // پہلے 2 کلکس پر صفحہ کے ٹاپ پر جمپ کریں
-    if (clickCount <= 2) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+const startBtn = document.getElementById('start-quiz');
+const quizContainer = document.getElementById('quiz');
+const questionText = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const countdownText = document.getElementById('countdown-text');
+const feedbackText = document.getElementById('feedback-text');
+const correctSound = document.getElementById('correct-sound');
+const wrongSound = document.getElementById('wrong-sound');
+
+const langSelector = document.getElementById('lang');
+const categorySelector = document.getElementById('category');
+
+const giftBtn = document.getElementById('send-gift');
+const giftInfo = document.getElementById('gift-info');
+
+// ----------------------------
+// Quiz Initialization
+// ----------------------------
+async function initializeQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    feedbackText.textContent = "";
+    countdownText.textContent = countdownTime;
+
+    // Load questions based on selected category & language
+    const category = categorySelector.value;
+    const language = langSelector.value;
+
+    questions = await fetchQuestions(category, language);
+
+    if (!questions || !questions.length) {
+        alert("No questions available for selected category & language.");
+        return;
     }
-    
-    // 10ویں کلک پر ایڈمن لاگ ان باکس کھولیں
-    if (clickCount === 10) {
-        document.getElementById('admin-modal').classList.remove('hidden');
-        clickCount = 0; // ری سیٹ کریں
-    }
+
+    // Start recording automatically (if enabled in settings)
+    if (window.recorder) recorder.startScreenRecording();
+
+    showQuestion(currentQuestionIndex);
 }
 
-// 2. Verify Admin Credentials
-function verifyAdmin() {
-    const passInput = document.getElementById('admin-pass').value;
-    const numInput = document.getElementById('admin-num').value;
+// ----------------------------
+// Fetch Questions (Simulated API call)
+// ----------------------------
+async function fetchQuestions(category, language) {
+    // Placeholder: In future, call backend API or AI-generated questions
+    console.log(`Fetching questions for category: ${category}, language: ${language}`);
 
-    if (passInput === secretCode && numInput === adminPhone) {
-        alert("Access Granted! Opening Admin Panel...");
-        window.location.href = 'admin-panel.html';
-    } else {
-        alert("Wrong Code or Number! Try again.");
-        closeModal();
-    }
-}
-
-function closeModal() {
-    document.getElementById('admin-modal').classList.add('hidden');
-    clickCount = 0;
-}
-
-// 3. Language & Category Selection
-function toggleMenu() {
-    document.getElementById("language-menu").classList.toggle("show");
-}
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    alert("Language set to: " + lang);
-    document.getElementById("language-menu").classList.remove("show");
-}
-
-function toggleRecording(status) {
-    isRecordingEnabled = status;
-    alert(status ? "Screen Recording Mode ON" : "Recording Mode OFF");
-}
-
-// 4. Start Quiz Function
-function startQuiz(category) {
-    document.getElementById('setup-screen').classList.add('hidden');
-    document.getElementById('game-screen').classList.remove('hidden');
-    
-    // AI Engine کو کال کریں (یہ اگلی فائل میں ہوگا)
-    loadNextQuestion(category);
-}
-// 5. Quiz Logic & Timer
-let timerInterval;
-let timeLeft = 10;
-
-function startTimer() {
-    timeLeft = 10;
-    document.getElementById('countdown').innerText = timeLeft;
-    
-    // ٹون ٹون آواز کے لیے بیپ (Beep) کا فنکشن
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('countdown').innerText = timeLeft;
-        
-        if (timeLeft > 0) {
-            playTickSound(); // ہر سیکنڈ پر 'ٹون' کی آواز
+    // Example static questions for demo
+    return [
+        {
+            question: "What is AI?",
+            options: ["Artificial Intelligence", "Astronomy Info", "Art Inspiration", "Animal Index"],
+            answer: 0
+        },
+        {
+            question: "Which planet is known as Red Planet?",
+            options: ["Earth", "Mars", "Venus", "Jupiter"],
+            answer: 1
+        },
+        {
+            question: "Who invented the World Wide Web?",
+            options: ["Bill Gates", "Tim Berners-Lee", "Elon Musk", "Steve Jobs"],
+            answer: 1
         }
+    ];
+}
 
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            handleTimeout(); // وقت ختم ہونے پر خودکار جواب
+// ----------------------------
+// Display Question
+// ----------------------------
+function showQuestion(index) {
+    clearInterval(countdownInterval);
+    countdownTime = 10;
+    countdownText.textContent = countdownTime;
+
+    const q = questions[index];
+    questionText.textContent = q.question;
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach((option, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.classList.add("option-btn");
+        btn.addEventListener("click", () => handleAnswer(i));
+        optionsContainer.appendChild(btn);
+    });
+
+    startCountdown();
+}
+
+// ----------------------------
+// Handle Answer
+// ----------------------------
+function handleAnswer(selectedIndex) {
+    clearInterval(countdownInterval);
+    const currentQ = questions[currentQuestionIndex];
+
+    if (selectedIndex === currentQ.answer) {
+        feedbackText.textContent = "Correct!";
+        score++;
+        correctSound.play();
+    } else {
+        feedbackText.textContent = `Wrong! Correct: ${currentQ.options[currentQ.answer]}`;
+        wrongSound.play();
+    }
+
+    // Move to next question after short delay
+    setTimeout(() => {
+        feedbackText.textContent = "";
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion(currentQuestionIndex);
+        } else {
+            endQuiz();
+        }
+    }, 1500);
+}
+
+// ----------------------------
+// Countdown Timer
+// ----------------------------
+function startCountdown() {
+    countdownInterval = setInterval(() => {
+        countdownTime--;
+        countdownText.textContent = countdownTime;
+
+        if (countdownTime <= 0) {
+            clearInterval(countdownInterval);
+            feedbackText.textContent = `Time's up! Correct: ${questions[currentQuestionIndex].options[questions[currentQuestionIndex].answer]}`;
+            wrongSound.play();
+
+            setTimeout(() => {
+                feedbackText.textContent = "";
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    showQuestion(currentQuestionIndex);
+                } else {
+                    endQuiz();
+                }
+            }, 1500);
         }
     }, 1000);
 }
 
-// 6. AI Voice (Text to Speech)
-function speakText(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    // یوزر کی منتخب کردہ زبان کے حساب سے آواز سیٹ کریں
-    utterance.lang = currentLanguage; 
-    utterance.rate = 0.9; // تھوڑا پروفیشنل اور آرام دہ لہجہ
-    window.speechSynthesis.speak(utterance);
-}
+// ----------------------------
+// End Quiz
+// ----------------------------
+function endQuiz() {
+    alert(`Quiz Over! Your Score: ${score} / ${questions.length}`);
 
-// 7. Play Professional Sounds
-function playTickSound() {
-    const beep = new Audio('https://www.soundjay.com/buttons/button-4.mp3'); 
-    beep.play();
-}
-
-function playCorrectSound() {
-    const clap = new Audio('https://www.soundjay.com/human/applause-01.mp3');
-    clap.play();
-    alert("Correct! 👏 (Fake Reward: 🏆)");
-}
-
-function playWrongSound() {
-    const wrong = new Audio('https://www.soundjay.com/buttons/button-10.mp3');
-    wrong.play();
-}
-
-// 8. Answer Checking Logic
-function checkAnswer(selected, correct) {
-    clearInterval(timerInterval); // ٹائمر روک دیں
-    
-    if (selected === correct) {
-        playCorrectSound();
-    } else {
-        playWrongSound();
-        alert("Wrong Answer! Better luck next time.");
+    // Stop screen recording if running
+    if (window.recorder && window.recorder.isScreenRecording) {
+        window.recorder.stopScreenRecording();
     }
 
-    // "Next" بٹن دکھائیں تاکہ یوزر اپنی مرضی سے اگلے سوال پر جائے
-    showNextButton();
+    // Future: Upload quiz video/audio + score to server/AI analytics
 }
 
-function showNextButton() {
-    const nextBtn = document.createElement("button");
-    nextBtn.innerText = "Next Question";
-    nextBtn.id = "next-btn";
-    nextBtn.onclick = () => {
-        nextBtn.remove();
-        loadNextQuestion(); // اگلا سوال لوڈ کریں
-    };
-    document.getElementById('game-screen').appendChild(nextBtn);
+// ----------------------------
+// Event Listeners
+// ----------------------------
+startBtn.addEventListener("click", () => {
+    quizContainer.classList.remove("hidden");
+    startBtn.classList.add("hidden");
+    initializeQuiz();
+});
+
+giftBtn.addEventListener("click", () => giftInfo.classList.toggle("hidden"));
+
+// ----------------------------
+// Admin Eye Unlock (Optional duplicate handling)
+// ----------------------------
+let eyeClickCount = 0;
+const adminEye = document.getElementById('admin-eye');
+if (adminEye) {
+    adminEye.addEventListener('click', () => {
+        eyeClickCount++;
+        if (eyeClickCount >= 10) {
+            const code = prompt("Enter Secret Code:");
+            const number = prompt("Enter Secret Number:");
+            if (code === "7866_Zaigham_5121472" && number === "03219379597") {
+                window.location.href = "admin-panel.html";
+            } else {
+                alert("Wrong credentials");
+                eyeClickCount = 0;
+            }
+        }
+    });
 }
 
-function handleTimeout() {
-    speakText("Time is up! The correct answer is displayed.");
-    playWrongSound();
-    showNextButton();
+// ----------------------------
+// Future-Proof Hooks
+// ----------------------------
+async function analyzeUserVoice() {
+    if (!window.recorder) return console.warn("Recorder not initialized.");
+    await window.recorder.transcribeAudio();
+    await window.recorder.detectLanguage();
+    await window.recorder.noiseReduction();
 }
 
+async function saveQuizData(userId = null) {
+    console.log("Saving quiz data and media... (future server/cloud integration)");
+}
+
+// ----------------------------
+// Multi-Language Dynamic Update
+// ----------------------------
+langSelector.addEventListener("change", () => {
+    console.log(`Language switched to ${langSelector.value}`);
+    // Future: dynamically reload quiz questions in selected language
+});
+
+categorySelector.addEventListener("change", () => {
+    console.log(`Category switched to ${categorySelector.value}`);
+    // Future: fetch category-specific questions
+});
