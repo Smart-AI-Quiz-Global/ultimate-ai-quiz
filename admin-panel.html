@@ -86,6 +86,64 @@
         alert("Ad has been scheduled for the selected country!");
         // یہاں ایڈ سیو کرنے کا لاجک ائے گا
     }
+    /* PROJECT: SMART-AI-QUIZ-GLOBAL 
+   FILE: AI-ENGINE.JS
+   DESCRIPTION: Connects to Google Gemini to fetch unlimited quiz questions.
+*/
+
+const AI_ENGINE = {
+    // یہ فنکشن Gemini API سے سوال لے کر آئے گا
+    async getQuestion(category, language) {
+        const apiKey = _internalAuth(); // یہ config.js سے آپ کی API کی (Key) اٹھائے گا
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        // اے آئی کے لیے ہدایات (Prompt)
+        const promptText = `Generate a unique multiple choice question about ${category} in ${language} language. 
+        Provide 4 options and the index of the correct answer (0-3). 
+        Format the response strictly as JSON: {"question": "...", "options": ["...", "...", "...", "..."], "answer": index}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }]
+                })
+            });
+
+            const data = await response.json();
+            const content = data.candidates[0].content.parts[0].text;
+            
+            // JSON صاف کرنے کے لیے (اگر AI کچھ اضافی ٹیکسٹ لکھ دے)
+            const jsonStart = content.indexOf('{');
+            const jsonEnd = content.lastIndexOf('}') + 1;
+            const cleanJson = content.slice(jsonStart, jsonEnd);
+
+            return JSON.parse(cleanJson);
+        } catch (error) {
+            console.error("AI Error:", error);
+            return this.getBackupQuestion(); // اگر نیٹ نہ ہو تو بیک اپ سوال
+        }
+    },
+
+    // بیک اپ سوال اگر اے آئی کام نہ کرے
+    getBackupQuestion() {
+        return {
+            question: "What is the capital of Pakistan?",
+            options: ["Karachi", "Lahore", "Islamabad", "Peshawar"],
+            answer: 2
+        };
+    }
+};
+
+// AI Voice (سوال بولنے کے لیے)
+function speakAI(text, langCode) {
+    const speech = new SpeechSynthesisUtterance();
+    speech.text = text;
+    speech.lang = langCode; // مثلاً 'ur-PK' اردو کے لیے، 'en-US' انگلش کے لیے
+    window.speechSynthesis.speak(speech);
+}
+
 </script>
 
 </body>
