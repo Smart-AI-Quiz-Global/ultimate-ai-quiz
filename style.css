@@ -1,386 +1,287 @@
-/* ==============================================
-Smart-AI-Quiz-Global - style.css
-Author: Smart-AI-Quiz-Global Team
-Description: Full Professional CSS for Multi-language AI Quiz Platform
-Version: 1.0.0
-Future-proof: Responsive, Animations, Theme-ready, Accessible
-============================================== */
+/* style.css */
+/* Smart-AI-Quiz-Global - Main Stylesheet */
+/* Author: Smart-AI-Quiz-Global Team */
 
-/* =====================
-    Reset & Base Styles
-===================== */
+/* --------------------------
+   Variables for Future Themes
+-------------------------- */
+:root {
+    --primary-color: #1a73e8;        /* Blue for buttons and highlights */
+    --secondary-color: #fbbc05;      /* Yellow for countdown or feedback */
+    --background-color: #f4f4f4;     /* Light background */
+    --text-color: #222;              /* Main text color */
+    --correct-color: #28a745;        /* Correct answer */
+    --wrong-color: #dc3545;          /* Wrong answer */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --------------------------
+   Global Styles
+-------------------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: all 0.3s ease-in-out;
 }
 
-html, body {
-    width: 100%;
-    min-height: 100vh;
-    background: #f4f4f9;
-    color: #1f1f1f;
-    scroll-behavior: smooth;
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-color);
 }
 
 a {
+    color: var(--primary-color);
     text-decoration: none;
-    color: inherit;
 }
 
-button {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-/* =====================
-    Header
-===================== */
+/* --------------------------
+   Header Styles
+-------------------------- */
 .site-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background: #1a73e8;
-    color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 100;
 }
 
 .logo-title-container {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 10px;
 }
 
 .site-logo {
     width: 50px;
     height: 50px;
     border-radius: 8px;
-    border: 2px solid #fff;
-    object-fit: cover;
 }
 
 .site-title {
     font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: bold;
 }
 
-/* =====================
-    Language & Category Selector
-===================== */
+/* Language & Category Selectors */
 .language-selector, .category-selector {
-    margin: 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin: 5px 10px;
 }
 
-select {
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+.language-selector select, .category-selector select {
+    padding: 5px 10px;
+    border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 1rem;
 }
 
-/* =====================
-    Main Quiz Container
-===================== */
+/* --------------------------
+   Main Quiz Container
+-------------------------- */
 .quiz-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 #start-quiz {
-    background: #1a73e8;
-    color: #fff;
+    padding: 12px 25px;
     font-size: 1.2rem;
-    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
     border-radius: 8px;
-    font-weight: 600;
-    width: 100%;
-    max-width: 300px;
-    display: block;
-    margin: 0 auto 1.5rem auto;
-    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 #start-quiz:hover {
-    background: #155ab6;
-    transform: scale(1.05);
+    background: darkblue;
 }
 
-/* =====================
-    Quiz Sections
-===================== */
 #quiz.hidden {
     display: none;
 }
 
 #question-container {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 #question-text {
     font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-#options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+    margin-bottom: 15px;
+    color: var(--text-color);
 }
 
 .option-btn {
-    padding: 0.7rem 1rem;
-    background: #f1f3f4;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 8px 0;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.2s ease;
+    background: #fff;
+    transition: 0.3s;
 }
 
 .option-btn:hover {
-    background: #e2e6eb;
-    transform: scale(1.02);
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
-.option-correct {
-    background: #4caf50 !important;
-    color: #fff;
-}
-
-.option-wrong {
-    background: #f44336 !important;
-    color: #fff;
-}
-
-/* =====================
-    Countdown
-===================== */
+/* Countdown Section */
 #countdown-container {
-    margin: 1rem 0;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #ff5722;
-    text-align: center;
-}
-
-#countdown-text {
-    display: inline-block;
-    background: #fff3e0;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 2px solid #ff9800;
-}
-
-/* =====================
-    Feedback Section
-===================== */
-#feedback-container {
-    margin-top: 1rem;
     font-size: 1.2rem;
-    font-weight: 600;
-    text-align: center;
-    min-height: 40px;
+    margin: 15px 0;
+    color: var(--secondary-color);
+}
+
+/* Feedback Section */
+#feedback-container {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 #feedback-text {
-    padding: 0.5rem;
-    border-radius: 6px;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* =====================
-    Gift / Donation Section
-===================== */
+/* Correct / Wrong Feedback Colors */
+#feedback-text.correct {
+    color: var(--correct-color);
+}
+
+#feedback-text.wrong {
+    color: var(--wrong-color);
+}
+
+/* Gift Section */
 .gift-container {
-    margin-top: 2rem;
+    margin-top: 20px;
     text-align: center;
 }
 
-#send-gift {
-    background: #ff9800;
-    color: #fff;
-    padding: 0.7rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s ease;
+.gift-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background: var(--secondary-color);
+    cursor: pointer;
+    color: #222;
+    transition: 0.3s;
 }
 
-#send-gift:hover {
-    background: #e68900;
-    transform: scale(1.05);
+.gift-container button:hover {
+    background: gold;
+}
+
+#gift-info.hidden {
+    display: none;
 }
 
 #gift-info {
-    margin-top: 1rem;
-    background: #fff3e0;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ffcc80;
+    margin-top: 10px;
+    padding: 10px;
+    background: #eee;
+    border-radius: 6px;
 }
 
-/* =====================
-    Social Footer
-===================== */
+/* --------------------------
+   Footer Styles
+-------------------------- */
 .site-footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
-    background: #1a73e8;
-    color: #fff;
-    padding: 1rem;
-    margin-top: 2rem;
+    gap: 15px;
+    background: #222;
+    color: white;
+    padding: 15px 0;
 }
 
 .site-footer a {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    color: #fff;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.1);
-    transition: all 0.3s ease;
+    gap: 8px;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: 0.3s;
 }
 
 .site-footer a:hover {
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.05);
+    background: var(--primary-color);
+    color: white;
 }
 
-/* Font Awesome Icon Sizes */
+/* Font Awesome icon sizing */
 .site-footer i {
     font-size: 1.2rem;
 }
 
-/* =====================
-    Admin Eye (Hidden)
-===================== */
+/* --------------------------
+   Admin Eye (Hidden)
+-------------------------- */
 #admin-eye {
+    width: 30px;
+    height: 30px;
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    background: url('favicon.ico') no-repeat center center;
-    background-size: cover;
-    opacity: 0.3;
+    bottom: 10px;
+    right: 10px;
     cursor: pointer;
-    z-index: 9999;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+    opacity: 0;
 }
 
-#admin-eye:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
-}
-
-/* =====================
-    Responsive Design
-===================== */
+/* --------------------------
+   Responsive Design
+-------------------------- */
 @media screen and (max-width: 768px) {
     .site-header {
         flex-direction: column;
-        gap: 1rem;
+        gap: 10px;
     }
 
-    .logo-title-container {
-        justify-content: center;
-    }
-
-    #start-quiz {
+    .language-selector, .category-selector {
         width: 100%;
     }
 
-    #options-container {
-        gap: 0.6rem;
+    .quiz-container {
+        margin: 20px;
+        padding: 15px;
     }
 
-    .site-footer {
-        flex-direction: column;
-        text-align: center;
+    .option-btn {
+        font-size: 1rem;
+        padding: 8px 12px;
     }
 }
 
-/* =====================
-    Future-Proof / Animations
-===================== */
-.fade-in {
-    animation: fadeIn 0.8s ease-in-out forwards;
-}
+@media screen and (max-width: 480px) {
+    .site-title {
+        font-size: 1.4rem;
+    }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.blink {
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-}
-
-/* =====================
-    Dark Mode (Future)
-===================== */
-body.dark-mode {
-    background: #121212;
-    color: #e0e0e0;
-}
-
-body.dark-mode .quiz-container {
-    background: #1e1e1e;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-}
-
-body.dark-mode select, body.dark-mode .option-btn, body.dark-mode #send-gift {
-    background: #2c2c2c;
-    color: #fff;
-    border: 1px solid #444;
-}
-
-body.dark-mode .site-footer {
-    background: #0d47a1;
-}
-
-body.dark-mode .site-footer a {
-    background: rgba(255,255,255,0.05);
-}
-
-/* =====================
-    Additional Future Utilities
-===================== */
-.hidden {
-    display: none !important;
-}
-
-.text-center {
-    text-align: center !important;
-}
-
-.pointer {
-    cursor: pointer !important;
+    #start-quiz {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
 }
