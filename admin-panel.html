@@ -1,55 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Smart AI Quiz Global</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart-AI-Quiz-Global | Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Basic Layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1b1b1b;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0f1115;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            color: #00ffcc;
+        }
+
+        .hidden-eye {
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hidden-eye[data-clicks="10"]::after {
+            content: "ADMIN ACCESS READY";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #ff0000;
+        }
+
+        main {
+            padding: 20px 30px;
+        }
+
+        section {
+            margin-bottom: 30px;
+            background-color: #252525;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        section h2 {
+            margin-bottom: 15px;
+            color: #00ffcc;
+        }
+
+        input, select, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #00ffcc;
+            color: #1b1b1b;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #00d1a6;
+        }
+
+        .ad-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ad-item {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1 1 calc(25% - 10px);
+        }
+
+        .ad-item img, .ad-item video {
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .admin-code {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .admin-code.active {
+            display: block;
+        }
+
+        /* Scrollable section for ads/questions */
+        .scrollable {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Future-proof notification */
+        .future-ready {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-<div id="adminPanel">
-    <h1>Admin Panel</h1>
 
-    <!-- Add New Question -->
-    <label for="newQuestion">Add New Question:</label>
-    <input type="text" id="newQuestion" placeholder="Enter question">
-    <button onclick="addQuestion()">Add Question</button>
+<header>
+    <h1>Smart-AI-Quiz-Global Admin Panel</h1>
+    <!-- Hidden Eye Icon -->
+    <i class="fas fa-eye hidden-eye" id="hiddenEye" data-clicks="0" title="Click 10 times to unlock admin"></i>
+</header>
 
-    <!-- Gift / Payment Details -->
-    <h2>Payment / Gifts</h2>
-    <div id="paymentDetails">
-        <p>EasyPaisa: 0312XXXXXXX</p>
-        <p>JazzCash: 0312XXXXXXX</p>
-        <p>Visa Card: XXXX-XXXX-XXXX-XXXX</p>
-        <p>UBL Bank: XXXXXXXX</p>
-    </div>
+<main>
 
-    <!-- Ads Management -->
-    <h2>Ads Management</h2>
-    <div id="adsList"></div>
-</div>
+    <!-- Admin Authentication Section -->
+    <section id="adminAuth" class="admin-code">
+        <h2>Enter Admin Credentials</h2>
+        <input type="text" id="adminCode" placeholder="Enter Admin Code">
+        <input type="text" id="adminPhone" placeholder="Enter Phone Number">
+        <button id="authBtn">Unlock Admin Panel</button>
+        <p id="authMsg"></p>
+    </section>
 
-<script src="ads-manager.js"></script>
+    <!-- Ads Management Section -->
+    <section id="adsSection" class="admin-code">
+        <h2>Manage Ads <span class="future-ready">Future-Proof Slot for 50 Ads</span></h2>
+        <input type="file" id="adFile" accept="image/*,video/*">
+        <select id="adCountry">
+            <option value="all">All Countries</option>
+            <option value="PK">Pakistan</option>
+            <option value="US">USA</option>
+            <option value="AE">UAE</option>
+            <option value="UK">UK</option>
+            <option value="IN">India</option>
+        </select>
+        <select id="adCategory">
+            <option value="all">All Categories</option>
+            <option value="islamic">Islamic</option>
+            <option value="tech">Technology</option>
+            <option value="edu">Education</option>
+            <option value="entertainment">Entertainment</option>
+            <!-- Future categories will auto populate -->
+        </select>
+        <button id="uploadAdBtn">Upload Ad</button>
+        <div class="scrollable ad-list" id="adsList"></div>
+    </section>
+
+    <!-- Questions Management Section -->
+    <section id="questionsSection" class="admin-code">
+        <h2>Manage Questions <span class="future-ready">AI Powered + Multi-Language Ready</span></h2>
+        <input type="text" id="questionText" placeholder="Enter Question">
+        <textarea id="optionsText" placeholder="Enter Options (comma separated)"></textarea>
+        <select id="questionCategory">
+            <option value="islamic">Islamic</option>
+            <option value="tech">Technology</option>
+            <option value="edu">Education</option>
+            <option value="entertainment">Entertainment</option>
+            <!-- Future categories -->
+        </select>
+        <select id="questionLanguage">
+            <option value="en">English</option>
+            <option value="ur">Urdu</option>
+            <option value="hi">Hindi</option>
+            <option value="ar">Arabic</option>
+            <option value="zh">Chinese</option>
+            <!-- Future languages -->
+        </select>
+        <button id="addQuestionBtn">Add Question</button>
+        <div class="scrollable" id="questionList"></div>
+    </section>
+
+    <!-- Gift / Donations Section -->
+    <section id="giftSection" class="admin-code">
+        <h2>Manage Gift / Donation Info</h2>
+        <input type="text" id="bankName" placeholder="Bank / Service Name">
+        <input type="text" id="bankNumber" placeholder="Bank / Mobile Number">
+        <input type="text" id="accountHolder" placeholder="Account Holder Name">
+        <button id="saveGiftBtn">Save Gift Info</button>
+        <div id="giftList"></div>
+    </section>
+
+</main>
+
+<!-- External JS -->
+<script src="script.js"></script>
 <script>
-function addQuestion(){
-    const q = document.getElementById('newQuestion').value;
-    if(q) alert("Question Added: "+q);
-}
+    // -------------------------------
+    // Hidden Eye Logic
+    // -------------------------------
+    const hiddenEye = document.getElementById('hiddenEye');
+    const adminAuth = document.getElementById('adminAuth');
+    let clickCount = 0;
 
-// Hidden Admin Eye Trigger (10 clicks)
-let adminEye = document.getElementById('adminEye');
-let clickCount = 0;
-adminEye.onclick = () => {
-    clickCount++;
-    if(clickCount>=10){
-        let code = prompt("Enter Admin Code:");
-        let number = prompt("Enter Registered Number:");
-        if(code==="7866_Zaigham_5121472" && number==="03219379597"){
-            alert("Admin Access Granted");
-            document.getElementById('adminPanel').style.display="block";
+    hiddenEye.addEventListener('click', () => {
+        clickCount++;
+        hiddenEye.dataset.clicks = clickCount;
+
+        if(clickCount === 10) {
+            // Show Admin Authentication
+            adminAuth.classList.add('active');
+            alert("Admin Authentication Unlocked! Enter Code to Continue");
         }
-    }
-};
+    });
+
+    // -------------------------------
+    // Admin Authentication
+    // -------------------------------
+    const authBtn = document.getElementById('authBtn');
+    const adminCodeInput = document.getElementById('adminCode');
+    const adminPhoneInput = document.getElementById('adminPhone');
+    const authMsg = document.getElementById('authMsg');
+
+    authBtn.addEventListener('click', () => {
+        const code = adminCodeInput.value.trim();
+        const phone = adminPhoneInput.value.trim();
+
+        // Default credentials
+        if(code === "7866_Zaigham_5121472" && phone === "03219379597") {
+            authMsg.style.color = "lime";
+            authMsg.textContent = "✅ Admin Access Granted!";
+            // Show all Admin Sections
+            document.querySelectorAll('.admin-code').forEach(el => el.classList.add('active'));
+        } else {
+            authMsg.style.color = "red";
+            authMsg.textContent = "❌ Wrong Code or Phone Number!";
+        }
+    });
+
+    // -------------------------------
+    // Future-proof Ad Upload Logic
+    // -------------------------------
+    const uploadAdBtn = document.getElementById('uploadAdBtn');
+    const adFile = document.getElementById('adFile');
+    const adCountry = document.getElementById('adCountry');
+    const adCategory = document.getElementById('adCategory');
+    const adsList = document.getElementById('adsList');
+
+    uploadAdBtn.addEventListener('click', () => {
+        const file = adFile.files[0];
+        if(!file) { alert("Select a file"); return; }
+
+        const adDiv = document.createElement('div');
+        adDiv.classList.add('ad-item');
+        if(file.type.includes("image")) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            adDiv.appendChild(img);
+        } else if(file.type.includes("video")) {
+            const vid = document.createElement('video');
+            vid.src = URL.createObjectURL(file);
+            vid.controls = true;
+            adDiv.appendChild(vid);
+        }
+
+        const info = document.createElement('p');
+        info.textContent = `Country: ${adCountry.value}, Category: ${adCategory.value}`;
+        adDiv.appendChild(info);
+
+        adsList.appendChild(adDiv);
+        adFile.value = "";
+    });
+
+    // -------------------------------
+    // Question Management Logic
+    // -------------------------------
+    const addQuestionBtn = document.getElementById('addQuestionBtn');
+    const questionText = document.getElementById('questionText');
+    const optionsText = document.getElementById('optionsText');
+    const questionCategory = document.getElementById('questionCategory');
+    const questionLanguage = document.getElementById('questionLanguage');
+    const questionList = document.getElementById('questionList');
+
+    addQuestionBtn.addEventListener('click', () => {
+        const q = questionText.value.trim();
+        const options = optionsText.value.trim().split(",");
+        if(!q || options.length < 2) { alert("Enter question and at least 2 options"); return; }
+
+        const div = document.createElement('div');
+        div.style.background = "#333";
+        div.style.marginBottom = "10px";
+        div.style.padding = "10px";
+        div.style.borderRadius = "8px";
+
+        div.innerHTML = `<strong>Q:</strong> ${q}<br>
+                         <strong>Options:</strong> ${options.join(" | ")}<br>
+                         <strong>Category:</strong> ${questionCategory.value}, 
+                         <strong>Language:</strong> ${questionLanguage.value}`;
+
+        questionList.appendChild(div);
+        questionText.value = "";
+        optionsText.value = "";
+    });
+
+    // -------------------------------
+    // Gift/Donation Logic
+    // -------------------------------
+    const saveGiftBtn = document.getElementById('saveGiftBtn');
+    const bankName = document.getElementById('bankName');
+    const bankNumber = document.getElementById('bankNumber');
+    const accountHolder = document.getElementById('accountHolder');
+    const giftList = document.getElementById('giftList');
+
+    saveGiftBtn.addEventListener('click', () => {
+        const bName = bankName.value.trim();
+        const bNumber = bankNumber.value.trim();
+        const aHolder = accountHolder.value.trim();
+        if(!bName || !bNumber || !aHolder) { alert("Fill all fields"); return; }
+
+        giftList.innerHTML = `<p>Bank/Service: ${bName}<br>Number: ${bNumber}<br>Account Holder: ${aHolder}</p>`;
+        bankName.value = bankNumber.value = accountHolder.value = "";
+    });
+
+    // -------------------------------
+    // Future Proof Placeholder
+    // -------------------------------
+    // This section is reserved for:
+    // - AI Integration (Auto Question Generation)
+    // - Multi-language Translation
+    // - Analytics Dashboard
+    // - Cloud Sync for Ads & Questions
 </script>
+
 </body>
 </html>
