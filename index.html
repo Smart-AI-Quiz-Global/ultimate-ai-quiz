@@ -1,161 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart-AI-Quiz-Global</title>
+    <title>Smart-AI-Quiz-Global</title><!-- Favicon & Website Logo -->
+<link id="dynamic-favicon" rel="icon" type="image/x-icon" href="favicon.ico">
+<script src="favicon.js" defer></script>
 
-    <!-- Favicon -->
-    <link id="dynamic-favicon" rel="icon" type="image/x-icon" href="favicon.ico">
-    <script src="favicon.js" defer></script>
+<!-- CSS -->
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+<!-- Core JS -->
+<script src="config.js" defer></script>
+<script src="ads-manager.js" defer></script>
+<script src="ai-engine.js" defer></script>
+<script src="recorder.js" defer></script>
+<script src="script.js" defer></script>
 
-    <!-- Core JS -->
-    <script src="config.js" defer></script>
-    <script src="ads-manager.js" defer></script>
-    <script src="ai-engine.js" defer></script>
-    <script src="recorder.js" defer></script>
-    <script src="script.js" defer></script>
+<!-- Meta for SEO & Responsive Enhancement -->
+<meta name="description" content="Smart-AI-Quiz-Global: Multi-language, AI-powered Quiz platform with live updates and social sharing features.">
+<meta name="keywords" content="AI, Quiz, Multi-language, Technology, Education, Islamic, Entertainment, Sports">
+<meta name="author" content="Smart-AI-Quiz-Global Team">
+
 </head>
-<body>
-    <!-- Header -->
-    <header class="site-header">
+<body><!-- ==================== HEADER ==================== --><header class="site-header">
+    <div class="logo-title">
+        <img src="favicon.ico" alt="Logo" class="site-logo">
         <h1>Smart-AI-Quiz-Global</h1>
+    </div><!-- Language Selector with Flags -->
+<div class="language-selector">
+    <label for="lang">Select Language:</label>
+    <select id="lang">
+        <option value="en">🇬🇧 English</option>
+        <option value="ur">🇵🇰 Urdu</option>
+        <option value="hi">🇮🇳 Hindi</option>
+        <option value="ar">🇸🇦 Arabic</option>
+        <option value="zh">🇨🇳 Chinese</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="pt">🇵🇹 Portuguese</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="ja">🇯🇵 Japanese</option>
+        <option value="ko">🇰🇷 Korean</option>
+        <option value="it">🇮🇹 Italian</option>
+        <option value="tr">🇹🇷 Turkish</option>
+        <option value="nl">🇳🇱 Dutch</option>
+        <option value="sv">🇸🇪 Swedish</option>
+        <option value="no">🇳🇴 Norwegian</option>
+        <option value="fi">🇫🇮 Finnish</option>
+        <option value="pl">🇵🇱 Polish</option>
+        <option value="th">🇹🇭 Thai</option>
+        <option value="id">🇮🇩 Indonesian</option>
+        <option value="ms">🇲🇾 Malay</option>
+        <option value="vi">🇻🇳 Vietnamese</option>
+        <option value="fa">🇮🇷 Persian</option>
+        <option value="he">🇮🇱 Hebrew</option>
+        <option value="bn">🇧🇩 Bengali</option>
+        <option value="pa">🇮🇳 Punjabi</option>
+        <option value="ta">🇮🇳 Tamil</option>
+        <option value="gu">🇮🇳 Gujarati</option>
+        <option value="mr">🇮🇳 Marathi</option>
+    </select>
+</div>
 
-        <!-- Language Selector with Flags -->
-        <div class="language-selector">
-            <label for="lang">Select Language:</label>
-            <select id="lang">
-                <option value="en">🇬🇧 English</option>
-                <option value="ur">🇵🇰 Urdu</option>
-                <option value="hi">🇮🇳 Hindi</option>
-                <option value="ar">🇸🇦 Arabic</option>
-                <option value="zh">🇨🇳 Chinese</option>
-                <option value="es">🇪🇸 Spanish</option>
-                <option value="fr">🇫🇷 French</option>
-                <option value="de">🇩🇪 German</option>
-                <option value="pt">🇵🇹 Portuguese</option>
-                <option value="ru">🇷🇺 Russian</option>
-                <option value="ja">🇯🇵 Japanese</option>
-                <option value="ko">🇰🇷 Korean</option>
-                <option value="it">🇮🇹 Italian</option>
-                <option value="tr">🇹🇷 Turkish</option>
-                <option value="nl">🇳🇱 Dutch</option>
-                <option value="sv">🇸🇪 Swedish</option>
-                <option value="no">🇳🇴 Norwegian</option>
-                <option value="fi">🇫🇮 Finnish</option>
-                <option value="pl">🇵🇱 Polish</option>
-                <option value="th">🇹🇭 Thai</option>
-                <option value="id">🇮🇩 Indonesian</option>
-                <option value="ms">🇲🇾 Malay</option>
-                <option value="vi">🇻🇳 Vietnamese</option>
-                <option value="fa">🇮🇷 Persian</option>
-                <option value="he">🇮🇱 Hebrew</option>
-                <option value="bn">🇧🇩 Bengali</option>
-                <option value="pa">🇮🇳 Punjabi</option>
-                <option value="ta">🇮🇳 Tamil</option>
-                <option value="gu">🇮🇳 Gujarati</option>
-                <option value="mr">🇮🇳 Marathi</option>
-            </select>
+<!-- Category Selector -->
+<div class="category-selector">
+    <label for="category">Select Category:</label>
+    <select id="category">
+        <option value="technology">Technology</option>
+        <option value="education">Education</option>
+        <option value="islamic">Islamic</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="sports">Sports</option>
+        <option value="general">General Knowledge</option>
+        <option value="science">Science</option>
+        <option value="history">History</option>
+        <option value="politics">Politics</option>
+        <option value="finance">Finance</option>
+    </select>
+</div>
+
+</header><!-- ==================== MAIN QUIZ AREA ==================== --><main class="quiz-container">
+    <button id="start-quiz" class="start-btn">Start Quiz</button><div id="quiz" class="hidden">
+    <!-- Question Section -->
+    <section id="question-section">
+        <div id="question-container">
+            <p id="question-text">Question will appear here...</p>
+            <div id="options-container"></div>
         </div>
+    </section>
 
-        <!-- Category Selector -->
-        <div class="category-selector">
-            <label for="category">Select Category:</label>
-            <select id="category">
-                <option value="technology">Technology</option>
-                <option value="education">Education</option>
-                <option value="islamic">Islamic</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="sports">Sports</option>
-                <option value="general">General Knowledge</option>
-                <option value="science">Science</option>
-                <option value="history">History</option>
-                <option value="politics">Politics</option>
-                <option value="finance">Finance</option>
-            </select>
+    <!-- Countdown Section -->
+    <section id="countdown-section">
+        <p id="countdown-text">10</p>
+        <audio id="countdown-audio" src="countdown-tick.mp3"></audio>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback-section">
+        <p id="feedback-text"></p>
+        <audio id="correct-sound" src="correct.mp3"></audio>
+        <audio id="wrong-sound" src="wrong.mp3"></audio>
+    </section>
+
+    <!-- Gift / Donation Section -->
+    <section class="gift-container">
+        <button id="send-gift">Send Gift / Support</button>
+        <div id="gift-info" class="hidden">
+            <p>Bank / EasyPaisa / UBL Details here</p>
         </div>
-    </header>
+    </section>
+</div>
 
-    <!-- Main Quiz Area -->
-    <main class="quiz-container">
-        <button id="start-quiz">Start Quiz</button>
-
-        <div id="quiz" class="hidden">
-            <div id="question-container">
-                <p id="question-text">Question will appear here...</p>
-                <div id="options-container"></div>
-            </div>
-
-            <div id="countdown-container">
-                <p id="countdown-text">10</p>
-                <audio id="countdown-audio" src="countdown-tick.mp3"></audio>
-            </div>
-
-            <div id="feedback-container">
-                <p id="feedback-text"></p>
-                <audio id="correct-sound" src="correct.mp3"></audio>
-                <audio id="wrong-sound" src="wrong.mp3"></audio>
-            </div>
-
-            <!-- Gift / Donation Button -->
-            <div class="gift-container">
-                <button id="send-gift">Send Gift / Support</button>
-                <div id="gift-info" class="hidden">
-                    <p>Bank / EasyPaisa / UBL Details here</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Social Media Links -->
-    <footer class="site-footer">
-        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank">Facebook</a>
-        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank">TikTok</a>
-        <a href="https://youtube.com/@mast_tv_official" target="_blank">YouTube</a>
-    </footer>
-
-    <!-- Hidden Admin Trigger Eye -->
-    <div id="admin-eye" title="Click 10 times for Admin Panel"></div>
-
-    <!-- Scripts -->
-    <script>
-        // Admin Panel Unlock Logic
-        let eyeClickCount = 0;
-        const adminEye = document.getElementById('admin-eye');
-        adminEye.addEventListener('click', () => {
-            eyeClickCount++;
-            if (eyeClickCount >= 10) {
-                const code = prompt("Enter Secret Code:");
-                const number = prompt("Enter Secret Number:");
-                if (code === "7866_Zaigham_5121472" && number === "03219379597") {
-                    window.location.href = "admin-panel.html";
-                } else {
-                    alert("Wrong credentials");
-                    eyeClickCount = 0;
-                }
+</main><!-- ==================== SOCIAL MEDIA FOOTER ==================== --><footer class="site-footer">
+    <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank">
+        <i class="fab fa-facebook-f"></i> Facebook
+    </a>
+    <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank">
+        <i class="fab fa-tiktok"></i> TikTok
+    </a>
+    <a href="https://youtube.com/@mast_tv_official" target="_blank">
+        <i class="fab fa-youtube"></i> YouTube
+    </a>
+    <a href="https://wa.me/03219379597" target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+</footer><!-- ==================== HIDDEN ADMIN PANEL TRIGGER ==================== --><div id="admin-eye" title="Click 10 times for Admin Panel"></div><!-- ==================== SCRIPTS ==================== --><script>
+    // Admin Panel Unlock Logic
+    let eyeClickCount = 0;
+    const adminEye = document.getElementById('admin-eye');
+    adminEye.addEventListener('click', () => {
+        eyeClickCount++;
+        if (eyeClickCount >= 10) {
+            const code = prompt("Enter Secret Code:");
+            const number = prompt("Enter Secret Number:");
+            if (code === "7866_Zaigham_5121472" && number === "03219379597") {
+                window.location.href = "admin-panel.html";
+            } else {
+                alert("Wrong credentials");
+                eyeClickCount = 0;
             }
-        });
+        }
+    });
 
-        // Start Quiz
-        const startBtn = document.getElementById('start-quiz');
-        const quizContainer = document.getElementById('quiz');
-        startBtn.addEventListener('click', () => {
-            quizContainer.classList.remove('hidden');
-            startBtn.classList.add('hidden');
-            if (typeof initializeQuiz === "function") {
-                initializeQuiz();
-            }
-        });
+    // Start Quiz
+    const startBtn = document.getElementById('start-quiz');
+    const quizContainer = document.getElementById('quiz');
+    startBtn.addEventListener('click', () => {
+        quizContainer.classList.remove('hidden');
+        startBtn.classList.add('hidden');
+        if (typeof initializeQuiz === 'function') initializeQuiz();
+    });
 
-        // Gift Button Toggle
-        const giftBtn = document.getElementById('send-gift');
-        const giftInfo = document.getElementById('gift-info');
-        giftBtn.addEventListener('click', () => {
-            giftInfo.classList.toggle('hidden');
-        });
-    </script>
-</body>
+    // Gift Button Toggle
+    const giftBtn = document.getElementById('send-gift');
+    const giftInfo = document.getElementById('gift-info');
+    giftBtn.addEventListener('click', () => giftInfo.classList.toggle('hidden'));
+</script></body>
 </html>
