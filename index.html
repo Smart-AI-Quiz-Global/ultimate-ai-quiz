@@ -4,31 +4,121 @@
     <meta charset="UTF-8">
     <title>Smart AI Quiz Global</title>
 
+    <!-- Mobile Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Smart AI Quiz Global - Play intelligent quizzes powered by AI.">
+    <meta name="keywords" content="AI Quiz, Smart Quiz, Online Quiz, Trivia Game">
+    <meta name="author" content="Smart AI Quiz Global">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000">
+
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-    <!-- Main Container -->
-    <div id="app"></div>
+    <!-- ================= MAIN CONTAINER ================= -->
+    <div id="app">
 
-    <!-- Navigation Buttons -->
-    <div style="text-align:center; margin-top:20px;">
-        <a href="admin-panel.html">Admin Panel</a>
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">Smart AI Quiz Global</div>
+
+            <nav class="navigation">
+                <a href="index.html">Home</a>
+                <a href="#categories">Categories</a>
+                <a href="#about">About</a>
+                <a href="admin-panel.html">Admin</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to Smart AI Quiz Global</h1>
+            <p>Experience AI-powered intelligent quizzes in real-time.</p>
+            <button id="startQuizBtn">Start Quiz</button>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="categories">
+            <h2>Quiz Categories</h2>
+
+            <div class="category-grid">
+                <button class="category">General Knowledge</button>
+                <button class="category">Science</button>
+                <button class="category">Technology</button>
+                <button class="category">History</button>
+                <button class="category">Sports</button>
+                <button class="category">Geography</button>
+                <button class="category">Mathematics</button>
+                <button class="category">Animals</button>
+                <button class="category">Space</button>
+                <button class="category">Health</button>
+                <button class="category">Business</button>
+                <button class="category">Politics</button>
+                <button class="category">Programming</button>
+                <button class="category">Islamic Knowledge</button>
+                <button class="category">World Facts</button>
+            </div>
+        </section>
+
+        <!-- Quiz Section (Hidden Initially) -->
+        <section id="quizSection" class="quiz hidden">
+
+            <h2 id="questionText">Question will appear here</h2>
+
+            <div class="options">
+                <button class="option-btn">Option 1</button>
+                <button class="option-btn">Option 2</button>
+                <button class="option-btn">Option 3</button>
+            </div>
+
+            <div class="timer">
+                <span id="countdown">10</span>
+            </div>
+
+            <div class="controls">
+                <button id="nextBtn">Next</button>
+                <button id="shareBtn">Share</button>
+            </div>
+
+        </section>
+
+        <!-- Advertisement Section -->
+        <section id="adContainer">
+            <!-- Ads will load dynamically -->
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <h2>About This Project</h2>
+            <p>
+                Smart AI Quiz Global is an advanced quiz platform designed 
+                to generate intelligent questions using artificial intelligence.
+                It supports real-time quiz generation and interactive gameplay.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 Smart AI Quiz Global. All Rights Reserved.</p>
+        </footer>
+
     </div>
 
-    <!-- JavaScript Files (Order Important) -->
+    <!-- ================= JAVASCRIPT FILES ================= -->
 
-    <!-- Config First -->
+    <!-- Config -->
     <script src="config.js"></script>
 
     <!-- AI Engine -->
@@ -40,8 +130,16 @@
     <!-- Ads Manager -->
     <script src="ads-manager.js"></script>
 
-    <!-- Main Script (Last) -->
+    <!-- Main Script -->
     <script src="script.js"></script>
+
+    <!-- Service Worker (PWA Support) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(() => console.log("Service Worker Registered"));
+        }
+    </script>
 
 </body>
 </html>
