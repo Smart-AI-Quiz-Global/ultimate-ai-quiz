@@ -7,21 +7,20 @@
 
     <!-- Favicon & Logo -->
     <link id="dynamic-favicon" rel="icon" type="image/x-icon" href="favicon.ico">
-    <script src="favicon.js" defer></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- JS Core -->
+    <!-- JS Scripts -->
     <script src="config.js" defer></script>
     <script src="ads-manager.js" defer></script>
     <script src="ai-engine.js" defer></script>
     <script src="recorder.js" defer></script>
     <script src="script.js" defer></script>
 
-    <!-- SEO Meta -->
-    <meta name="description" content="Smart-AI-Quiz-Global: Multi-language AI-powered Quiz Platform">
+    <!-- SEO -->
+    <meta name="description" content="Smart-AI-Quiz-Global: Multi-language AI-powered Quiz platform">
     <meta name="keywords" content="AI, Quiz, Multi-language, Technology, Education, Islamic, Entertainment, Sports">
     <meta name="author" content="Smart-AI-Quiz-Global Team">
 </head>
@@ -92,105 +91,76 @@
 
     <!-- Main Quiz Area -->
     <main class="quiz-container">
-        <button id="start-quiz" class="primary-btn">Start Quiz</button>
-
+        <button id="start-quiz">Start Quiz</button>
         <div id="quiz" class="hidden">
-            <!-- Question Section -->
-            <section id="question-section">
+            <div id="question-container">
                 <p id="question-text">Question will appear here...</p>
                 <div id="options-container"></div>
-            </section>
+            </div>
 
-            <!-- Countdown -->
-            <section id="countdown-section">
+            <div id="countdown-container">
                 <p id="countdown-text">10</p>
                 <audio id="countdown-audio" src="countdown-tick.mp3"></audio>
-            </section>
+            </div>
 
-            <!-- Feedback -->
-            <section id="feedback-section">
+            <div id="feedback-container">
                 <p id="feedback-text"></p>
                 <audio id="correct-sound" src="correct.mp3"></audio>
                 <audio id="wrong-sound" src="wrong.mp3"></audio>
-            </section>
-
-            <!-- Recorder Controls -->
-            <section id="recorder-controls">
-                <h3>Quiz Recording (Audio & Screen)</h3>
-                <button id="init-recorder">Init Recorder</button>
-                <button id="start-recording">Start Recording</button>
-                <button id="stop-recording">Stop Recording</button>
-                <button id="play-recording">Play Recording</button>
-                <button id="download-recording">Download Recording</button>
-            </section>
+            </div>
 
             <!-- Gift / Donation -->
-            <section class="gift-container">
+            <div class="gift-container">
                 <button id="send-gift">Send Gift / Support</button>
                 <div id="gift-info" class="hidden">
                     <p>Bank / EasyPaisa / UBL Details here</p>
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
     <!-- Social Footer -->
     <footer class="site-footer">
-        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank">
-            <i class="fab fa-facebook-f"></i> Facebook
-        </a>
-        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank">
-            <i class="fab fa-tiktok"></i> TikTok
-        </a>
-        <a href="https://youtube.com/@mast_tv_official" target="_blank">
-            <i class="fab fa-youtube"></i> YouTube
-        </a>
-        <a href="https://wa.me/03219379597" target="_blank">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
+        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a href="https://youtube.com/@mast_tv_official" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://wa.me/03219379597" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
     </footer>
 
-    <!-- Admin Unlock -->
+    <!-- Admin Eye -->
     <div id="admin-eye" title="Click 10 times for Admin Panel"></div>
 
-    <!-- Recorder UI Logic -->
     <script>
-        // Recorder buttons
-        const initBtn = document.getElementById('init-recorder');
-        const startBtnRec = document.getElementById('start-recording');
-        const stopBtnRec = document.getElementById('stop-recording');
-        const playBtnRec = document.getElementById('play-recording');
-        const downloadBtnRec = document.getElementById('download-recording');
-
-        // Initialize Recorder
-        initBtn.addEventListener('click', async () => {
-            if (window.recorder) {
-                await window.recorder.init();
-                alert("Recorder initialized successfully!");
-            } else {
-                alert("Recorder not loaded.");
+        // Admin Unlock Logic
+        let eyeClickCount = 0;
+        const adminEye = document.getElementById('admin-eye');
+        adminEye.addEventListener('click', () => {
+            eyeClickCount++;
+            if (eyeClickCount >= 10) {
+                const code = prompt("Enter Secret Code:");
+                const number = prompt("Enter Secret Number:");
+                if (code === "7866_Zaigham_5121472" && number === "03219379597") {
+                    window.location.href = "admin-panel.html";
+                } else {
+                    alert("Wrong credentials");
+                    eyeClickCount = 0;
+                }
             }
         });
 
-        // Start Recording
-        startBtnRec.addEventListener('click', () => {
-            if (window.recorder) window.recorder.startRecording();
+        // Start Quiz Logic
+        const startBtn = document.getElementById('start-quiz');
+        const quizContainer = document.getElementById('quiz');
+        startBtn.addEventListener('click', () => {
+            quizContainer.classList.remove('hidden');
+            startBtn.classList.add('hidden');
+            if (typeof initializeQuiz === "function") initializeQuiz();
         });
 
-        // Stop Recording
-        stopBtnRec.addEventListener('click', () => {
-            if (window.recorder) window.recorder.stopRecording();
-        });
-
-        // Play Recording
-        playBtnRec.addEventListener('click', () => {
-            if (window.recorder) window.recorder.playAudio();
-        });
-
-        // Download Recording
-        downloadBtnRec.addEventListener('click', () => {
-            if (window.recorder) window.recorder.downloadAudio();
-        });
+        // Gift Toggle
+        const giftBtn = document.getElementById('send-gift');
+        const giftInfo = document.getElementById('gift-info');
+        giftBtn.addEventListener('click', () => giftInfo.classList.toggle('hidden'));
     </script>
 </body>
 </html>
