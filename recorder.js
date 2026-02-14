@@ -1,72 +1,73 @@
 // recorder.js
-// Smart-AI-Quiz-Global - Audio & Screen Recorder Module
+// Smart-AI-Quiz-Global - Professional Audio & Screen Recorder Module
 // Author: Smart-AI-Quiz-Global Team
-// Description: Handles microphone recording, screen recording, playback, download, and future AI features.
+// Description: Handles audio recording, screen recording, playback, download, and future AI-powered features.
 
 class Recorder {
     constructor() {
-        // Microphone properties
-        this.mediaRecorder = null;
+        // Audio Recording
+        this.audioRecorder = null;
         this.audioChunks = [];
         this.audioBlob = null;
         this.audioUrl = null;
         this.audioElement = null;
-        this.isRecordingAudio = false;
+        this.isAudioRecording = false;
 
-        // Screen recording properties
+        // Screen Recording
         this.screenRecorder = null;
         this.screenChunks = [];
-        this.isRecordingScreen = false;
+        this.isScreenRecording = false;
+
+        // User Preferences
+        this.isAutoScreenRecordEnabled = false; // Future: auto-record quiz
     }
 
-    // -----------------------------
-    // Microphone Recording Methods
-    // -----------------------------
-    async initMic() {
+    /* --------------------------
+       Audio Recorder Methods
+    -------------------------- */
+    async initAudio() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            this.mediaRecorder = new MediaRecorder(stream);
-
-            this.mediaRecorder.ondataavailable = (e) => this.audioChunks.push(e.data);
-            this.mediaRecorder.onstop = () => {
+            this.audioRecorder = new MediaRecorder(stream);
+            
+            this.audioRecorder.ondataavailable = e => this.audioChunks.push(e.data);
+            this.audioRecorder.onstop = () => {
                 this.audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
                 this.audioUrl = URL.createObjectURL(this.audioBlob);
                 this.audioElement = new Audio(this.audioUrl);
                 this.audioChunks = [];
             };
-            console.log("Microphone initialized successfully.");
+            console.log("Audio Recorder initialized successfully.");
         } catch (err) {
-            console.error("Microphone access denied or not supported:", err);
-            alert("Microphone access is required for recording. Please allow microphone permission.");
+            console.error("Microphone access denied:", err);
+            alert("Microphone access is required for voice recording.");
         }
     }
 
     startAudioRecording() {
-        if (!this.mediaRecorder) return console.warn("Microphone not initialized. Call initMic() first.");
-        if (this.isRecordingAudio) return console.warn("Audio recording already in progress.");
-
+        if (!this.audioRecorder) return console.warn("Audio recorder not initialized.");
+        if (this.isAudioRecording) return console.warn("Audio recording already in progress.");
         this.audioChunks = [];
-        this.mediaRecorder.start();
-        this.isRecordingAudio = true;
+        this.audioRecorder.start();
+        this.isAudioRecording = true;
         console.log("Audio recording started...");
     }
 
     stopAudioRecording() {
-        if (!this.mediaRecorder || !this.isRecordingAudio) return console.warn("No audio recording in progress.");
-        this.mediaRecorder.stop();
-        this.isRecordingAudio = false;
+        if (!this.audioRecorder || !this.isAudioRecording) return console.warn("No audio recording in progress.");
+        this.audioRecorder.stop();
+        this.isAudioRecording = false;
         console.log("Audio recording stopped.");
     }
 
     playAudio() {
-        if (!this.audioElement) return console.warn("No audio recorded yet.");
+        if (!this.audioElement) return console.warn("No recorded audio found.");
         this.audioElement.play();
-        console.log("Playing recorded audio...");
     }
 
-    downloadAudio(filename = `audio_${Date.now()}.webm`) {
-        if (!this.audioBlob) return console.warn("No audio to download.");
-        const a = document.createElement("a");
+    downloadAudio(filename = `SmartAI_Quiz_Audio_${Date.now()}.webm`) {
+        if (!this.audioBlob) return console.warn("No audio recorded to download.");
+        const a = document.createElement('a');
         a.href = this.audioUrl;
         a.download = filename;
         document.body.appendChild(a);
@@ -75,48 +76,46 @@ class Recorder {
         console.log("Audio downloaded:", filename);
     }
 
-    // -----------------------------
-    // Screen + Audio Recording
-    // -----------------------------
+    /* --------------------------
+       Screen Recorder Methods
+    -------------------------- */
     async startScreenRecording() {
         try {
             const stream = await navigator.mediaDevices.getDisplayMedia({
                 video: { cursor: "always", width: 1280, height: 720 },
-                audio: true // System + microphone audio
+                audio: true
             });
 
             this.screenRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
-            this.screenChunks = [];
-
-            this.screenRecorder.ondataavailable = (e) => {
-                if (e.data.size > 0) this.screenChunks.push(e.data);
+            
+            this.screenRecorder.ondataavailable = event => {
+                if (event.data.size > 0) this.screenChunks.push(event.data);
             };
+            this.screenRecorder.onstop = () => this.saveScreenRecording();
 
-            this.screenRecorder.onstop = () => this.saveScreenVideo();
             this.screenRecorder.start();
-            this.isRecordingScreen = true;
+            this.isScreenRecording = true;
             console.log("Screen recording started...");
         } catch (err) {
             console.error("Screen recording error:", err);
-            alert("Please allow screen capture to record your video.");
+            alert("Screen capture permission required.");
         }
     }
 
     stopScreenRecording() {
-        if (!this.screenRecorder || !this.isRecordingScreen) return console.warn("No screen recording in progress.");
+        if (!this.screenRecorder || !this.isScreenRecording) return console.warn("No screen recording in progress.");
         this.screenRecorder.stop();
-        this.isRecordingScreen = false;
+        this.isScreenRecording = false;
         console.log("Screen recording stopped.");
     }
 
-    saveScreenVideo() {
+    saveScreenRecording() {
         const blob = new Blob(this.screenChunks, { type: 'video/webm' });
         const url = URL.createObjectURL(blob);
-
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = `Smart_AI_Quiz_${Date.now()}.webm`;
+        a.download = `SmartAI_Quiz_Video_${Date.now()}.webm`;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
@@ -124,59 +123,32 @@ class Recorder {
             window.URL.revokeObjectURL(url);
             this.screenChunks = [];
         }, 100);
-
-        alert("Your quiz video is ready! You can now upload it to YouTube or share.");
+        alert("Quiz video ready! You can upload it to YouTube.");
     }
 
-    // -----------------------------
-    // AI & Future Features
-    // -----------------------------
+    /* --------------------------
+       Future AI-Powered Methods
+    -------------------------- */
     async transcribeAudio() {
         if (!this.audioBlob) return console.warn("No audio recorded.");
-        console.log("Transcription feature coming soon...");
-        // Future: integrate AI transcription API
+        console.log("Transcription AI coming soon...");
     }
 
     async detectLanguage() {
         if (!this.audioBlob) return console.warn("No audio recorded.");
-        console.log("Language detection feature coming soon...");
-        // Future: integrate language detection AI API
+        console.log("Language detection AI coming soon...");
     }
 
     async noiseReduction() {
-        console.log("Noise reduction feature coming soon...");
-        // Future: integrate WebAudio noise reduction or AI processing
+        console.log("Noise reduction AI coming soon...");
     }
 
-    saveToServer(userId = null) {
+    async saveToServer(userId = null) {
         if (!this.audioBlob) return console.warn("No audio to upload.");
-        console.log("Saving to server... (future feature)");
-        // Future: Upload audio/video to server/cloud storage
-    }
-
-    // -----------------------------
-    // Automatic Start if User Prefers
-    // -----------------------------
-    autoStartRecording(isEnabled = false) {
-        if (isEnabled) {
-            this.startScreenRecording();
-        }
+        console.log("Uploading audio/video to server (future feature)...");
     }
 }
 
-// -----------------------------
-// Singleton instance for global use
-// -----------------------------
+// Singleton Instance
 const recorder = new Recorder();
 window.recorder = recorder;
-
-// -----------------------------
-// Usage Example (can trigger from UI buttons)
-// -----------------------------
-// await recorder.initMic();
-// recorder.startAudioRecording();
-// recorder.stopAudioRecording();
-// recorder.playAudio();
-// recorder.downloadAudio();
-// recorder.startScreenRecording();
-// recorder.stopScreenRecording();
