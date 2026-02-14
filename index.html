@@ -3,147 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart-AI-Quiz-Global | AI-Powered Learning</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Smart-AI-Quiz-Global | Interactive AI Learning</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
-
     <style>
-        /* Initial Loader & Setup Styles */
-        body {
+        :root {
+            --primary-bg: #0f172a;
+            --accent-color: #38bdf8;
+            --btn-gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+            --correct-green: #10b981;
+            --wrong-red: #ef4444;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
             font-family: 'Poppins', sans-serif;
-            background: #0f172a; /* Dark Elegant Theme */
-            color: white;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            overflow: hidden;
+            color: #fff;
         }
 
-        #main-wrapper {
-            width: 100%;
-            max-width: 1280px; /* Standard 16:9 Width for YouTube Recording */
-            aspect-ratio: 16 / 9;
-            background: #1e293b;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 4px solid #334155;
-            border-radius: 15px;
+        /* 16:9 Aspect Ratio Container for YouTube Recording */
+        #main-container {
+            width: 100vw;
+            height: 56.25vw; /* Precise 16:9 ratio */
+            max-width: 1280px;
+            max-height: 720px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary-bg);
+            border: 2px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
-    </style>
-</head>
-<body>
 
-<div id="main-wrapper">
-    <div id="top-ad-container" style="text-align: center; padding: 5px;">
-        </div>
-    <div id="admin-trigger-eye" onclick="handleEyeClick()" title="Project Info">
-        <i class="fa-regular fa-eye"></i>
-    </div>
-
-    <div id="home-screen" class="screen-active">
-        <div class="hero-content">
-            <div class="logo-area">
-                <img src="logo.png" alt="Smart AI Quiz Logo" id="main-logo">
-                <h1 class="glow-text">Smart-AI-Quiz-Global</h1>
-                <p>The Future of AI-Powered Interactive Learning</p>
-            </div>
-
-            <div class="action-buttons">
-                <button onclick="showSelectionScreen()" class="btn-start">
-                    <i class="fas fa-play-circle"></i> Start Quiz / کوئز شروع کریں
-                </button>
-            </div>
-
-            <div class="gift-section" onclick="toggleDonationModal()">
-                <i class="fas fa-eye-slash"></i>
-                <span>Support Us / گفٹ بھیجیں</span>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        #admin-trigger-eye {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0.15; /* بہت مدہم تاکہ کسی کو شک نہ ہو */
-            font-size: 14px;
-            cursor: pointer;
-            z-index: 1000;
-            color: #94a3b8;
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
-        .hero-content {
+        .active { display: block; }
+        /* --- Home Screen & Secret Eye Styling --- */
+        .hero-section {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
             text-align: center;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('bg-pattern.jpg');
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&q=80');
             background-size: cover;
         }
 
-        .glow-text {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #38bdf8;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-            margin-bottom: 5px;
+        #secret-eye-trigger {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.2); /* بہت مدہم تاکہ کسی کو شک نہ ہو */
+            cursor: pointer;
+            z-index: 1000;
         }
 
-        .btn-start {
-            padding: 15px 40px;
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .btn-main-start {
+            padding: 18px 45px;
             font-size: 1.5rem;
-            background: #2563eb;
-            color: white;
+            font-weight: 600;
+            background: var(--btn-gradient);
             border: none;
             border-radius: 50px;
+            color: white;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
-            margin-top: 20px;
         }
 
-        .btn-start:hover {
+        .btn-main-start:hover {
             transform: scale(1.05);
-            background: #1d4ed8;
-        }
-
-        .gift-section {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.6);
         }
     </style>
-    <div id="selection-screen" class="screen-hidden">
-        <div class="selection-container">
-            <h2 class="selection-title"><i class="fas fa-cog"></i> Configure Your AI Experience</h2>
+</head>
+<body>
+
+<div id="main-container">
+    <div id="secret-eye-trigger" onclick="handleSecretClick()">
+        <i class="fa-solid fa-eye"></i>
+    </div>
+
+    <div id="home-screen" class="screen active">
+        <div class="hero-section">
+            <h1 class="main-title">Smart-AI-Quiz-Global</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8;">
+                Experience the Future of Interactive Learning & Entertainment
+            </p>
+            <button class="btn-main-start" onclick="goToSelection()">
+                <i class="fas fa-play"></i> Start Quiz Engine
+            </button>
+        </div>
+    </div>
+    <div id="selection-screen" class="screen">
+        <div class="selection-wrapper">
+            <h2 class="selection-heading"><i class="fas fa-sliders-h"></i> Customize Your Quiz</h2>
             
-            <div class="grid-selection">
+            <div class="selection-grid">
                 <div class="selection-box">
-                    <h3><i class="fas fa-language"></i> Select Language (30 Global)</h3>
-                    <select id="language-select" class="custom-dropdown">
-                        <option value="en">🇺🇸 English (United States)</option>
+                    <label><i class="fas fa-globe"></i> Select Language (30 Global)</label>
+                    <select id="user-language" class="styled-select">
+                        <option value="en">🇺🇸 English (US/UK - High CPC)</option>
                         <option value="ur">🇵🇰 Urdu (اردو)</option>
                         <option value="hi">🇮🇳 Hindi (हिन्दी)</option>
                         <option value="ar">🇸🇦 Arabic (العربية)</option>
@@ -177,438 +165,547 @@
                 </div>
 
                 <div class="selection-box">
-                    <h3><i class="fas fa-th-large"></i> Select Category (20 Topics)</h3>
-                    <select id="category-select" class="custom-dropdown">
-                        <option value="mixed">🌟 All Mixed Content</option>
+                    <label><i class="fas fa-list-check"></i> Select Category (20 Topics)</label>
+                    <select id="user-category" class="styled-select">
+                        <option value="all">🌟 All Mixed (All-in-One)</option>
                         <option value="islamic">🕌 Islamic History & Knowledge</option>
-                        <option value="tech">💻 Artificial Intelligence & Tech</option>
+                        <option value="tech">💻 Technology & AI</option>
                         <option value="science">🔬 Advanced Science</option>
                         <option value="history">📜 Global History</option>
                         <option value="sports">⚽ World Sports</option>
                         <option value="finance">💰 Finance & Stock Market</option>
                         <option value="health">🏥 Medical & Health</option>
-                        <option value="space">🚀 Astronomy & Space</option>
+                        <option value="space">🚀 Space & Astronomy</option>
                         <option value="edu">📚 General Education</option>
                         <option value="geo">🌍 Geography & Countries</option>
                         <option value="politics">⚖️ Global Politics</option>
                         <option value="ent">🎬 Entertainment & Movies</option>
-                        <option value="food">🍱 Food & Culture</option>
+                        <option value="food">🍱 Global Cuisine</option>
                         <option value="nature">🌿 Nature & Animals</option>
                         <option value="math">📐 Mathematics</option>
                         <option value="literature">📖 Literature & Arts</option>
                         <option value="crypto">🪙 Crypto & Blockchain</option>
-                        <option value="coding">👨‍💻 Programming Languages</option>
+                        <option value="coding">👨‍💻 Programming</option>
                         <option value="logic">🧠 Riddles & Logic</option>
                     </select>
                 </div>
             </div>
 
-            <button onclick="startQuizEngine()" class="btn-continue">
-                Launch AI Quiz <i class="fas fa-bolt"></i>
+            <button class="btn-proceed" onclick="startQuiz()">
+                Start Quiz / کوئز شروع کریں <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-    </div>
-    <div id="quiz-arena" class="screen-hidden">
-        <div class="quiz-header">
-            <div id="question-number">Question: 1/10</div>
-            <div id="timer-box">
-                <span id="countdown-number">10</span>
-                <svg width="50" height="50">
-                    <circle r="20" cx="25" cy="25" id="timer-circle"></circle>
-                </svg>
-            </div>
-            <div id="score-card">Score: 0</div>
-        </div>
-
-        <div class="question-container">
-            <h2 id="main-question">Generating AI Question...</h2>
-        </div>
-
-        <div class="options-grid" id="options-container">
-            <button class="option-btn" onclick="checkAnswer(0)">Option 1</button>
-            <button class="option-btn" onclick="checkAnswer(1)">Option 2</button>
-            <button class="option-btn" onclick="checkAnswer(2)">Option 3</button>
-            <button class="option-btn" onclick="checkAnswer(3)">Option 4</button>
-        </div>
-
-        <div id="feedback-layer" class="hidden">
-            <div id="feedback-icon"></div>
-            <p id="feedback-text"></p>
-        </div>
-
-        <div class="quiz-footer">
-            <button id="next-btn" class="btn-next hidden" onclick="loadNextQuestion()">
-                Next Question <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-        
-        <audio id="bg-music" loop src="assets/bg-music.mp3"></audio>
-        <audio id="timer-tick" src="assets/tick.mp3"></audio>
     </div>
 
     <style>
-        /* Quiz Arena Specific Styling */
-        #quiz-arena {
+        /* Selection Screen Styles */
+        .selection-wrapper {
+            padding: 40px;
+            background: rgba(30, 41, 59, 0.9);
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            padding: 20px;
-            box-sizing: border-box;
-            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
-        }
-
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.2rem;
-            color: #38bdf8;
-            font-weight: bold;
-        }
-
-        #timer-box {
-            position: relative;
-            display: flex;
             justify-content: center;
             align-items: center;
         }
-
-        #countdown-number {
-            position: absolute;
-            font-size: 1.5rem;
-            color: #ef4444;
-        }
-
-        #timer-circle {
-            fill: none;
-            stroke: #ef4444;
-            stroke-width: 4px;
-            stroke-dasharray: 126; /* 2 * PI * R */
-            transition: stroke-dashoffset 1s linear;
-        }
-
-        .question-container {
-            text-align: center;
-            padding: 20px;
-            min-height: 120px;
-        }
-
-        #main-question {
-            font-size: 2.2rem;
-            line-height: 1.4;
-            color: #f8fafc;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .options-grid {
+        .selection-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 90%;
-            margin: 0 auto;
+            gap: 25px;
+            width: 80%;
+            margin: 30px 0;
         }
-
-        .option-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #334155;
-            padding: 15px;
+        .styled-select {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
             color: white;
-            font-size: 1.3rem;
-            border-radius: 12px;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: left;
         }
-
-        .option-btn:hover {
-            background: #334155;
-            border-color: #38bdf8;
-            transform: translateY(-3px);
-        }
-
-        .btn-next {
-            background: #f59e0b;
-            color: #000;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin: 0 auto;
+        .btn-proceed {
+            background: #10b981;
+            color: white;
+            padding: 15px 40px;
             border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
         }
-
-        .hidden { display: none !important; }
+        .btn-proceed:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
     </style>
-    <div id="result-screen" class="screen-hidden">
-        <div class="result-container">
-            <h2 id="result-title">Quiz Completed!</h2>
-            <div id="final-score-display">00</div>
-            <p id="reward-msg">Generating your performance reward...</p>
+    <div id="quiz-arena" class="screen">
+        <div class="quiz-top-bar">
+            <div id="q-count">Question: 1/10</div>
             
-            <div class="result-actions">
-                <button onclick="downloadQuizVideo()" class="btn-download">
-                    <i class="fas fa-video"></i> Download Video for YouTube
-                </button>
-                <button onclick="location.reload()" class="btn-restart">
-                    <i class="fas fa-redo"></i> Play Again
-                </button>
+            <div class="timer-wrapper">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                    <circle class="timer-progress" cx="50" cy="50" r="45" id="timer-bar"></circle>
+                </svg>
+                <div id="timer-text">10</div>
             </div>
 
-            <div class="social-share-box">
-                <p>Share with friends:</p>
-                <a href="#" id="share-wa" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" id="share-fb" class="social-icon"><i class="fab fa-facebook"></i></a>
-            </div>
+            <div id="user-score">Score: 0</div>
         </div>
-    </div>
 
-    <div id="donation-modal" class="modal-hidden">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleDonationModal()">&times;</span>
-            <h3><i class="fas fa-heart"></i> Support Our Project</h3>
-            <p>If you like our AI Quiz, you can send us a gift:</p>
-            <div class="bank-details">
-                <div class="bank-card">
-                    <img src="https://img.icons8.com/color/48/000000/bank.png" alt="Bank">
-                    <strong>UBL Bank</strong>
-                    <p id="ubl-detail">Loading...</p>
-                </div>
-                <div class="bank-card">
-                    <img src="assets/easypaisa-logo.png" alt="EasyPaisa" style="width: 40px;">
-                    <strong>EasyPaisa</strong>
-                    <p id="ep-detail">Loading...</p>
-                </div>
-            </div>
+        <div class="question-display">
+            <h2 id="current-question">Preparing AI Question...</h2>
         </div>
-    </div>
 
-    <div id="recording-controls">
-        <div id="rec-status" class="status-idle"></div>
-        <button id="start-rec-btn" onclick="startRecording()"><i class="fas fa-circle"></i> REC</button>
-        <button id="stop-rec-btn" class="hidden" onclick="stopRecording()"><i class="fas fa-stop"></i> STOP</button>
-    </div>
+        <div class="options-container" id="options-grid">
+            <button class="option-card" onclick="checkAnswer(0)">
+                <span class="opt-prefix">A</span> <span class="opt-text">Option 1</span>
+            </button>
+            <button class="option-card" onclick="checkAnswer(1)">
+                <span class="opt-prefix">B</span> <span class="opt-text">Option 2</span>
+            </button>
+            <button class="option-card" onclick="checkAnswer(2)">
+                <span class="opt-prefix">C</span> <span class="opt-text">Option 3</span>
+            </button>
+            <button class="option-card" onclick="checkAnswer(3)">
+                <span class="opt-prefix">D</span> <span class="opt-text">Option 4</span>
+            </button>
+        </div>
 
-    <div id="bottom-ad-bar">
-        <div id="container-bc14fd3cc493145f5f9b6821df2fea04"></div>
+        <div class="quiz-footer">
+            <button id="next-question-btn" class="btn-next hidden" onclick="loadNextQuestion()">
+                Next Question <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
 
     <style>
-        /* Modal & Recording Styles */
-        .modal-hidden { display: none; }
-        #donation-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            display: flex; justify-content: center; align-items: center;
+        /* Quiz Arena Styles */
+        #quiz-arena {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
-        .modal-content {
-            background: #1e293b; padding: 30px; border-radius: 15px;
-            width: 90%; max-width: 400px; text-align: center; border: 2px solid #38bdf8;
-        }
-        .bank-card {
-            background: rgba(255,255,255,0.05); padding: 15px;
-            margin: 10px 0; border-radius: 10px; border: 1px dashed #38bdf8;
-        }
-        #recording-controls {
-            position: absolute; top: 10px; left: 10px;
-            background: rgba(0,0,0,0.6); padding: 10px; border-radius: 10px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        #rec-status { width: 12px; height: 12px; border-radius: 50%; }
-        .status-idle { background: gray; }
-        .status-recording { background: red; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
 
-        #bottom-ad-bar {
-            position: absolute; bottom: 0; width: 100%; height: 60px;
-            background: rgba(0,0,0,0.5); display: flex; justify-content: center;
+        .quiz-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            color: var(--accent-color);
         }
+
+        /* Circular Timer Design */
+        .timer-wrapper {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+        .timer-svg { transform: rotate(-90deg); }
+        .timer-bg { fill: none; stroke: #334155; stroke-width: 8; }
+        .timer-progress {
+            fill: none; stroke: var(--accent-color); stroke-width: 8;
+            stroke-dasharray: 283; stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+        #timer-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem; font-weight: bold; color: #fff;
+        }
+
+        .question-display {
+            text-align: center;
+            padding: 0 50px;
+            min-height: 120px;
+        }
+        #current-question {
+            font-size: 2.2rem; line-height: 1.4; color: #f8fafc;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #334155;
+            padding: 18px;
+            color: white;
+            font-size: 1.3rem;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+            display: flex; align-items: center;
+        }
+        .opt-prefix {
+            background: var(--accent-color); color: #000;
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; font-weight: bold;
+        }
+        .option-card:hover { background: #334155; transform: translateY(-3px); }
+
+        .hidden { display: none; }
     </style>
-    <div id="admin-login-overlay" class="screen-hidden">
-        <div class="admin-login-box">
-            <h3><i class="fas fa-user-shield"></i> System Authentication</h3>
-            <p>Please enter secure credentials to access control panel.</p>
+    <div id="donation-screen" class="screen-overlay hidden">
+        <div class="modal-box">
+            <span class="close-btn" onclick="toggleDonation()">&times;</span>
+            <h2 class="modal-title"><i class="fas fa-heart"></i> Support Our Project</h2>
+            <p>اگر آپ کو ہمارا کام پسند آیا ہے تو آپ ہمیں "گفٹ" بھیج سکتے ہیں۔</p>
             
-            <div class="input-group">
-                <input type="password" id="admin-pass-code" placeholder="Enter Secret Code (7866_...)">
+            <div class="payment-cards">
+                <div class="card ep-card">
+                    <div class="card-icon"><i class="fas fa-mobile-screen-button"></i></div>
+                    <h3>EasyPaisa</h3>
+                    <p id="display-ep-number">0321-9379597</p>
+                    <span class="account-name">Account: Syed Ali Hassan</span>
+                </div>
+
+                <div class="card bank-card">
+                    <div class="card-icon"><i class="fas fa-university"></i></div>
+                    <h3>UBL Bank (Visa)</h3>
+                    <p id="display-ubl-number">IBAN: PK72UBIL...</p>
+                    <span class="account-name">Account: Syed Ali Hassan</span>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="text" id="admin-phone-verify" placeholder="Enter Phone Number">
-            </div>
-            
-            <button onclick="verifyAdminAccess()" class="btn-verify">Verify & Access</button>
-            <button onclick="closeAdminLogin()" class="btn-cancel">Cancel</button>
+            <p class="thanks-msg">آپ کی سپورٹ ہمیں مزید بہتر بنانے میں مدد دیتی ہے!</p>
         </div>
     </div>
 
+    <div id="admin-auth-screen" class="screen-overlay hidden">
+        <div class="auth-box">
+            <h3><i class="fas fa-lock"></i> System Access</h3>
+            <p>Please verify your credentials</p>
+            <div class="input-group">
+                <input type="password" id="admin-code-input" placeholder="Enter Secret Code">
+                <input type="text" id="admin-phone-input" placeholder="Verify Phone Number">
+            </div>
+            <button class="btn-verify" onclick="checkAdminCredentials()">Login to Panel</button>
+            <button class="btn-cancel" onclick="closeAdminAuth()">Cancel</button>
+        </div>
+    </div>
+
+    <style>
+        /* Modal & Overlay Global Styles */
+        .screen-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 5000;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Donation Modal Styling */
+        .modal-box {
+            background: #1e293b; padding: 30px; border-radius: 20px;
+            width: 80%; max-width: 500px; text-align: center;
+            border: 2px solid var(--accent-color); position: relative;
+        }
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 2rem;
+            cursor: pointer; color: #94a3b8;
+        }
+        .payment-cards { display: flex; gap: 15px; margin-top: 20px; }
+        .card {
+            flex: 1; background: rgba(255,255,255,0.05); padding: 20px;
+            border-radius: 15px; border: 1px solid #334155; transition: 0.3s;
+        }
+        .ep-card:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+        .bank-card:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+        .card-icon { font-size: 2rem; margin-bottom: 10px; color: var(--accent-color); }
+
+        /* Auth Box Styling */
+        .auth-box {
+            background: #0f172a; padding: 40px; border-radius: 20px;
+            border: 2px solid var(--wrong-red); text-align: center; width: 350px;
+        }
+        .input-group input {
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px;
+            background: #1e293b; border: 1px solid #334155; color: white;
+        }
+        .btn-verify {
+            background: var(--wrong-red); color: white; border: none;
+            padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
+        .btn-cancel {
+            background: transparent; color: #94a3b8; border: none; margin-top: 15px; cursor: pointer;
+        }
+    </style>
+    <div id="admin-dashboard" class="screen-overlay hidden">
+        <div class="dashboard-container">
+            <div class="db-header">
+                <h2><i class="fas fa-user-gear"></i> Global Control Panel</h2>
+                <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+            </div>
+
+            <div class="db-grid">
+                <div class="db-card">
+                    <h3><i class="fas fa-wallet"></i> Gift & Payment Settings</h3>
+                    <div class="field-box">
+                        <label>EasyPaisa Number:</label>
+                        <input type="text" id="db-ep-num" value="03219379597">
+                    </div>
+                    <div class="field-box">
+                        <label>UBL / IBAN Detail:</label>
+                        <input type="text" id="db-ubl-num" placeholder="Enter IBAN">
+                    </div>
+                    <div class="field-box">
+                        <label>Account Holder Name:</label>
+                        <input type="text" id="db-acc-name" value="Syed Ali Hassan">
+                    </div>
+                    <button class="btn-save" onclick="updatePaymentInfo()">Save Details</button>
+                </div>
+
+                <div class="db-card">
+                    <h3><i class="fas fa-rectangle-ad"></i> Ad Manager (50 Slots)</h3>
+                    <div class="field-box">
+                        <label>Target Country:</label>
+                        <select id="db-ad-country">
+                            <option value="global">Global (All)</option>
+                            <option value="pk">Pakistan</option>
+                            <option value="us">USA / UK</option>
+                            <option value="ar">Arab Countries</option>
+                            <option value="in">India</option>
+                        </select>
+                    </div>
+                    <div class="field-box">
+                        <label>Ad Content (Video/Image URL):</label>
+                        <input type="text" id="db-ad-url" placeholder="https://...">
+                    </div>
+                    <button class="btn-save-ad" onclick="deployCustomAd()">Push Ad to Slot</button>
+                    <p class="status-text">Active Custom Slots: <span id="active-slots">0</span>/50</p>
+                </div>
+
+                <div class="db-card">
+                    <h3><i class="fas fa-brain"></i> AI Engine Override</h3>
+                    <label>Manual Question Push:</label>
+                    <textarea id="db-manual-q" placeholder="Type a manual question to show globally..."></textarea>
+                    <button class="btn-push" onclick="pushManualQuestion()">Live Push</button>
+                    <div class="toggle-group">
+                        <span>Auto AI Generation:</span>
+                        <input type="checkbox" id="ai-auto-toggle" checked>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Admin Dashboard Internal Styles */
+        .dashboard-container {
+            width: 95%; height: 90%; background: #0f172a; 
+            border-radius: 20px; border: 2px solid var(--accent-color);
+            padding: 25px; overflow-y: auto;
+        }
+        .db-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .db-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .db-card {
+            background: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155;
+        }
+        .db-card h3 { font-size: 1.1rem; color: var(--accent-color); margin-bottom: 15px; }
+        .field-box { margin-bottom: 12px; }
+        .field-box label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 5px; }
+        .field-box input, .field-box select, .db-card textarea {
+            width: 100%; padding: 10px; border-radius: 8px; background: #0f172a;
+            border: 1px solid #334155; color: white;
+        }
+        .btn-save, .btn-save-ad, .btn-push {
+            width: 100%; padding: 10px; border-radius: 8px; border: none;
+            font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s;
+        }
+        .btn-save { background: var(--correct-green); color: white; }
+        .btn-save-ad { background: var(--accent-color); color: #000; }
+        .btn-push { background: #f59e0b; color: white; }
+        .btn-logout { background: var(--wrong-red); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .status-text { font-size: 0.8rem; margin-top: 10px; color: #94a3b8; }
+        .toggle-group { display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.9rem; }
+    </style>
     <div id="social-sidebar">
-        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-btn fb" title="Follow on Facebook">
+        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-icon fb" title="Facebook">
             <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-btn tt" title="Follow on TikTok">
+        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-icon tt" title="TikTok">
             <i class="fab fa-tiktok"></i>
         </a>
-        <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-btn yt" title="Subscribe on YouTube">
+        <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-icon yt" title="YouTube">
             <i class="fab fa-youtube"></i>
         </a>
-        <a href="https://wa.me/923219379597" target="_blank" class="social-btn wa" title="Contact on WhatsApp">
+        <a href="https://wa.me/923219379597" target="_blank" class="social-icon wa" title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
 
-    <style>
-        /* Admin Login Styling */
-        #admin-login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.98);
-            z-index: 5000; display: flex; justify-content: center; align-items: center;
-        }
-        .admin-login-box {
-            background: #1e293b; padding: 40px; border-radius: 20px;
-            border: 2px solid #ef4444; text-align: center; width: 350px;
-        }
-        .input-group input {
-            width: 100%; padding: 12px; margin: 10px 0;
-            background: #0f172a; border: 1px solid #334155;
-            color: white; border-radius: 8px; font-size: 1rem;
-        }
-        .btn-verify {
-            background: #ef4444; color: white; border: none;
-            padding: 12px 25px; border-radius: 8px; cursor: pointer; width: 100%;
-            font-weight: bold; margin-top: 10px;
-        }
+    <div id="result-screen" class="screen">
+        <div class="result-content">
+            <div class="crown-icon"><i class="fas fa-crown"></i></div>
+            <h2 id="congrats-text">Congratulations!</h2>
+            <div class="score-display">
+                <span id="final-score">0</span>
+                <p>Total Points Earned</p>
+            </div>
 
-        /* Social Sidebar Styling */
+            <div class="result-actions">
+                <button class="btn-download" onclick="exportQuizVideo()">
+                    <i class="fas fa-file-video"></i> Download Quiz Video (16:9)
+                </button>
+                
+                <button class="btn-share" onclick="shareWithFriends()">
+                    <i class="fas fa-share-nodes"></i> Share with Friends
+                </button>
+
+                <button class="btn-restart" onclick="location.reload()">
+                    <i class="fas fa-redo"></i> Play Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Floating Social Sidebar */
         #social-sidebar {
-            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 15px; z-index: 100;
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 12px; z-index: 100;
         }
-        .social-btn {
-            width: 45px; height: 45px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            color: white; font-size: 1.5rem; text-decoration: none;
-            transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .social-icon {
+            width: 45px; height: 45px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; color: white;
+            font-size: 1.3rem; text-decoration: none; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .fb { background: #1877F2; }
-        .tt { background: #000000; border: 1px solid #fff; }
+        .tt { background: #000; border: 1px solid #fff; }
         .yt { background: #FF0000; }
         .wa { background: #25D366; }
-        .social-btn:hover { transform: scale(1.1) rotate(10deg); }
+        .social-icon:hover { transform: scale(1.1) translateX(5px); }
+
+        /* Result Screen Styling */
+        .result-content {
+            height: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('assets/result-bg.jpg');
+        }
+        .crown-icon { font-size: 4rem; color: #f59e0b; margin-bottom: 10px; animation: bounce 2s infinite; }
+        .score-display {
+            background: rgba(255,255,255,0.05); padding: 20px 50px;
+            border-radius: 20px; border: 2px solid var(--accent-color); margin-bottom: 30px;
+        }
+        #final-score { font-size: 4rem; font-weight: 800; color: var(--accent-color); }
+        
+        .result-actions { display: flex; flex-direction: column; gap: 15px; width: 300px; }
+        .btn-download { background: #8b5cf6; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .btn-share { background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .btn-restart { background: transparent; color: white; border: 1px solid white; padding: 10px; border-radius: 10px; cursor: pointer; }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
-    <div id="admin-dashboard" class="screen-hidden">
-        <div class="dashboard-header">
-            <h2><i class="fas fa-tools"></i> Global Admin Control Center</h2>
-            <button onclick="logoutAdmin()" class="btn-logout">Logout</button>
+    <div id="top-ad-slot" class="ad-container">
+        <script type="text/javascript">
+            atOptions = { 'key' : 'bbce5a50700ab4a362d5a6a41f0756ed', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://breachuptown.com/bbce5a50700ab4a362d5a6a41f0756ed/invoke.js"></script>
+    </div>
+
+    <div id="left-sidebar-ads">
+        <div class="side-ad">
+            <script type="text/javascript">
+                atOptions = { 'key' : 'f8e0f5f1c77aee933fbb7a25f674c4ee', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://breachuptown.com/f8e0f5f1c77aee933fbb7a25f674c4ee/invoke.js"></script>
         </div>
-
-        <div class="dashboard-grid">
-            <div class="db-card">
-                <h3><i class="fas fa-university"></i> Payment Details</h3>
-                <input type="text" id="set-ubl" placeholder="UBL Account / IBAN">
-                <input type="text" id="set-ep" placeholder="EasyPaisa Number">
-                <input type="text" id="set-name" placeholder="Account Holder Name">
-                <button onclick="saveBankSettings()" class="btn-save">Update Bank Info</button>
-            </div>
-
-            <div class="db-card">
-                <h3><i class="fas fa-ad"></i> Ad Manager (Country Wise)</h3>
-                <select id="ad-country-target">
-                    <option value="all">Global (All Countries)</option>
-                    <option value="pk">Pakistan</option>
-                    <option value="us">USA / UK / Canada</option>
-                    <option value="ar">Arab Countries</option>
-                    <option value="in">India</option>
-                </select>
-                <input type="text" id="ad-img-url" placeholder="Image/Video URL for Ad">
-                <input type="text" id="ad-link-url" placeholder="Destination Link">
-                <button onclick="addNewCustomAd()" class="btn-save">Deploy Custom Ad</button>
-                <div id="ad-slots-status">Active Slots: 0/50</div>
-            </div>
-
-            <div class="db-card">
-                <h3><i class="fas fa-brain"></i> AI Engine Control</h3>
-                <label>Manual Question Override:</label>
-                <textarea id="manual-q" placeholder="Enter manual question..."></textarea>
-                <button onclick="pushManualQuestion()" class="btn-save">Push to Live Quiz</button>
-                <div class="toggle-box">
-                    <span>Auto-AI Mode:</span>
-                    <input type="checkbox" id="ai-toggle" checked>
-                </div>
-            </div>
+        <div class="side-ad">
+            <script type="text/javascript">
+                atOptions = { 'key' : '2ad6c4e5997c6ab7a5ebaa6dcce124b6', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://breachuptown.com/2ad6c4e5997c6ab7a5ebaa6dcce124b6/invoke.js"></script>
         </div>
     </div>
 
-    <style>
-        /* Admin Dashboard Layout */
-        #admin-dashboard {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f172a; z-index: 6000; overflow-y: auto; padding: 20px;
-        }
-        .dashboard-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #334155; padding-bottom: 15px; margin-bottom: 20px;
-        }
-        .dashboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
-        }
-        .db-card {
-            background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #38bdf8;
-        }
-        .db-card h3 { color: #38bdf8; margin-bottom: 15px; font-size: 1.1rem; }
-        .db-card input, .db-card textarea, .db-card select {
-            width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;
-            background: #0f172a; border: 1px solid #334155; color: white;
-        }
-        .btn-save {
-            background: #10b981; color: white; border: none; padding: 10px;
-            width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold;
-        }
-        .btn-logout { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
-        .toggle-box { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-    </style>
-    <div id="interstitial-ad-overlay" class="screen-hidden">
-        <div class="ad-box">
-            <p>Advertisement - Quiz continues in a moment...</p>
-            <script>
+    <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
+    <div id="container-bc14fd3cc493145f5f9b6821df2fea04"></div>
+
+    <div id="interstitial-ad-box" class="hidden-ad-overlay">
+        <div class="ad-content">
+            <p>ADVERTISEMENT</p>
+            <script type="text/javascript">
                 atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
             </script>
-            <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
-            <button onclick="closeAdOverlay()" class="btn-skip-ad">Continue Quiz</button>
+            <script type="text/javascript" src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
+            <button class="btn-close-ad" onclick="closeAdOverlay()">Continue Quiz</button>
         </div>
     </div>
 
-    <div style="display:none;">
-        <div id="container-90af8dee84ab8501b624e076ec9a12c8"></div>
-        <div id="container-f8e0f5f1c77aee933fbb7a25f674c4ee"></div>
+    <div id="bottom-ad-strip">
+        <script type="text/javascript">
+            atOptions = { 'key' : '90af8dee84ab8501b624e076ec9a12c8', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://breachuptown.com/90af8dee84ab8501b624e076ec9a12c8/invoke.js"></script>
+        
+        <script type="text/javascript">
+            atOptions = { 'key' : 'c3fad5f8aa7dc16816052e3745d01c9c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://breachuptown.com/c3fad5f8aa7dc16816052e3745d01c9c/invoke.js"></script>
     </div>
 
-    <script src="config.js"></script>
-    <script src="ads-manager.js"></script>
-    <script src="ai-engine.js"></script>
-    <script src="recorder.js"></script>
-    <script src="script.js"></script>
-
     <script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
-    <script src="https://breachuptown.com/4d/f7/56/4df7569fb44a5d7a885cd63b4f956e09.js"></script>
-    <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
 
     <style>
-        /* Ad Overlay Styling */
-        #interstitial-ad-overlay {
+        /* Ad Placement Styles */
+        #top-ad-slot { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 10; }
+        #left-sidebar-ads { position: absolute; left: -170px; top: 0; display: flex; flex-direction: column; gap: 10px; }
+        #bottom-ad-strip { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; }
+        
+        .hidden-ad-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.95); z-index: 10000;
+            display: none; justify-content: center; align-items: center;
         }
-        .ad-box { text-align: center; color: white; }
-        .btn-skip-ad {
-            margin-top: 20px; padding: 10px 30px; background: #38bdf8;
-            border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
-        }
-        #bottom-ad-bar iframe { max-width: 100%; border: none; }
+        .ad-content { text-align: center; color: white; }
+        .btn-close-ad { margin-top: 15px; padding: 10px 25px; background: var(--accent-color); border: none; cursor: pointer; font-weight: bold; }
     </style>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="tick-sound">
+        <source src="assets/sounds/tick.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correct-sound">
+        <source src="assets/sounds/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="assets/sounds/wrong.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="config.js"></script>
+    
+    <script src="ads-manager.js"></script>
+    
+    <script src="recorder.js"></script>
+    
+    <script src="ai-engine.js"></script>
+    
+    <script src="script.js"></script>
+
+    <script>
+        // Basic Initial Check to ensure everything loads
+        window.onload = () => {
+            console.log("Smart-AI-Quiz-Global: System Initialized...");
+        };
+    </script>
 
 </div> </body>
 </html>
