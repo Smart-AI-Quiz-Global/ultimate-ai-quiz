@@ -5,128 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel - Smart AI Quiz Global</title>
 <link rel="stylesheet" href="style.css">
-<style>
-body {margin:0; font-family:Arial, sans-serif; background:#111; color:#fff;}
-.container {max-width:1000px; margin:auto; padding:20px;}
-h1{text-align:center; margin-bottom:30px; color:#00ffcc;}
-.section{background:#1c1c1c; padding:20px; border-radius:10px; margin-bottom:25px;}
-.section h2{color:#00ffcc; margin-bottom:15px;}
-input, textarea, select{width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:none;}
-button{padding:10px 20px; border:none; background:#00ffcc; color:#000; font-weight:bold; border-radius:6px; cursor:pointer;}
-button:hover{background:#00ddb3;}
-.small-text{font-size:12px; color:#aaa;}
-</style>
 </head>
 <body>
+<div id="adminPanel">
+    <h1>Admin Panel</h1>
 
-<div class="container">
-<h1>Admin Dashboard</h1>
+    <!-- Add New Question -->
+    <label for="newQuestion">Add New Question:</label>
+    <input type="text" id="newQuestion" placeholder="Enter question">
+    <button onclick="addQuestion()">Add Question</button>
 
-<!-- Site & Quiz Settings -->
-<div class="section">
-<h2>Site & Quiz Settings</h2>
-<label>Website Name</label>
-<input type="text" id="siteName">
+    <!-- Gift / Payment Details -->
+    <h2>Payment / Gifts</h2>
+    <div id="paymentDetails">
+        <p>EasyPaisa: 0312XXXXXXX</p>
+        <p>JazzCash: 0312XXXXXXX</p>
+        <p>Visa Card: XXXX-XXXX-XXXX-XXXX</p>
+        <p>UBL Bank: XXXXXXXX</p>
+    </div>
 
-<label>Splash Video URL</label>
-<input type="text" id="introVideo">
-
-<label>Splash Image URL</label>
-<input type="text" id="splashAd">
-
-<label>Background Music URL</label>
-<input type="text" id="bgMusic">
-
-<label>AI Question Engine API Key</label>
-<input type="text" id="aiApiKey">
-
-<label>Categories (comma separated)</label>
-<input type="text" id="categories">
-
-<label>Languages (comma separated)</label>
-<input type="text" id="languages">
-
-<label>Ads Code (All scripts)</label>
-<textarea id="adsCode" rows="5"></textarea>
-
-<button onclick="saveSiteSettings()">Save Site Settings</button>
+    <!-- Ads Management -->
+    <h2>Ads Management</h2>
+    <div id="adsList"></div>
 </div>
 
-<!-- Payment Settings -->
-<div class="section">
-<h2>Payment Options</h2>
-<label>EasyPaisa Number</label>
-<input type="text" id="easypaisa">
-<label>JazzCash Number</label>
-<input type="text" id="jazzcash">
-<label>Visa Card Number</label>
-<input type="text" id="visa">
-<label>UBL Bank Account Number</label>
-<input type="text" id="ubl">
-<label>Gift Card / Wallet Address</label>
-<input type="text" id="giftcard">
-<button onclick="savePaymentSettings()">Save Payment Settings</button>
-</div>
-
-<!-- Reward Settings -->
-<div class="section">
-<h2>Reward / Quiz Configuration</h2>
-<label>Points Required for Gift</label>
-<input type="number" id="pointsRequired">
-<label>Reward Message</label>
-<input type="text" id="rewardMessage">
-<button onclick="saveRewardSettings()">Save Reward Settings</button>
-</div>
-
-</div>
-
+<script src="ads-manager.js"></script>
 <script>
-function saveSiteSettings(){
-    localStorage.setItem("siteName", document.getElementById("siteName").value);
-    localStorage.setItem("introVideo", document.getElementById("introVideo").value);
-    localStorage.setItem("splashAd", document.getElementById("splashAd").value);
-    localStorage.setItem("bgMusic", document.getElementById("bgMusic").value);
-    localStorage.setItem("aiApiKey", document.getElementById("aiApiKey").value);
-    localStorage.setItem("categories", document.getElementById("categories").value);
-    localStorage.setItem("languages", document.getElementById("languages").value);
-    localStorage.setItem("adsCode", document.getElementById("adsCode").value);
-    alert("Site & Quiz Settings Saved");
+function addQuestion(){
+    const q = document.getElementById('newQuestion').value;
+    if(q) alert("Question Added: "+q);
 }
 
-function savePaymentSettings(){
-    localStorage.setItem("easypaisa", document.getElementById("easypaisa").value);
-    localStorage.setItem("jazzcash", document.getElementById("jazzcash").value);
-    localStorage.setItem("visa", document.getElementById("visa").value);
-    localStorage.setItem("ubl", document.getElementById("ubl").value);
-    localStorage.setItem("giftcard", document.getElementById("giftcard").value);
-    alert("Payment Settings Saved");
-}
-
-function saveRewardSettings(){
-    localStorage.setItem("pointsRequired", document.getElementById("pointsRequired").value);
-    localStorage.setItem("rewardMessage", document.getElementById("rewardMessage").value);
-    alert("Reward Settings Saved");
-}
-
-// Load saved values
-window.onload=function(){
-    document.getElementById("siteName").value = localStorage.getItem("siteName") || "";
-    document.getElementById("introVideo").value = localStorage.getItem("introVideo") || "";
-    document.getElementById("splashAd").value = localStorage.getItem("splashAd") || "";
-    document.getElementById("bgMusic").value = localStorage.getItem("bgMusic") || "";
-    document.getElementById("aiApiKey").value = localStorage.getItem("aiApiKey") || "";
-    document.getElementById("categories").value = localStorage.getItem("categories") || "";
-    document.getElementById("languages").value = localStorage.getItem("languages") || "";
-    document.getElementById("adsCode").value = localStorage.getItem("adsCode") || "";
-    document.getElementById("easypaisa").value = localStorage.getItem("easypaisa") || "";
-    document.getElementById("jazzcash").value = localStorage.getItem("jazzcash") || "";
-    document.getElementById("visa").value = localStorage.getItem("visa") || "";
-    document.getElementById("ubl").value = localStorage.getItem("ubl") || "";
-    document.getElementById("giftcard").value = localStorage.getItem("giftcard") || "";
-    document.getElementById("pointsRequired").value = localStorage.getItem("pointsRequired") || "";
-    document.getElementById("rewardMessage").value = localStorage.getItem("rewardMessage") || "";
-}
+// Hidden Admin Eye Trigger (10 clicks)
+let adminEye = document.getElementById('adminEye');
+let clickCount = 0;
+adminEye.onclick = () => {
+    clickCount++;
+    if(clickCount>=10){
+        let code = prompt("Enter Admin Code:");
+        let number = prompt("Enter Registered Number:");
+        if(code==="7866_Zaigham_5121472" && number==="03219379597"){
+            alert("Admin Access Granted");
+            document.getElementById('adminPanel').style.display="block";
+        }
+    }
+};
 </script>
-
 </body>
 </html>
