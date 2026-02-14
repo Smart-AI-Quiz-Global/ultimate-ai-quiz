@@ -3,164 +3,612 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart-AI-Quiz-Global</title>
-
-    <!-- Favicon & Logo -->
-    <link id="dynamic-favicon" rel="icon" type="image/x-icon" href="favicon.ico">
-
-    <!-- CSS -->
+    <title>Smart-AI-Quiz-Global | AI-Powered Learning</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- JS Scripts -->
-    <script src="config.js" defer></script>
-    <script src="ads-manager.js" defer></script>
-    <script src="ai-engine.js" defer></script>
-    <script src="recorder.js" defer></script>
-    <script src="script.js" defer></script>
+    <style>
+        /* Initial Loader & Setup Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a; /* Dark Elegant Theme */
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    <!-- SEO -->
-    <meta name="description" content="Smart-AI-Quiz-Global: Multi-language AI-powered Quiz platform">
-    <meta name="keywords" content="AI, Quiz, Multi-language, Technology, Education, Islamic, Entertainment, Sports">
-    <meta name="author" content="Smart-AI-Quiz-Global Team">
+        #main-wrapper {
+            width: 100%;
+            max-width: 1280px; /* Standard 16:9 Width for YouTube Recording */
+            aspect-ratio: 16 / 9;
+            background: #1e293b;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 4px solid #334155;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="site-header">
-        <div class="logo-title-container">
-            <a href="index.html" class="site-logo-link">
-                <img src="favicon.ico" alt="Smart-AI-Quiz-Global Logo" class="site-logo">
-            </a>
-            <h1 class="site-title">Smart-AI-Quiz-Global</h1>
-        </div>
 
-        <!-- Language Selector -->
-        <div class="language-selector">
-            <label for="lang">Select Language:</label>
-            <select id="lang">
-                <option value="en">🇬🇧 English</option>
-                <option value="ur">🇵🇰 Urdu</option>
-                <option value="hi">🇮🇳 Hindi</option>
-                <option value="ar">🇸🇦 Arabic</option>
-                <option value="zh">🇨🇳 Chinese</option>
-                <option value="es">🇪🇸 Spanish</option>
-                <option value="fr">🇫🇷 French</option>
-                <option value="de">🇩🇪 German</option>
-                <option value="pt">🇵🇹 Portuguese</option>
-                <option value="ru">🇷🇺 Russian</option>
-                <option value="ja">🇯🇵 Japanese</option>
-                <option value="ko">🇰🇷 Korean</option>
-                <option value="it">🇮🇹 Italian</option>
-                <option value="tr">🇹🇷 Turkish</option>
-                <option value="nl">🇳🇱 Dutch</option>
-                <option value="sv">🇸🇪 Swedish</option>
-                <option value="no">🇳🇴 Norwegian</option>
-                <option value="fi">🇫🇮 Finnish</option>
-                <option value="pl">🇵🇱 Polish</option>
-                <option value="th">🇹🇭 Thai</option>
-                <option value="id">🇮🇩 Indonesian</option>
-                <option value="ms">🇲🇾 Malay</option>
-                <option value="vi">🇻🇳 Vietnamese</option>
-                <option value="fa">🇮🇷 Persian</option>
-                <option value="he">🇮🇱 Hebrew</option>
-                <option value="bn">🇧🇩 Bengali</option>
-                <option value="pa">🇮🇳 Punjabi</option>
-                <option value="ta">🇮🇳 Tamil</option>
-                <option value="gu">🇮🇳 Gujarati</option>
-                <option value="mr">🇮🇳 Marathi</option>
-            </select>
+<div id="main-wrapper">
+    <div id="top-ad-container" style="text-align: center; padding: 5px;">
         </div>
+    <div id="admin-trigger-eye" onclick="handleEyeClick()" title="Project Info">
+        <i class="fa-regular fa-eye"></i>
+    </div>
 
-        <!-- Category Selector -->
-        <div class="category-selector">
-            <label for="category">Select Category:</label>
-            <select id="category">
-                <option value="technology">Technology</option>
-                <option value="education">Education</option>
-                <option value="islamic">Islamic</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="sports">Sports</option>
-                <option value="general">General Knowledge</option>
-                <option value="science">Science</option>
-                <option value="history">History</option>
-                <option value="politics">Politics</option>
-                <option value="finance">Finance</option>
-            </select>
-        </div>
-    </header>
-
-    <!-- Main Quiz Area -->
-    <main class="quiz-container">
-        <button id="start-quiz">Start Quiz</button>
-        <div id="quiz" class="hidden">
-            <div id="question-container">
-                <p id="question-text">Question will appear here...</p>
-                <div id="options-container"></div>
+    <div id="home-screen" class="screen-active">
+        <div class="hero-content">
+            <div class="logo-area">
+                <img src="logo.png" alt="Smart AI Quiz Logo" id="main-logo">
+                <h1 class="glow-text">Smart-AI-Quiz-Global</h1>
+                <p>The Future of AI-Powered Interactive Learning</p>
             </div>
 
-            <div id="countdown-container">
-                <p id="countdown-text">10</p>
-                <audio id="countdown-audio" src="countdown-tick.mp3"></audio>
+            <div class="action-buttons">
+                <button onclick="showSelectionScreen()" class="btn-start">
+                    <i class="fas fa-play-circle"></i> Start Quiz / کوئز شروع کریں
+                </button>
             </div>
 
-            <div id="feedback-container">
-                <p id="feedback-text"></p>
-                <audio id="correct-sound" src="correct.mp3"></audio>
-                <audio id="wrong-sound" src="wrong.mp3"></audio>
+            <div class="gift-section" onclick="toggleDonationModal()">
+                <i class="fas fa-eye-slash"></i>
+                <span>Support Us / گفٹ بھیجیں</span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #admin-trigger-eye {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.15; /* بہت مدہم تاکہ کسی کو شک نہ ہو */
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 1000;
+            color: #94a3b8;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('bg-pattern.jpg');
+            background-size: cover;
+        }
+
+        .glow-text {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #38bdf8;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .btn-start {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            margin-top: 20px;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+            background: #1d4ed8;
+        }
+
+        .gift-section {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+    </style>
+    <div id="selection-screen" class="screen-hidden">
+        <div class="selection-container">
+            <h2 class="selection-title"><i class="fas fa-cog"></i> Configure Your AI Experience</h2>
+            
+            <div class="grid-selection">
+                <div class="selection-box">
+                    <h3><i class="fas fa-language"></i> Select Language (30 Global)</h3>
+                    <select id="language-select" class="custom-dropdown">
+                        <option value="en">🇺🇸 English (United States)</option>
+                        <option value="ur">🇵🇰 Urdu (اردو)</option>
+                        <option value="hi">🇮🇳 Hindi (हिन्दी)</option>
+                        <option value="ar">🇸🇦 Arabic (العربية)</option>
+                        <option value="zh">🇨🇳 Chinese (中文)</option>
+                        <option value="es">🇪🇸 Spanish (Español)</option>
+                        <option value="de">🇩🇪 German (Deutsch)</option>
+                        <option value="fr">🇫🇷 French (Français)</option>
+                        <option value="ja">🇯🇵 Japanese (日本語)</option>
+                        <option value="ru">🇷🇺 Russian (Русский)</option>
+                        <option value="pt">🇵🇹 Portuguese (Português)</option>
+                        <option value="it">🇮🇹 Italian (Italiano)</option>
+                        <option value="ko">🇰🇷 Korean (한국어)</option>
+                        <option value="tr">🇹🇷 Turkish (Türkçe)</option>
+                        <option value="nl">🇳🇱 Dutch (Nederlands)</option>
+                        <option value="sv">🇸🇪 Swedish (Svenska)</option>
+                        <option value="no">🇳🇴 Norwegian (Norsk)</option>
+                        <option value="da">🇩🇰 Danish (Dansk)</option>
+                        <option value="fi">🇫🇮 Finnish (Suomi)</option>
+                        <option value="pl">🇵🇱 Polish (Polski)</option>
+                        <option value="he">🇮🇱 Hebrew (עברית)</option>
+                        <option value="th">🇹🇭 Thai (ไทย)</option>
+                        <option value="id">🇮🇩 Indonesian (Bahasa Indonesia)</option>
+                        <option value="vi">🇻🇳 Vietnamese (Tiếng Việt)</option>
+                        <option value="el">🇬🇷 Greek (Ελληνικά)</option>
+                        <option value="cs">🇨🇿 Czech (Čeština)</option>
+                        <option value="ro">🇷🇴 Romanian (Română)</option>
+                        <option value="hu">🇭🇺 Hungarian (Magyar)</option>
+                        <option value="ms">🇲🇾 Malay (Bahasa Melayu)</option>
+                        <option value="fa">🇮🇷 Persian (فارسی)</option>
+                    </select>
+                </div>
+
+                <div class="selection-box">
+                    <h3><i class="fas fa-th-large"></i> Select Category (20 Topics)</h3>
+                    <select id="category-select" class="custom-dropdown">
+                        <option value="mixed">🌟 All Mixed Content</option>
+                        <option value="islamic">🕌 Islamic History & Knowledge</option>
+                        <option value="tech">💻 Artificial Intelligence & Tech</option>
+                        <option value="science">🔬 Advanced Science</option>
+                        <option value="history">📜 Global History</option>
+                        <option value="sports">⚽ World Sports</option>
+                        <option value="finance">💰 Finance & Stock Market</option>
+                        <option value="health">🏥 Medical & Health</option>
+                        <option value="space">🚀 Astronomy & Space</option>
+                        <option value="edu">📚 General Education</option>
+                        <option value="geo">🌍 Geography & Countries</option>
+                        <option value="politics">⚖️ Global Politics</option>
+                        <option value="ent">🎬 Entertainment & Movies</option>
+                        <option value="food">🍱 Food & Culture</option>
+                        <option value="nature">🌿 Nature & Animals</option>
+                        <option value="math">📐 Mathematics</option>
+                        <option value="literature">📖 Literature & Arts</option>
+                        <option value="crypto">🪙 Crypto & Blockchain</option>
+                        <option value="coding">👨‍💻 Programming Languages</option>
+                        <option value="logic">🧠 Riddles & Logic</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Gift / Donation -->
-            <div class="gift-container">
-                <button id="send-gift">Send Gift / Support</button>
-                <div id="gift-info" class="hidden">
-                    <p>Bank / EasyPaisa / UBL Details here</p>
+            <button onclick="startQuizEngine()" class="btn-continue">
+                Launch AI Quiz <i class="fas fa-bolt"></i>
+            </button>
+        </div>
+    </div>
+    <div id="quiz-arena" class="screen-hidden">
+        <div class="quiz-header">
+            <div id="question-number">Question: 1/10</div>
+            <div id="timer-box">
+                <span id="countdown-number">10</span>
+                <svg width="50" height="50">
+                    <circle r="20" cx="25" cy="25" id="timer-circle"></circle>
+                </svg>
+            </div>
+            <div id="score-card">Score: 0</div>
+        </div>
+
+        <div class="question-container">
+            <h2 id="main-question">Generating AI Question...</h2>
+        </div>
+
+        <div class="options-grid" id="options-container">
+            <button class="option-btn" onclick="checkAnswer(0)">Option 1</button>
+            <button class="option-btn" onclick="checkAnswer(1)">Option 2</button>
+            <button class="option-btn" onclick="checkAnswer(2)">Option 3</button>
+            <button class="option-btn" onclick="checkAnswer(3)">Option 4</button>
+        </div>
+
+        <div id="feedback-layer" class="hidden">
+            <div id="feedback-icon"></div>
+            <p id="feedback-text"></p>
+        </div>
+
+        <div class="quiz-footer">
+            <button id="next-btn" class="btn-next hidden" onclick="loadNextQuestion()">
+                Next Question <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <audio id="bg-music" loop src="assets/bg-music.mp3"></audio>
+        <audio id="timer-tick" src="assets/tick.mp3"></audio>
+    </div>
+
+    <style>
+        /* Quiz Arena Specific Styling */
+        #quiz-arena {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 20px;
+            box-sizing: border-box;
+            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        #timer-box {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #countdown-number {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #ef4444;
+        }
+
+        #timer-circle {
+            fill: none;
+            stroke: #ef4444;
+            stroke-width: 4px;
+            stroke-dasharray: 126; /* 2 * PI * R */
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .question-container {
+            text-align: center;
+            padding: 20px;
+            min-height: 120px;
+        }
+
+        #main-question {
+            font-size: 2.2rem;
+            line-height: 1.4;
+            color: #f8fafc;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #334155;
+            padding: 15px;
+            color: white;
+            font-size: 1.3rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: #334155;
+            border-color: #38bdf8;
+            transform: translateY(-3px);
+        }
+
+        .btn-next {
+            background: #f59e0b;
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0 auto;
+            border: none;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+    <div id="result-screen" class="screen-hidden">
+        <div class="result-container">
+            <h2 id="result-title">Quiz Completed!</h2>
+            <div id="final-score-display">00</div>
+            <p id="reward-msg">Generating your performance reward...</p>
+            
+            <div class="result-actions">
+                <button onclick="downloadQuizVideo()" class="btn-download">
+                    <i class="fas fa-video"></i> Download Video for YouTube
+                </button>
+                <button onclick="location.reload()" class="btn-restart">
+                    <i class="fas fa-redo"></i> Play Again
+                </button>
+            </div>
+
+            <div class="social-share-box">
+                <p>Share with friends:</p>
+                <a href="#" id="share-wa" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" id="share-fb" class="social-icon"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="donation-modal" class="modal-hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleDonationModal()">&times;</span>
+            <h3><i class="fas fa-heart"></i> Support Our Project</h3>
+            <p>If you like our AI Quiz, you can send us a gift:</p>
+            <div class="bank-details">
+                <div class="bank-card">
+                    <img src="https://img.icons8.com/color/48/000000/bank.png" alt="Bank">
+                    <strong>UBL Bank</strong>
+                    <p id="ubl-detail">Loading...</p>
+                </div>
+                <div class="bank-card">
+                    <img src="assets/easypaisa-logo.png" alt="EasyPaisa" style="width: 40px;">
+                    <strong>EasyPaisa</strong>
+                    <p id="ep-detail">Loading...</p>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Social Footer -->
-    <footer class="site-footer">
-        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-        <a href="https://youtube.com/@mast_tv_official" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-        <a href="https://wa.me/03219379597" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    </footer>
+    <div id="recording-controls">
+        <div id="rec-status" class="status-idle"></div>
+        <button id="start-rec-btn" onclick="startRecording()"><i class="fas fa-circle"></i> REC</button>
+        <button id="stop-rec-btn" class="hidden" onclick="stopRecording()"><i class="fas fa-stop"></i> STOP</button>
+    </div>
 
-    <!-- Admin Eye -->
-    <div id="admin-eye" title="Click 10 times for Admin Panel"></div>
+    <div id="bottom-ad-bar">
+        <div id="container-bc14fd3cc493145f5f9b6821df2fea04"></div>
+    </div>
 
-    <script>
-        // Admin Unlock Logic
-        let eyeClickCount = 0;
-        const adminEye = document.getElementById('admin-eye');
-        adminEye.addEventListener('click', () => {
-            eyeClickCount++;
-            if (eyeClickCount >= 10) {
-                const code = prompt("Enter Secret Code:");
-                const number = prompt("Enter Secret Number:");
-                if (code === "7866_Zaigham_5121472" && number === "03219379597") {
-                    window.location.href = "admin-panel.html";
-                } else {
-                    alert("Wrong credentials");
-                    eyeClickCount = 0;
-                }
-            }
-        });
+    <style>
+        /* Modal & Recording Styles */
+        .modal-hidden { display: none; }
+        #donation-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: #1e293b; padding: 30px; border-radius: 15px;
+            width: 90%; max-width: 400px; text-align: center; border: 2px solid #38bdf8;
+        }
+        .bank-card {
+            background: rgba(255,255,255,0.05); padding: 15px;
+            margin: 10px 0; border-radius: 10px; border: 1px dashed #38bdf8;
+        }
+        #recording-controls {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(0,0,0,0.6); padding: 10px; border-radius: 10px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        #rec-status { width: 12px; height: 12px; border-radius: 50%; }
+        .status-idle { background: gray; }
+        .status-recording { background: red; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        // Start Quiz Logic
-        const startBtn = document.getElementById('start-quiz');
-        const quizContainer = document.getElementById('quiz');
-        startBtn.addEventListener('click', () => {
-            quizContainer.classList.remove('hidden');
-            startBtn.classList.add('hidden');
-            if (typeof initializeQuiz === "function") initializeQuiz();
-        });
+        #bottom-ad-bar {
+            position: absolute; bottom: 0; width: 100%; height: 60px;
+            background: rgba(0,0,0,0.5); display: flex; justify-content: center;
+        }
+    </style>
+    <div id="admin-login-overlay" class="screen-hidden">
+        <div class="admin-login-box">
+            <h3><i class="fas fa-user-shield"></i> System Authentication</h3>
+            <p>Please enter secure credentials to access control panel.</p>
+            
+            <div class="input-group">
+                <input type="password" id="admin-pass-code" placeholder="Enter Secret Code (7866_...)">
+            </div>
+            <div class="input-group">
+                <input type="text" id="admin-phone-verify" placeholder="Enter Phone Number">
+            </div>
+            
+            <button onclick="verifyAdminAccess()" class="btn-verify">Verify & Access</button>
+            <button onclick="closeAdminLogin()" class="btn-cancel">Cancel</button>
+        </div>
+    </div>
 
-        // Gift Toggle
-        const giftBtn = document.getElementById('send-gift');
-        const giftInfo = document.getElementById('gift-info');
-        giftBtn.addEventListener('click', () => giftInfo.classList.toggle('hidden'));
-    </script>
-</body>
+    <div id="social-sidebar">
+        <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-btn fb" title="Follow on Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-btn tt" title="Follow on TikTok">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-btn yt" title="Subscribe on YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/923219379597" target="_blank" class="social-btn wa" title="Contact on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <style>
+        /* Admin Login Styling */
+        #admin-login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            z-index: 5000; display: flex; justify-content: center; align-items: center;
+        }
+        .admin-login-box {
+            background: #1e293b; padding: 40px; border-radius: 20px;
+            border: 2px solid #ef4444; text-align: center; width: 350px;
+        }
+        .input-group input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: #0f172a; border: 1px solid #334155;
+            color: white; border-radius: 8px; font-size: 1rem;
+        }
+        .btn-verify {
+            background: #ef4444; color: white; border: none;
+            padding: 12px 25px; border-radius: 8px; cursor: pointer; width: 100%;
+            font-weight: bold; margin-top: 10px;
+        }
+
+        /* Social Sidebar Styling */
+        #social-sidebar {
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 100;
+        }
+        .social-btn {
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 1.5rem; text-decoration: none;
+            transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .fb { background: #1877F2; }
+        .tt { background: #000000; border: 1px solid #fff; }
+        .yt { background: #FF0000; }
+        .wa { background: #25D366; }
+        .social-btn:hover { transform: scale(1.1) rotate(10deg); }
+    </style>
+    <div id="admin-dashboard" class="screen-hidden">
+        <div class="dashboard-header">
+            <h2><i class="fas fa-tools"></i> Global Admin Control Center</h2>
+            <button onclick="logoutAdmin()" class="btn-logout">Logout</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="db-card">
+                <h3><i class="fas fa-university"></i> Payment Details</h3>
+                <input type="text" id="set-ubl" placeholder="UBL Account / IBAN">
+                <input type="text" id="set-ep" placeholder="EasyPaisa Number">
+                <input type="text" id="set-name" placeholder="Account Holder Name">
+                <button onclick="saveBankSettings()" class="btn-save">Update Bank Info</button>
+            </div>
+
+            <div class="db-card">
+                <h3><i class="fas fa-ad"></i> Ad Manager (Country Wise)</h3>
+                <select id="ad-country-target">
+                    <option value="all">Global (All Countries)</option>
+                    <option value="pk">Pakistan</option>
+                    <option value="us">USA / UK / Canada</option>
+                    <option value="ar">Arab Countries</option>
+                    <option value="in">India</option>
+                </select>
+                <input type="text" id="ad-img-url" placeholder="Image/Video URL for Ad">
+                <input type="text" id="ad-link-url" placeholder="Destination Link">
+                <button onclick="addNewCustomAd()" class="btn-save">Deploy Custom Ad</button>
+                <div id="ad-slots-status">Active Slots: 0/50</div>
+            </div>
+
+            <div class="db-card">
+                <h3><i class="fas fa-brain"></i> AI Engine Control</h3>
+                <label>Manual Question Override:</label>
+                <textarea id="manual-q" placeholder="Enter manual question..."></textarea>
+                <button onclick="pushManualQuestion()" class="btn-save">Push to Live Quiz</button>
+                <div class="toggle-box">
+                    <span>Auto-AI Mode:</span>
+                    <input type="checkbox" id="ai-toggle" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Admin Dashboard Layout */
+        #admin-dashboard {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f172a; z-index: 6000; overflow-y: auto; padding: 20px;
+        }
+        .dashboard-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #334155; padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .dashboard-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .db-card {
+            background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #38bdf8;
+        }
+        .db-card h3 { color: #38bdf8; margin-bottom: 15px; font-size: 1.1rem; }
+        .db-card input, .db-card textarea, .db-card select {
+            width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;
+            background: #0f172a; border: 1px solid #334155; color: white;
+        }
+        .btn-save {
+            background: #10b981; color: white; border: none; padding: 10px;
+            width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        .btn-logout { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .toggle-box { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    </style>
+    <div id="interstitial-ad-overlay" class="screen-hidden">
+        <div class="ad-box">
+            <p>Advertisement - Quiz continues in a moment...</p>
+            <script>
+                atOptions = { 'key' : 'b8a2a3a0f2c41e94333a2a6554d05cb7', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+            </script>
+            <script src="https://breachuptown.com/b8a2a3a0f2c41e94333a2a6554d05cb7/invoke.js"></script>
+            <button onclick="closeAdOverlay()" class="btn-skip-ad">Continue Quiz</button>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <div id="container-90af8dee84ab8501b624e076ec9a12c8"></div>
+        <div id="container-f8e0f5f1c77aee933fbb7a25f674c4ee"></div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="ads-manager.js"></script>
+    <script src="ai-engine.js"></script>
+    <script src="recorder.js"></script>
+    <script src="script.js"></script>
+
+    <script src="https://breachuptown.com/9d/3a/95/9d3a95b6d6898dd8f4ca5c51153ef95c.js"></script>
+    <script src="https://breachuptown.com/4d/f7/56/4df7569fb44a5d7a885cd63b4f956e09.js"></script>
+    <script async="async" data-cfasync="false" src="https://breachuptown.com/bc14fd3cc493145f5f9b6821df2fea04/invoke.js"></script>
+
+    <style>
+        /* Ad Overlay Styling */
+        #interstitial-ad-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .ad-box { text-align: center; color: white; }
+        .btn-skip-ad {
+            margin-top: 20px; padding: 10px 30px; background: #38bdf8;
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        #bottom-ad-bar iframe { max-width: 100%; border: none; }
+    </style>
+
+</div> </body>
 </html>
